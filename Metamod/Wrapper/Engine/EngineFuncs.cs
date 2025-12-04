@@ -102,10 +102,9 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     }
     public void RemoveEntity(Edict e) => Base.pfnRemoveEntity(e.GetPointer());
 
-    private StringHandle? _namedEntity;
     public Edict CreateNamedEntity(string className)
     {
-        _namedEntity ??= new(className);
+        StringHandle? _namedEntity = new(className);
         unsafe
         {
             return new((NativeEdict*)Base.pfnCreateNamedEntity(_namedEntity.ToHandle()));
@@ -643,14 +642,15 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
 
     public void EngCheckParm(string pchCmdLineToken, out string ppszValue)
     {
-        unsafe
+        nint ns = Marshal.StringToHGlobalAnsi(pchCmdLineToken);
+        try
         {
-            nint ns = Marshal.StringToHGlobalAnsi(pchCmdLineToken);
-            nint os = Marshal.AllocHGlobal(sizeof(nint));
-            Base.pfnEngCheckParm(ns, out os);
+            nint resultPtr = Base.pfnEngCheckParm(ns, out nint pchNextVal);
+            ppszValue = Marshal.PtrToStringUTF8(pchNextVal) ?? string.Empty;
+        }
+        finally
+        {
             Marshal.FreeHGlobal(ns);
-            ppszValue = Marshal.PtrToStringUTF8(os) ?? string.Empty;
-            Marshal.FreeHGlobal(os);
         }
     }
 }
