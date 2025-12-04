@@ -1,10 +1,18 @@
 ﻿using System.Drawing;
+using Metamod.Native.Game;
 
 namespace Metamod.Wrapper.Game;
 
 public class HudParams : BaseNativeWrapper<NativeHudParams>
 {
     public HudParams() : base() { }
+
+    /// <summary>
+    /// 使用现有的 native 指针包装一个 HudParams。
+    /// 与其他 Wrapper 保持一致的 nint 构造方式，方便从非托管回调中创建包装对象。
+    /// </summary>
+    /// <param name="ptr">指向 NativeHudParams 的非托管指针。</param>
+    internal unsafe HudParams(nint ptr) : base((NativeHudParams*)ptr) { }
 
     internal unsafe HudParams(NativeHudParams* nativePtr, bool ownsPointer = false)
         : base(nativePtr, ownsPointer) { }
