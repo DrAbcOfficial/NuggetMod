@@ -25,6 +25,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         }
     }
 
+    private Vector3f? _velocity;
+    
     /// <summary>
     /// Gets the client's velocity.
     /// </summary>
@@ -34,7 +36,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->velocity);
+                _velocity ??= new Vector3f(&NativePtr->velocity);
+                return _velocity;
             }
         }
     }
@@ -60,6 +63,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         }
     }
 
+    private Vector3f? _punchAngle;
+    
     /// <summary>
     /// Gets the punch angle (view kick from weapon recoil).
     /// </summary>
@@ -69,7 +74,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->punchangle);
+                _punchAngle ??= new Vector3f(&NativePtr->punchangle);
+                return _punchAngle;
             }
         }
     }
@@ -137,6 +143,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         }
     }
 
+    private Vector3f? _viewOfs;
+    
     /// <summary>
     /// Gets the view offset from origin (eye position).
     /// </summary>
@@ -146,7 +154,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->view_ofs);
+                _viewOfs ??= new Vector3f(&NativePtr->view_ofs);
+                return _viewOfs;
             }
         }
     }
@@ -748,6 +757,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         }
     }
 
+    private Vector3f? _vUser1;
+    
     /// <summary>
     /// Gets custom vector value 1 for mods.
     /// </summary>
@@ -757,10 +768,14 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->vuser1);
+                _vUser1 ??= new Vector3f(&NativePtr->vuser1);
+                return _vUser1;
             }
         }
     }
+    
+    private Vector3f? _vUser2;
+    
     /// <summary>
     /// Gets custom vector value 2 for mods.
     /// </summary>
@@ -770,11 +785,14 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->vuser2);
+                _vUser2 ??= new Vector3f(&NativePtr->vuser2);
+                return _vUser2;
             }
         }
     }
 
+    private Vector3f? _vUser3;
+    
     /// <summary>
     /// Gets custom vector value 3 for mods.
     /// </summary>
@@ -784,11 +802,14 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->vuser3);
+                _vUser3 ??= new Vector3f(&NativePtr->vuser3);
+                return _vUser3;
             }
         }
     }
 
+    private Vector3f? _vUser4;
+    
     /// <summary>
     /// Gets custom vector value 4 for mods.
     /// </summary>
@@ -798,7 +819,8 @@ public class ClientData : BaseNativeWrapper<NativeClientData>
         {
             unsafe
             {
-                return new Vector3f(&NativePtr->vuser4);
+                _vUser4 ??= new Vector3f(&NativePtr->vuser4);
+                return _vUser4;
             }
         }
     }
