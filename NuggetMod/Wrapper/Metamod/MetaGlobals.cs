@@ -1,7 +1,7 @@
 ﻿using NuggetMod.Enum.NuggetMod;
-using NuggetMod.Native.NuggetMod;
+using NuggetMod.Native.Metamod;
 
-namespace NuggetMod.Wrapper.NuggetMod
+namespace NuggetMod.Wrapper.Metamod
 {
     /// <summary>
     /// Wrapper for MetaMod global variables
@@ -10,7 +10,7 @@ namespace NuggetMod.Wrapper.NuggetMod
     {
         internal unsafe MetaGlobals(NativeMetaGlobals* ptr) : base(ptr) { }
         internal unsafe MetaGlobals(nint ptr) : this((NativeMetaGlobals*)ptr) { }
-        
+
         /// <summary>
         /// Gets or sets the plugin's return result flag
         /// </summary>

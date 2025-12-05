@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace NuggetMod.Native.NuggetMod;
+namespace NuggetMod.Native.Metamod;
 
 /// <summary>
 /// Native structure representing plugin information for Metamod.

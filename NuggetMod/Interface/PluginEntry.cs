@@ -1,7 +1,7 @@
 ﻿using NuggetMod.Enum.NuggetMod;
-using NuggetMod.Native.NuggetMod;
+using NuggetMod.Native.Metamod;
 using NuggetMod.Wrapper.Engine;
-using NuggetMod.Wrapper.NuggetMod;
+using NuggetMod.Wrapper.Metamod;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Interface;

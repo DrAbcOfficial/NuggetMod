@@ -1,11 +1,10 @@
-﻿using NuggetMod.Helper;
-using NuggetMod.Interface.Events;
+﻿using NuggetMod.Interface.Events;
 using NuggetMod.Interface.Events.NativeCaller;
 using NuggetMod.Native.Engine;
 using NuggetMod.Native.Game;
-using NuggetMod.Native.NuggetMod;
+using NuggetMod.Native.Metamod;
 using NuggetMod.Wrapper.Engine;
-using NuggetMod.Wrapper.NuggetMod;
+using NuggetMod.Wrapper.Metamod;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Interface;
@@ -475,27 +474,27 @@ public class MetaMod
     /// Gets the engine functions interface
     /// </summary>
     public static EngineFuncs EngineFuncs => _engineFuncs ?? throw new NullReferenceException("EngineFuncs is NULL");
-    
+
     /// <summary>
     /// Gets the global variables
     /// </summary>
     public static GlobalVars GlobalVars => _globalVars ?? throw new NullReferenceException("GlobalVars is NULL");
-        
+
     /// <summary>
     /// Gets the MetaMod utility functions
     /// </summary>
     public static MetaUtilFunctions MetaUtilFuncs => _metaUtilFuncs ?? throw new NullReferenceException("MetaUtilFuncs is NULL");
-    
+
     /// <summary>
     /// Gets the plugin information
     /// </summary>
     public static MetaPluginInfo PluginInfo => _pluginInfo ?? throw new NullReferenceException("PluginInfo is NULL");
-    
+
     /// <summary>
     /// Gets the MetaMod global variables
     /// </summary>
     public static MetaGlobals MetaGlobals => _metaGlobals ?? throw new NullReferenceException("MetaGlobals is NULL");
-    
+
     /// <summary>
     /// Gets the game DLL functions
     /// </summary>

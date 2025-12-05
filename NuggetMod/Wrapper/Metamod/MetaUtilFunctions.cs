@@ -2,12 +2,12 @@
 using NuggetMod.Interface;
 using NuggetMod.Native.Engine;
 using NuggetMod.Native.Game;
-using NuggetMod.Native.NuggetMod;
+using NuggetMod.Native.Metamod;
 using NuggetMod.Wrapper.Engine;
 using NuggetMod.Wrapper.Game;
 using System.Runtime.InteropServices;
 
-namespace NuggetMod.Wrapper.NuggetMod;
+namespace NuggetMod.Wrapper.Metamod;
 
 /// <summary>
 /// Wrapper for MetaMod utility functions

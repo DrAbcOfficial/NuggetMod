@@ -1,7 +1,7 @@
-﻿using NuggetMod.Native.NuggetMod;
+﻿using NuggetMod.Native.Metamod;
 using NuggetMod.Wrapper.Game;
 
-namespace NuggetMod.Wrapper.NuggetMod;
+namespace NuggetMod.Wrapper.Metamod;
 
 /// <summary>
 /// Wrapper for game DLL function tables accessible through MetaMod

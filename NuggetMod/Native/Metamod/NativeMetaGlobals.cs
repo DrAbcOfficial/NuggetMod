@@ -1,7 +1,7 @@
 ﻿using NuggetMod.Enum.NuggetMod;
 using System.Runtime.InteropServices;
 
-namespace NuggetMod.Native.NuggetMod;
+namespace NuggetMod.Native.Metamod;
 
 /// <summary>
 /// Native MetaMod Globals

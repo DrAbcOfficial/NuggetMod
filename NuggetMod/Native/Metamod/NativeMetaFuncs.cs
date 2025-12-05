@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace NuggetMod.Native.NuggetMod;
+namespace NuggetMod.Native.Metamod;
 
 // 定义委托
 

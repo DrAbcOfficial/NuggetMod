@@ -1,6 +1,6 @@
 ﻿using NuggetMod.Enum.NuggetMod;
 
-namespace NuggetMod.Wrapper.NuggetMod;
+namespace NuggetMod.Wrapper.Metamod;
 
 /// <summary>
 /// Contains metadata information about a MetaMod plugin

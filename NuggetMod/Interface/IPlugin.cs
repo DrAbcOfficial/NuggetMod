@@ -1,6 +1,5 @@
 ﻿using NuggetMod.Enum.NuggetMod;
-using NuggetMod.Wrapper.NuggetMod;
-
+using NuggetMod.Wrapper.Metamod;
 namespace NuggetMod.Interface;
 
 /// <summary>

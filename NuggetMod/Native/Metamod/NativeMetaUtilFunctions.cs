@@ -1,9 +1,9 @@
 ﻿using NuggetMod.Enum.NuggetMod;
-using NuggetMod.Native;
 using NuggetMod.Native.Engine;
 using NuggetMod.Native.Game;
-using NuggetMod.Native.NuggetMod;
 using System.Runtime.InteropServices;
+
+namespace NuggetMod.Native.Metamod;
 /// <summary>
 /// Native MetaMod utility functions structure containing function pointers for MetaMod plugin utilities.
 /// Provides logging, plugin management, module inspection, hooking, and disassembly capabilities.
