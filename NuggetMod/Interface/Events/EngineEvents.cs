@@ -7,167 +7,643 @@ using NuggetMod.Wrapper.Engine;
 namespace NuggetMod.Interface.Events;
 
 #region Delegates
+/// <summary>
+/// Delegate for precaching a model.
+/// </summary>
 public delegate (MetaResult, int) PrecacheModelDelegate(string s);
+/// <summary>
+/// Delegate for precaching a sound.
+/// </summary>
 public delegate (MetaResult, int) PrecacheSoundDelegate(string s);
+/// <summary>
+/// Delegate for setting entity model.
+/// </summary>
 public delegate MetaResult SetModelDelegate(Edict e, string m);
+/// <summary>
+/// Delegate for getting model index.
+/// </summary>
 public delegate (MetaResult, int) ModelIndexDelegate(string m);
+/// <summary>
+/// Delegate for getting model frame count.
+/// </summary>
 public delegate (MetaResult, int) ModelFramesDelegate(int modelIndex);
+/// <summary>
+/// Delegate for setting entity size.
+/// </summary>
 public delegate MetaResult SetSizeDelegate(Edict e, Vector3f min, Vector3f max);
+/// <summary>
+/// Delegate for changing level.
+/// </summary>
 public delegate MetaResult ChangeLevelDelegate(string s1, string s2);
+/// <summary>
+/// Delegate for getting spawn parameters.
+/// </summary>
 public delegate MetaResult GetSpawnParmsDelegate(Edict ent);
+/// <summary>
+/// Delegate for saving spawn parameters.
+/// </summary>
 public delegate MetaResult SaveSpawnParmsDelegate(Edict ent);
+/// <summary>
+/// Delegate for converting vector to yaw angle.
+/// </summary>
 public delegate (MetaResult, float) VecToYawDelegate(Vector3f vec);
+/// <summary>
+/// Delegate for converting vector to angles.
+/// </summary>
 public delegate MetaResult VecToAnglesDelegate(Vector3f vec, Vector3f angles);
+/// <summary>
+/// Delegate for moving entity to origin.
+/// </summary>
 public delegate MetaResult MoveToOriginDelegate(Edict ent, Vector3f goal, float dist, int moveType);
+/// <summary>
+/// Delegate for changing entity yaw.
+/// </summary>
 public delegate MetaResult ChangeYawDelegate(Edict edict);
+/// <summary>
+/// Delegate for changing entity pitch.
+/// </summary>
 public delegate MetaResult ChangePitchDelegate(Edict ent);
+/// <summary>
+/// Delegate for finding entity by string field.
+/// </summary>
 public delegate (MetaResult, Edict) FindEntityByStringDelegate(Edict e, string field, string value);
+/// <summary>
+/// Delegate for getting entity illumination.
+/// </summary>
 public delegate (MetaResult, int) GetEntityIllumDelegate(Edict ent);
+/// <summary>
+/// Delegate for finding entity in sphere.
+/// </summary>
 public delegate (MetaResult, Edict) FindEntityInSphereDelegate(Edict e, Vector3f origin, float radius);
+/// <summary>
+/// Delegate for finding client in PVS.
+/// </summary>
 public delegate (MetaResult, Edict) FindClientInPVSDelegate(Edict e);
+/// <summary>
+/// Delegate for getting entities in PVS.
+/// </summary>
 public delegate (MetaResult, Edict) EntitiesInPVSDelegate(Edict e);
+/// <summary>
+/// Delegate for making global vectors from angles.
+/// </summary>
 public delegate MetaResult MakeVectorsDelegate(Vector3f vec);
+/// <summary>
+/// Delegate for converting angles to vectors.
+/// </summary>
 public delegate MetaResult AngleVectorsDelegate(Vector3f vec, Vector3f forward, Vector3f right, Vector3f up);
+/// <summary>
+/// Delegate for creating entity.
+/// </summary>
 public delegate (MetaResult, Edict) CreateEntityDelegate();
+/// <summary>
+/// Delegate for removing entity.
+/// </summary>
 public delegate MetaResult RemoveEntityDelegate(Edict e);
+/// <summary>
+/// Delegate for creating named entity.
+/// </summary>
 public delegate (MetaResult, Edict) CreateNamedEntityDelegate(int className);
+/// <summary>
+/// Delegate for making entity static.
+/// </summary>
 public delegate MetaResult MakeStaticDelegate(Edict ent);
+/// <summary>
+/// Delegate for checking if entity is on floor.
+/// </summary>
 public delegate (MetaResult, int) EntIsOnFloorDelegate(Edict ent);
+/// <summary>
+/// Delegate for dropping entity to floor.
+/// </summary>
 public delegate (MetaResult, int) DropToFloorDelegate(Edict ent);
+/// <summary>
+/// Delegate for entity walk move.
+/// </summary>
 public delegate (MetaResult, int) WalkMoveDelegate(Edict ent, float yaw, float dist, int mode);
+/// <summary>
+/// Delegate for setting entity origin.
+/// </summary>
 public delegate MetaResult SetOriginDelegate(Edict ent, Vector3f origin);
+/// <summary>
+/// Delegate for emitting sound from entity.
+/// </summary>
 public delegate MetaResult EmitSoundDelegate(Edict ent, int channel, string sample, float volume, float attenuation, int fFlags, int pitch);
+/// <summary>
+/// Delegate for emitting ambient sound.
+/// </summary>
 public delegate MetaResult EmitAmbientSoundDelegate(Edict ent, Vector3f pos, string sample, float volume, float attenuation, int fFlags, int pitch);
+/// <summary>
+/// Delegate for tracing line.
+/// </summary>
 public delegate MetaResult TraceLineDelegate(Vector3f v1, Vector3f v2, int fNoMonsters, Edict pentToSkip, ref TraceResult ptr);
+/// <summary>
+/// Delegate for tracing toss trajectory.
+/// </summary>
 public delegate MetaResult TraceTossDelegate(Edict pent, Edict pentToIgnore, ref TraceResult ptr);
+/// <summary>
+/// Delegate for tracing monster hull.
+/// </summary>
 public delegate (MetaResult, int) TraceMonsterHullDelegate(Edict pent, Vector3f v1, Vector3f v2, int fNoMonsters, Edict pentToSkip, ref TraceResult ptr);
+/// <summary>
+/// Delegate for tracing hull.
+/// </summary>
 public delegate MetaResult TraceHullDelegate(Vector3f v1, Vector3f v2, int fNoMonsters, int hullNumber, Edict pentToSkip, ref TraceResult ptr);
+/// <summary>
+/// Delegate for tracing model.
+/// </summary>
 public delegate MetaResult TraceModelDelegate(Vector3f v1, Vector3f v2, int hullNumber, Edict pent, ref TraceResult ptr);
+/// <summary>
+/// Delegate for tracing texture.
+/// </summary>
 public delegate (MetaResult, string) TraceTextureDelegate(Edict pTextureEntity, Vector3f v1, Vector3f v2);
+/// <summary>
+/// Delegate for tracing sphere.
+/// </summary>
 public delegate MetaResult TraceSphereDelegate(Vector3f v1, Vector3f v2, int fNoMonsters, float radius, Edict pentToSkip, ref TraceResult ptr);
+/// <summary>
+/// Delegate for getting aim vector.
+/// </summary>
 public delegate MetaResult GetAimVectorDelegate(Edict ent, float speed, ref Vector3f vec);
+/// <summary>
+/// Delegate for executing server command.
+/// </summary>
 public delegate MetaResult ServerCommandDelegate(string str);
+/// <summary>
+/// Delegate for executing server command buffer.
+/// </summary>
 public delegate MetaResult ServerExecuteDelegate();
+/// <summary>
+/// Delegate for executing client command from engine.
+/// </summary>
 public delegate MetaResult EngineClientCommandDelegate(Edict ent, string str);
+/// <summary>
+/// Delegate for creating particle effect.
+/// </summary>
 public delegate MetaResult ParticleEffectDelegate(Vector3f org, Vector3f dir, float color, float count);
+/// <summary>
+/// Delegate for setting light style.
+/// </summary>
 public delegate MetaResult LightStyleDelegate(int style, string val);
+/// <summary>
+/// Delegate for getting decal index.
+/// </summary>
 public delegate (MetaResult, int) DecalIndexDelegate(string name);
+/// <summary>
+/// Delegate for getting point contents.
+/// </summary>
 public delegate (MetaResult, int) PointContentsDelegate(Vector3f vec);
+/// <summary>
+/// Delegate for beginning network message.
+/// </summary>
 public delegate MetaResult MessageBeginDelegate(int msg_dest, int msg_type, Vector3f pOrigin, Edict ed);
+/// <summary>
+/// Delegate for ending network message.
+/// </summary>
 public delegate MetaResult MessageEndDelegate();
+/// <summary>
+/// Delegate for writing byte to network message.
+/// </summary>
 public delegate MetaResult WriteByteDelegate(int iValue);
+/// <summary>
+/// Delegate for writing char to network message.
+/// </summary>
 public delegate MetaResult WriteCharDelegate(int iValue);
+/// <summary>
+/// Delegate for writing short to network message.
+/// </summary>
 public delegate MetaResult WriteShortDelegate(int iValue);
+/// <summary>
+/// Delegate for writing long to network message.
+/// </summary>
 public delegate MetaResult WriteLongDelegate(int iValue);
+/// <summary>
+/// Delegate for writing angle to network message.
+/// </summary>
 public delegate MetaResult WriteAngleDelegate(float flValue);
+/// <summary>
+/// Delegate for writing coordinate to network message.
+/// </summary>
 public delegate MetaResult WriteCoordDelegate(float flValue);
+/// <summary>
+/// Delegate for writing string to network message.
+/// </summary>
 public delegate MetaResult WriteStringDelegate(string sz);
+/// <summary>
+/// Delegate for writing entity to network message.
+/// </summary>
 public delegate MetaResult WriteEntityDelegate(int iValue);
+/// <summary>
+/// Delegate for registering console variable.
+/// </summary>
 public delegate MetaResult CVarRegisterDelegate(CVar cvar);
+/// <summary>
+/// Delegate for getting console variable float value.
+/// </summary>
 public delegate (MetaResult, float) CVarGetFloatDelegate(string szVarName);
+/// <summary>
+/// Delegate for getting console variable string value.
+/// </summary>
 public delegate (MetaResult, string) CVarGetStringDelegate(string szVarName);
+/// <summary>
+/// Delegate for setting console variable float value.
+/// </summary>
 public delegate MetaResult CVarSetFloatDelegate(string szVarName, float flValue);
+/// <summary>
+/// Delegate for setting console variable string value.
+/// </summary>
 public delegate MetaResult CVarSetStringDelegate(string szVarName, string szValue);
+/// <summary>
+/// Delegate for displaying alert message.
+/// </summary>
 public delegate MetaResult AlertMessageDelegate(AlertType atype, string szFmt);
+/// <summary>
+/// Delegate for engine file printf.
+/// </summary>
 public delegate MetaResult EngineFprintfDelegate(nint pFile, string szFmt, params string[] p);
+/// <summary>
+/// Delegate for allocating entity private data.
+/// </summary>
 public delegate (MetaResult, nint) PvAllocEntPrivateDataDelegate(Edict ed, int size);
+/// <summary>
+/// Delegate for getting entity private data pointer.
+/// </summary>
 public delegate (MetaResult, nint) PvEntPrivateDataDelegate(Edict ed);
+/// <summary>
+/// Delegate for freeing entity private data.
+/// </summary>
 public delegate MetaResult FreeEntPrivateDataDelegate(Edict ed);
+/// <summary>
+/// Delegate for getting string from index.
+/// </summary>
 public delegate (MetaResult, string) SzFromIndexDelegate(int iString);
+/// <summary>
+/// Delegate for allocating string.
+/// </summary>
 public delegate (MetaResult, int) AllocStringDelegate(string szValue);
+/// <summary>
+/// Delegate for getting entity variables from edict.
+/// </summary>
 public delegate (MetaResult, Entvars) GetVarsOfEntDelegate(Edict pEdict);
+/// <summary>
+/// Delegate for getting entity from offset.
+/// </summary>
 public delegate (MetaResult, Edict) PEntityOfEntOffsetDelegate(int iEntOffset);
+/// <summary>
+/// Delegate for getting offset from entity.
+/// </summary>
 public delegate (MetaResult, int) EntOffsetOfPEntityDelegate(Edict pEdict);
+/// <summary>
+/// Delegate for getting index of edict.
+/// </summary>
 public delegate (MetaResult, int) IndexOfEdictDelegate(Edict pEdict);
+/// <summary>
+/// Delegate for getting entity from index.
+/// </summary>
 public delegate (MetaResult, Edict) PEntityOfEntIndexDelegate(int iEntIndex);
+/// <summary>
+/// Delegate for finding entity by entity variables.
+/// </summary>
 public delegate (MetaResult, Edict) FindEntityByVarsDelegate(Entvars pvars);
+/// <summary>
+/// Delegate for getting model pointer.
+/// </summary>
 public delegate (MetaResult, nint) GetModelPtrDelegate(Edict pEdict);
+/// <summary>
+/// Delegate for registering user message.
+/// </summary>
 public delegate (MetaResult, int) RegUserMsgDelegate(string pszName, int iSize);
+/// <summary>
+/// Delegate for animation auto-move.
+/// </summary>
 public delegate MetaResult AnimationAutomoveDelegate(Edict ent, float flTime);
+/// <summary>
+/// Delegate for getting bone position.
+/// </summary>
 public delegate MetaResult GetBonePositionDelegate(Edict ent, int iBone, ref Vector3f origin, ref Vector3f angles);
+/// <summary>
+/// Delegate for getting function address from name.
+/// </summary>
 public delegate (MetaResult, uint) FunctionFromNameDelegate(string pName);
+/// <summary>
+/// Delegate for getting function name from address.
+/// </summary>
 public delegate (MetaResult, string) NameForFunctionDelegate(uint function);
+/// <summary>
+/// Delegate for printing message to client console.
+/// </summary>
 public delegate MetaResult ClientPrintfDelegate(Edict ent, PrintType ptype, string szMsg);
+/// <summary>
+/// Delegate for printing message to server console.
+/// </summary>
 public delegate MetaResult ServerPrintDelegate(string msg);
+/// <summary>
+/// Delegate for getting command arguments.
+/// </summary>
 public delegate (MetaResult, string) Cmd_ArgsDelegate();
+/// <summary>
+/// Delegate for getting command argument by index.
+/// </summary>
 public delegate (MetaResult, string) Cmd_ArgvDelegate(int argc);
+/// <summary>
+/// Delegate for getting command argument count.
+/// </summary>
 public delegate (MetaResult, int) Cmd_ArgcDelegate();
+/// <summary>
+/// Delegate for getting entity attachment position.
+/// </summary>
 public delegate MetaResult GetAttachmentDelegate(Edict ent, int iAttachment, ref Vector3f origin, ref Vector3f angles);
+/// <summary>
+/// Delegate for initializing CRC32.
+/// </summary>
 public delegate MetaResult CRC32_InitDelegate(CRC32 pulCRC);
+/// <summary>
+/// Delegate for processing CRC32 buffer.
+/// </summary>
 public delegate MetaResult CRC32_ProcessBufferDelegate(CRC32 pulCRC, nint buffer, int len);
+/// <summary>
+/// Delegate for processing CRC32 byte.
+/// </summary>
 public delegate MetaResult CRC32_ProcessByteDelegate(CRC32 pulCRC, byte ch);
+/// <summary>
+/// Delegate for finalizing CRC32.
+/// </summary>
 public delegate (MetaResult, CRC32) CRC32_FinalDelegate(CRC32 pulCRC);
+/// <summary>
+/// Delegate for generating random long integer.
+/// </summary>
 public delegate (MetaResult, int) RandomLongDelegate(int lLow, int lHigh);
+/// <summary>
+/// Delegate for generating random float.
+/// </summary>
 public delegate (MetaResult, float) RandomFloatDelegate(float flLow, float flHigh);
+/// <summary>
+/// Delegate for setting client view entity.
+/// </summary>
 public delegate MetaResult SetViewDelegate(Edict ent, Edict viewent);
+/// <summary>
+/// Delegate for getting server time.
+/// </summary>
 public delegate (MetaResult, float) TimeDelegate();
+/// <summary>
+/// Delegate for setting crosshair angle.
+/// </summary>
 public delegate MetaResult CrosshairAngleDelegate(Edict ent, float pitch, float yaw);
+/// <summary>
+/// Delegate for loading file.
+/// </summary>
 public delegate (MetaResult, nint) LoadFileForMeDelegate(string filename, out int pLength);
+/// <summary>
+/// Delegate for freeing loaded file.
+/// </summary>
 public delegate MetaResult FreeFileDelegate(nint buffer);
+/// <summary>
+/// Delegate for ending section.
+/// </summary>
 public delegate MetaResult EndSectionDelegate(string szSectionName);
+/// <summary>
+/// Delegate for comparing file times.
+/// </summary>
 public delegate (MetaResult, int) CompareFileTimeDelegate(string filename1, string filename2, out int iCompare);
+/// <summary>
+/// Delegate for getting game directory.
+/// </summary>
 public delegate (MetaResult, string) GetGameDirDelegate();
+/// <summary>
+/// Delegate for registering console variable (alternative).
+/// </summary>
 public delegate MetaResult CVar_RegisterVariableDelegate(CVar cvar);
+/// <summary>
+/// Delegate for fading client volume.
+/// </summary>
 public delegate MetaResult FadeClientVolumeDelegate(Edict ent, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds);
+/// <summary>
+/// Delegate for setting client max speed.
+/// </summary>
 public delegate MetaResult SetClientMaxspeedDelegate(Edict ent, float fNewMaxspeed);
+/// <summary>
+/// Delegate for creating fake client (bot).
+/// </summary>
 public delegate (MetaResult, Edict) CreateFakeClientDelegate(string netname);
+/// <summary>
+/// Delegate for running player move for fake client.
+/// </summary>
 public delegate MetaResult RunPlayerMoveDelegate(Edict fakeClient, Vector3f viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec);
+/// <summary>
+/// Delegate for getting number of entities.
+/// </summary>
 public delegate (MetaResult, int) NumberOfEntitiesDelegate();
+/// <summary>
+/// Delegate for getting info key buffer.
+/// </summary>
 public delegate (MetaResult, string) GetInfoKeyBufferDelegate(Edict ent);
+/// <summary>
+/// Delegate for getting info key value.
+/// </summary>
 public delegate (MetaResult, string) InfoKeyValueDelegate(string infobuffer, string key);
+/// <summary>
+/// Delegate for setting key value in info buffer.
+/// </summary>
 public delegate MetaResult SetKeyValueDelegate(ref string infobuffer, string key, string value);
+/// <summary>
+/// Delegate for setting client key value.
+/// </summary>
 public delegate MetaResult SetClientKeyValueDelegate(int clientIndex, string infobuffer, string key, string value);
+/// <summary>
+/// Delegate for checking if map is valid.
+/// </summary>
 public delegate (MetaResult, bool) IsMapValidDelegate(string filename);
+/// <summary>
+/// Delegate for creating static decal.
+/// </summary>
 public delegate MetaResult StaticDecalDelegate(Vector3f origin, int decalIndex, int entityIndex, int modelIndex);
+/// <summary>
+/// Delegate for precaching generic resource.
+/// </summary>
 public delegate (MetaResult, int) PrecacheGenericDelegate(string s);
+/// <summary>
+/// Delegate for getting player user ID.
+/// </summary>
 public delegate (MetaResult, int) GetPlayerUserIdDelegate(Edict e);
+/// <summary>
+/// Delegate for building sound message.
+/// </summary>
 public delegate MetaResult BuildSoundMsgDelegate(Edict entity, int channel, string sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, Vector3f pOrigin, Edict ed);
+/// <summary>
+/// Delegate for checking if server is dedicated.
+/// </summary>
 public delegate (MetaResult, bool) IsDedicatedServerDelegate();
+/// <summary>
+/// Delegate for getting console variable pointer.
+/// </summary>
 public delegate (MetaResult, CVar?) CVarGetPointerDelegate(string szVarName);
+/// <summary>
+/// Delegate for getting player WON ID.
+/// </summary>
 public delegate (MetaResult, uint) GetPlayerWONIdDelegate(Edict e);
+/// <summary>
+/// Delegate for removing key from info string.
+/// </summary>
 public delegate MetaResult Info_RemoveKeyDelegate(ref string s, string key);
+/// <summary>
+/// Delegate for getting physics key value.
+/// </summary>
 public delegate (MetaResult, string) GetPhysicsKeyValueDelegate(Edict ent, string key);
+/// <summary>
+/// Delegate for setting physics key value.
+/// </summary>
 public delegate MetaResult SetPhysicsKeyValueDelegate(Edict ent, string key, string value);
+/// <summary>
+/// Delegate for getting physics info string.
+/// </summary>
 public delegate (MetaResult, string) GetPhysicsInfoStringDelegate(Edict ent);
+/// <summary>
+/// Delegate for precaching event.
+/// </summary>
 public delegate (MetaResult, ushort) PrecacheEventDelegate(int type, string psz);
+/// <summary>
+/// Delegate for playing back event.
+/// </summary>
 public delegate MetaResult PlaybackEventDelegate(int flags, Edict ed, ushort eventindex, float delay, Vector3f origin, Vector3f angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
+/// <summary>
+/// Delegate for setting fat PVS (Potentially Visible Set).
+/// </summary>
 public delegate (MetaResult, string) SetFatPVSDelegate(Vector3f org);
+/// <summary>
+/// Delegate for setting fat PAS (Potentially Audible Set).
+/// </summary>
 public delegate (MetaResult, string) SetFatPASDelegate(Vector3f org);
+/// <summary>
+/// Delegate for checking entity visibility.
+/// </summary>
 public delegate (MetaResult, bool) CheckVisibilityDelegate(Edict entity, nint pset);
+/// <summary>
+/// Delegate for setting delta field.
+/// </summary>
 public delegate MetaResult DeltaSetFieldDelegate(nint pFields, string fieldName);
+/// <summary>
+/// Delegate for unsetting delta field.
+/// </summary>
 public delegate MetaResult DeltaUnsetFieldDelegate(nint pFields, string fieldName);
+/// <summary>
+/// Delegate for adding delta encoder.
+/// </summary>
 public delegate MetaResult DeltaAddEncoderDelegate(string name, nint callback);
+/// <summary>
+/// Delegate for getting current player index.
+/// </summary>
 public delegate (MetaResult, int) GetCurrentPlayerDelegate();
+/// <summary>
+/// Delegate for checking if player can be skipped.
+/// </summary>
 public delegate (MetaResult, int) CanSkipPlayerDelegate(Edict player);
+/// <summary>
+/// Delegate for finding delta field.
+/// </summary>
 public delegate (MetaResult, int) DeltaFindFieldDelegate(nint pFields, string fieldName);
+/// <summary>
+/// Delegate for setting delta field by index.
+/// </summary>
 public delegate MetaResult DeltaSetFieldByIndexDelegate(nint pFields, int fieldNumber);
+/// <summary>
+/// Delegate for unsetting delta field by index.
+/// </summary>
 public delegate MetaResult DeltaUnsetFieldByIndexDelegate(nint pFields, int fieldNumber);
+/// <summary>
+/// Delegate for setting group mask.
+/// </summary>
 public delegate MetaResult SetGroupMaskDelegate(int mask, int op);
+/// <summary>
+/// Delegate for creating instanced baseline.
+/// </summary>
 public delegate (MetaResult, int) CreateInstancedBaselineDelegate(int classname, EntityState baseline);
+/// <summary>
+/// Delegate for directly setting console variable.
+/// </summary>
 public delegate MetaResult Cvar_DirectSetDelegate(CVar cvar, string value);
+/// <summary>
+/// Delegate for forcing file consistency check.
+/// </summary>
 public delegate MetaResult ForceUnmodifiedDelegate(ForceType type, Vector3f mins, Vector3f maxs, string filename);
+/// <summary>
+/// Delegate for getting player network statistics.
+/// </summary>
 public delegate MetaResult GetPlayerStatsDelegate(Edict ent, out int ping, out int packet_loss);
+/// <summary>
+/// Delegate for adding server command.
+/// </summary>
 public delegate MetaResult AddServerCommandDelegate(string cmd_name, ServerCommandDelegate function);
+/// <summary>
+/// Delegate for getting voice client listening status.
+/// </summary>
 public delegate (MetaResult, bool) Voice_GetClientListeningDelegate(int iReceiver, int iSender);
+/// <summary>
+/// Delegate for setting voice client listening status.
+/// </summary>
 public delegate (MetaResult, bool) Voice_SetClientListeningDelegate(int iReceiver, int iSender, bool bListen);
+/// <summary>
+/// Delegate for getting player authentication ID.
+/// </summary>
 public delegate (MetaResult, string) GetPlayerAuthIdDelegate(Edict e);
+/// <summary>
+/// Delegate for getting sequence entry.
+/// </summary>
 public delegate (MetaResult, nint) SequenceGetDelegate(string fieldName, string entryName);
+/// <summary>
+/// Delegate for picking sentence from sequence.
+/// </summary>
 public delegate (MetaResult, nint) SequencePickSentenceDelegate(string groupName, int pickMethod, out int picked);
+/// <summary>
+/// Delegate for getting file size.
+/// </summary>
 public delegate (MetaResult, int) GetFileSizeDelegate(string filename);
+/// <summary>
+/// Delegate for getting approximate wave play length.
+/// </summary>
 public delegate (MetaResult, uint) GetApproxWavePlayLenDelegate(string filepath);
+/// <summary>
+/// Delegate for checking if current match is career match.
+/// </summary>
 public delegate (MetaResult, int) IsCareerMatchDelegate();
+/// <summary>
+/// Delegate for getting localized string length.
+/// </summary>
 public delegate (MetaResult, int) GetLocalizedStringLengthDelegate(string label);
+/// <summary>
+/// Delegate for registering tutor message as shown.
+/// </summary>
 public delegate MetaResult RegisterTutorMessageShownDelegate(int mid);
+/// <summary>
+/// Delegate for getting times tutor message was shown.
+/// </summary>
 public delegate (MetaResult, int) GetTimesTutorMessageShownDelegate(int mid);
+/// <summary>
+/// Delegate for processing tutor message decay buffer.
+/// </summary>
 public delegate MetaResult ProcessTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
+/// <summary>
+/// Delegate for constructing tutor message decay buffer.
+/// </summary>
 public delegate MetaResult ConstructTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
+/// <summary>
+/// Delegate for resetting tutor message decay data.
+/// </summary>
 public delegate MetaResult ResetTutorMessageDecayDataDelegate();
+/// <summary>
+/// Delegate for querying client console variable value.
+/// </summary>
 public delegate MetaResult QueryClientCvarValueDelegate(Edict player, string cvarName);
+/// <summary>
+/// Delegate for querying client console variable value with request ID.
+/// </summary>
 public delegate MetaResult QueryClientCvarValue2Delegate(Edict player, string cvarName, int requestID);
+/// <summary>
+/// Delegate for checking engine command line parameter.
+/// </summary>
 public delegate (MetaResult, int) EngCheckParmDelegate(string pchCmdLineToken, out string ppszValue);
 #endregion
 
-
+/// <summary>
+/// Provides events for engine functions that can be hooked by plugins.
+/// </summary>
 public class EngineEvents
 {
     #region Events

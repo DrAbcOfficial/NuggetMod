@@ -1,17 +1,48 @@
 ﻿namespace NuggetMod.Enum.NuggetMod;
 
+/// <summary>
+/// Specifies the reason why a plugin is being unloaded.
+/// </summary>
 public enum PluginUnloadReason
 {
+    /// <summary>
+    /// No reason specified.
+    /// </summary>
     PNL_NULL = 0,
-    PNL_INI_DELETED,        // was deleted from plugins.ini
-    PNL_FILE_NEWER,         // file on disk is newer than last load
-    PNL_COMMAND,            // requested by server/console command
-    PNL_CMD_FORCED,         // forced by server/console command
-    PNL_DELAYED,            // delayed from previous request; can't tell origin
-                            //only used for 'real_reason' on MPlugin::unload()
-    PNL_PLUGIN,         // requested by plugin function call
-    PNL_PLG_FORCED,         // forced by plugin function call
-                            //only used internally for 'meta reload'
-    PNL_RELOAD,         // forced unload by reload()
+    /// <summary>
+    /// Plugin was deleted from plugins.ini.
+    /// </summary>
+    PNL_INI_DELETED,
+    /// <summary>
+    /// File on disk is newer than last load.
+    /// </summary>
+    PNL_FILE_NEWER,
+    /// <summary>
+    /// Requested by server/console command.
+    /// </summary>
+    PNL_COMMAND,
+    /// <summary>
+    /// Forced by server/console command.
+    /// </summary>
+    PNL_CMD_FORCED,
+    /// <summary>
+    /// Delayed from previous request; can't tell origin (only used for 'real_reason' on MPlugin::unload()).
+    /// </summary>
+    PNL_DELAYED,
+    /// <summary>
+    /// Requested by plugin function call.
+    /// </summary>
+    PNL_PLUGIN,
+    /// <summary>
+    /// Forced by plugin function call.
+    /// </summary>
+    PNL_PLG_FORCED,
+    /// <summary>
+    /// Forced unload by reload() (only used internally for 'meta reload').
+    /// </summary>
+    PNL_RELOAD,
+    /// <summary>
+    /// Server is shutting down.
+    /// </summary>
     PNL_SHUTDOWN,
 };

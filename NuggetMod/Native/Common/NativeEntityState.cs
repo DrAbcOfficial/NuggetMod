@@ -1,14 +1,21 @@
-﻿using NuggetMod.Enum.NuggetMod;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Common;
 
+/// <summary>
+/// Native structure representing entity state for network transmission.
+/// Contains fields for delta compression and network synchronization.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeEntityState : INativeStruct
 {
-    // Fields which are filled in by routines outside of delta compression
+    /// <summary>
+    /// Entity type identifier.
+    /// </summary>
     internal int entityType;
-    // Index into cl_entities array for this entity.
+    /// <summary>
+    /// Index into cl_entities array for this entity.
+    /// </summary>
     internal int number;
     internal float msg_time;
 

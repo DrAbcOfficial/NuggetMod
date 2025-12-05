@@ -3,10 +3,20 @@ using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Engine;
 
+/// <summary>
+/// Native structure representing global server variables.
+/// Contains server state, timing, and trace result information.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeGlobalVars : INativeStruct
 {
+    /// <summary>
+    /// Current server time in seconds.
+    /// </summary>
     internal float time;
+    /// <summary>
+    /// Duration of current frame in seconds.
+    /// </summary>
     internal float frametime;
     internal float force_retouch;
     internal NativeStringHandle mapname;

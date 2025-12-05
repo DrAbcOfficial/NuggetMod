@@ -4,13 +4,31 @@ using NuggetMod.Wrapper.Engine;
 namespace NuggetMod.Interface.Events;
 
 #region new dll functions
+/// <summary>
+/// Delegate for entity private data cleanup.
+/// </summary>
 public delegate MetaResult OnFreeEntPrivateDataDelegate(Edict pEnt);
+/// <summary>
+/// Delegate for game shutdown.
+/// </summary>
 public delegate MetaResult GameShutdownDelegate();
+/// <summary>
+/// Delegate for collision detection between entities.
+/// </summary>
 public delegate (MetaResult, int) ShouldCollideDelegate(Edict pentTouched, Edict pentOther);
+/// <summary>
+/// Delegate for client cvar value query response.
+/// </summary>
 public delegate MetaResult CvarValueDelegate(Edict pEnt, string value);
+/// <summary>
+/// Delegate for client cvar value query response with request ID.
+/// </summary>
 public delegate MetaResult CvarValue2Delegate(Edict pEnt, int requestID, string cvarName, string value);
 #endregion
 
+/// <summary>
+/// Provides events for new game DLL functions that can be hooked by plugins.
+/// </summary>
 public class NewDLLEvents
 {
     #region new dll functions

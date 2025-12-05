@@ -2,16 +2,46 @@
 
 namespace NuggetMod.Native.NuggetMod;
 
+/// <summary>
+/// Native structure representing plugin information for Metamod.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativePluginInfo : INativeStruct
 {
-    internal nint ifvers;             // meta_interface version
-    internal nint name;                   // full name of plugin
-    internal nint version;                // version
-    internal nint date;                   // date
-    internal nint author;             // author name/email
-    internal nint url;                    // URL
-    internal nint logtag;             // log message prefix (unused right now)
-    internal int loadable;     // when loadable
-    internal int unloadable;   // when unloadable
+    /// <summary>
+    /// Pointer to meta_interface version string.
+    /// </summary>
+    internal nint ifvers;
+    /// <summary>
+    /// Pointer to full name of plugin.
+    /// </summary>
+    internal nint name;
+    /// <summary>
+    /// Pointer to version string.
+    /// </summary>
+    internal nint version;
+    /// <summary>
+    /// Pointer to date string.
+    /// </summary>
+    internal nint date;
+    /// <summary>
+    /// Pointer to author name/email.
+    /// </summary>
+    internal nint author;
+    /// <summary>
+    /// Pointer to URL string.
+    /// </summary>
+    internal nint url;
+    /// <summary>
+    /// Pointer to log message prefix (unused right now).
+    /// </summary>
+    internal nint logtag;
+    /// <summary>
+    /// When the plugin can be loaded (PluginLoadTime enum value).
+    /// </summary>
+    internal int loadable;
+    /// <summary>
+    /// When the plugin can be unloaded (PluginLoadTime enum value).
+    /// </summary>
+    internal int unloadable;
 };

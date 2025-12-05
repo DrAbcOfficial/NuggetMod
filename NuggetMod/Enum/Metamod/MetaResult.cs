@@ -1,11 +1,29 @@
 ﻿namespace NuggetMod.Enum.NuggetMod;
-// Flags returned by a plugin's api function.
-// NOTE: order is crucial, as greater/less comparisons are made.
+
+/// <summary>
+/// Flags returned by a plugin's API function.
+/// NOTE: order is crucial, as greater/less comparisons are made.
+/// </summary>
 public enum MetaResult
 {
+    /// <summary>
+    /// Result not set.
+    /// </summary>
     MRES_UNSET = 0,
-    MRES_IGNORED,       // plugin didn't take any action
-    MRES_HANDLED,       // plugin did something, but real function should still be called
-    MRES_OVERRIDE,      // call real function, but use my return value
-    MRES_SUPERCEDE,		// skip real function; use my return value
+    /// <summary>
+    /// Plugin didn't take any action.
+    /// </summary>
+    MRES_IGNORED,
+    /// <summary>
+    /// Plugin did something, but real function should still be called.
+    /// </summary>
+    MRES_HANDLED,
+    /// <summary>
+    /// Call real function, but use my return value.
+    /// </summary>
+    MRES_OVERRIDE,
+    /// <summary>
+    /// Skip real function; use my return value.
+    /// </summary>
+    MRES_SUPERCEDE,
 }

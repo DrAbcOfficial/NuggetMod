@@ -2,17 +2,42 @@
 
 namespace NuggetMod.Native.Engine;
 
-
+/// <summary>
+/// Native structure representing a player customization (e.g., custom spray decals, models).
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeCustomization : INativeStruct
 {
-    internal int bInUse;     // Is this customization in use;
-    internal NativeResource resource; // The resource_t for this customization
-    internal int bTranslated; // Has the raw data been translated into a useable format?  
-                              //  (e.g., raw decal .wad make into texture_t *)
-    internal int nUserData1; // Customization specific data
-    internal int nUserData2; // Customization specific data
-    internal nint pInfo;          // Buffer that holds the data structure that references the data (e.g., the cachewad_t)
-    internal nint pBuffer;       // Buffer that holds the data for the customization (the raw .wad data)
-    internal unsafe NativeCustomization* pNext; // Next in chain
+    /// <summary>
+    /// Whether this customization is in use.
+    /// </summary>
+    internal int bInUse;
+    /// <summary>
+    /// The resource for this customization.
+    /// </summary>
+    internal NativeResource resource;
+    /// <summary>
+    /// Whether the raw data has been translated into a useable format (e.g., raw decal .wad converted to texture).
+    /// </summary>
+    internal int bTranslated;
+    /// <summary>
+    /// Customization specific data 1.
+    /// </summary>
+    internal int nUserData1;
+    /// <summary>
+    /// Customization specific data 2.
+    /// </summary>
+    internal int nUserData2;
+    /// <summary>
+    /// Buffer that holds the data structure that references the data (e.g., the cachewad_t).
+    /// </summary>
+    internal nint pInfo;
+    /// <summary>
+    /// Buffer that holds the data for the customization (the raw .wad data).
+    /// </summary>
+    internal nint pBuffer;
+    /// <summary>
+    /// Pointer to next customization in chain.
+    /// </summary>
+    internal unsafe NativeCustomization* pNext;
 }

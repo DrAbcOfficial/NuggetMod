@@ -1,5 +1,4 @@
-﻿using NuggetMod.Native.Game;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.NuggetMod;
 

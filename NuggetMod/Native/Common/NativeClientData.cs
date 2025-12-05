@@ -2,10 +2,19 @@
 
 namespace NuggetMod.Native.Common;
 
+/// <summary>
+/// Native structure representing client-specific data sent to the client for prediction and rendering.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeClientData : INativeStruct
 {
+    /// <summary>
+    /// Client origin position.
+    /// </summary>
     internal NativeVector3f origin;
+    /// <summary>
+    /// Client velocity.
+    /// </summary>
     internal NativeVector3f velocity;
 
     internal int viewmodel;

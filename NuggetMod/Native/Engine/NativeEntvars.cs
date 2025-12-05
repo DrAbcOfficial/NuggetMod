@@ -3,12 +3,25 @@ using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Engine;
 
+/// <summary>
+/// Native structure representing entity variables (entvars_t).
+/// Contains all the standard entity properties used by the game engine.
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct NativeEntvars : INativeStruct
 {
+    /// <summary>
+    /// Entity class name.
+    /// </summary>
     internal NativeStringHandle classname;
+    /// <summary>
+    /// Global entity name for cross-level persistence.
+    /// </summary>
     internal NativeStringHandle globalname;
 
+    /// <summary>
+    /// Entity origin position in world coordinates.
+    /// </summary>
     internal NativeVector3f origin;
     internal NativeVector3f oldorigin;
     internal NativeVector3f velocity;

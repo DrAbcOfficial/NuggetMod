@@ -7,59 +7,212 @@ namespace NuggetMod.Interface.Events;
 
 #region delegates
 #region dll functions
+/// <summary>
+/// Delegate for game initialization.
+/// </summary>
 public delegate MetaResult GameInitDelegate();
+/// <summary>
+/// Delegate for entity spawn.
+/// </summary>
 public delegate (MetaResult, int) SpawnDelegate(Edict pent);
+/// <summary>
+/// Delegate for entity think function.
+/// </summary>
 public delegate MetaResult ThinkDelegate(Edict pent);
+/// <summary>
+/// Delegate for entity use function.
+/// </summary>
 public delegate MetaResult UseDelegate(Edict pentUsed, Edict pentOther);
+/// <summary>
+/// Delegate for entity touch function.
+/// </summary>
 public delegate MetaResult TouchDelegate(Edict pentTouched, Edict pentOther);
+/// <summary>
+/// Delegate for entity blocked function.
+/// </summary>
 public delegate MetaResult BlockedDelegate(Edict pentBlocked, Edict pentOther);
+/// <summary>
+/// Delegate for entity key-value data handling.
+/// </summary>
 public delegate MetaResult KeyValueDelegate(Edict pentKeyvalue, KeyValueData pkvd);
+/// <summary>
+/// Delegate for entity save operation.
+/// </summary>
 public delegate MetaResult SaveDelegate(Edict pent, nint pSaveData);
+/// <summary>
+/// Delegate for entity restore operation.
+/// </summary>
 public delegate (MetaResult, int) RestoreDelegate(Edict pent, nint pSaveData, int globalEntity);
+/// <summary>
+/// Delegate for setting entity absolute bounding box.
+/// </summary>
 public delegate MetaResult SetAbsBoxDelegate(Edict pent);
+/// <summary>
+/// Delegate for writing save fields.
+/// </summary>
 public delegate MetaResult SaveWriteFieldsDelegate(nint a, nint b, nint c, nint d, int max);
+/// <summary>
+/// Delegate for reading save fields.
+/// </summary>
 public delegate MetaResult SaveReadFieldsDelegate(nint a, nint b, nint c, nint d, int max);
+/// <summary>
+/// Delegate for saving global state.
+/// </summary>
 public delegate MetaResult SaveGlobalStateDelegate(nint pSaveData);
+/// <summary>
+/// Delegate for restoring global state.
+/// </summary>
 public delegate MetaResult RestoreGlobalStateDelegate(nint pSaveData);
+/// <summary>
+/// Delegate for resetting global state.
+/// </summary>
 public delegate MetaResult ResetGlobalStateDelegate();
+/// <summary>
+/// Delegate for client connection.
+/// </summary>
 public delegate (MetaResult, bool) ClientConnectDelegate(Edict pEntity, string pszName, string pszAddress, ref string szRejectReason);
+/// <summary>
+/// Delegate for client disconnection.
+/// </summary>
 public delegate MetaResult ClientDisconnectDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for client kill command.
+/// </summary>
 public delegate MetaResult ClientKillDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for putting client in server.
+/// </summary>
 public delegate MetaResult ClientPutInServerDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for client command execution.
+/// </summary>
 public delegate MetaResult DllClientCommandDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for client user info change.
+/// </summary>
 public delegate MetaResult ClientUserInfoChangedDelegate(Edict pEntity, ref string infobuffer);
+/// <summary>
+/// Delegate for server activation.
+/// </summary>
 public delegate MetaResult ServerActivateDelegate(Edict pEdictList, int edictCount, int clientMax);
+/// <summary>
+/// Delegate for server deactivation.
+/// </summary>
 public delegate MetaResult ServerDeactivateDelegate();
+/// <summary>
+/// Delegate for player pre-think.
+/// </summary>
 public delegate MetaResult PlayerPreThinkDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for player post-think.
+/// </summary>
 public delegate MetaResult PlayerPostThinkDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for start of frame.
+/// </summary>
 public delegate MetaResult StartFrameDelegate();
+/// <summary>
+/// Delegate for new level parameters.
+/// </summary>
 public delegate MetaResult ParmsNewLevelDelegate();
+/// <summary>
+/// Delegate for change level parameters.
+/// </summary>
 public delegate MetaResult ParmsChangeLevelDelegate();
+/// <summary>
+/// Delegate for getting game description.
+/// </summary>
 public delegate (MetaResult, string) GetGameDescriptionDelegate();
+/// <summary>
+/// Delegate for player customization.
+/// </summary>
 public delegate MetaResult PlayerCustomizationDelegate(Edict pEntity, Customization pCustom);
+/// <summary>
+/// Delegate for spectator connection.
+/// </summary>
 public delegate MetaResult SpectatorConnectDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for spectator disconnection.
+/// </summary>
 public delegate MetaResult SpectatorDisconnectDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for spectator think.
+/// </summary>
 public delegate MetaResult SpectatorThinkDelegate(Edict pEntity);
+/// <summary>
+/// Delegate for system error handling.
+/// </summary>
 public delegate MetaResult SysErrorDelegate(string error_string);
+/// <summary>
+/// Delegate for player movement.
+/// </summary>
 public delegate MetaResult PMMoveDelegate(PlayerMove pm, bool server);
+/// <summary>
+/// Delegate for player movement initialization.
+/// </summary>
 public delegate MetaResult PMInitDelegate(PlayerMove pm);
+/// <summary>
+/// Delegate for finding texture type in player movement.
+/// </summary>
 public delegate MetaResult PMFindTextureTypeDelegate(string name);
+/// <summary>
+/// Delegate for setting up visibility.
+/// </summary>
 public delegate MetaResult SetupVisibilityDelegate(Edict pViewEntity, Edict pClient, ref byte[] pvs, ref byte[] pas);
+/// <summary>
+/// Delegate for updating client data.
+/// </summary>
 public delegate MetaResult UpdateClientDataDelegate(Edict ent, int sendweapons, ClientData cd);
+/// <summary>
+/// Delegate for adding entity to full pack.
+/// </summary>
 public delegate (MetaResult, int) AddToFullPackDelegate(EntityState state, int e, Edict ent, Edict host, int hostflags, int player, byte[] pSet);
+/// <summary>
+/// Delegate for creating entity baseline.
+/// </summary>
 public delegate MetaResult CreateBaselineDelegate(int player, int eindex, EntityState baseline, Edict entity, int playermodelindex, Vector3f player_mins, Vector3f player_maxs);
+/// <summary>
+/// Delegate for registering delta encoders.
+/// </summary>
 public delegate MetaResult RegisterEncodersDelegate();
+/// <summary>
+/// Delegate for getting weapon data.
+/// </summary>
 public delegate (MetaResult, int) GetWeaponDataDelegate(Edict player, WeaponData info);
+/// <summary>
+/// Delegate for command start.
+/// </summary>
 public delegate MetaResult CmdStartDelegate(Edict plyer, UserCmd cmd, uint random_seed);
+/// <summary>
+/// Delegate for command end.
+/// </summary>
 public delegate MetaResult CmdEndDelegate(Edict plyer);
+/// <summary>
+/// Delegate for connectionless packet handling.
+/// </summary>
 public delegate (MetaResult, int) ConnectionlessPacketDelegate(NetAdr net_from, string args, ref string response_buffer, ref int response_buffer_size);
+/// <summary>
+/// Delegate for getting hull bounds.
+/// </summary>
 public delegate (MetaResult, int) GetHullBoundsDelegate(int hullnumber, ref Vector3f mins, ref Vector3f maxs);
+/// <summary>
+/// Delegate for creating instanced baselines.
+/// </summary>
 public delegate MetaResult CreateInstancedBaselinesDelegate();
+/// <summary>
+/// Delegate for handling inconsistent file.
+/// </summary>
 public delegate (MetaResult, int) InconsistentFileDelegate(Edict player, string filename, ref string disconnect_message);
+/// <summary>
+/// Delegate for allowing lag compensation.
+/// </summary>
 public delegate (MetaResult, int) AllowLagCompensationDelegate();
 #endregion
 #endregion
 
+/// <summary>
+/// Provides events for game DLL functions that can be hooked by plugins.
+/// </summary>
 public class DLLEvents
 {
     #region Events
