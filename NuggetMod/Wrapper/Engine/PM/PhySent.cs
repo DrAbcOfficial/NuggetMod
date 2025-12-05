@@ -42,7 +42,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 基础int类型属性
+    /// <summary>
+    /// Gets or sets whether this entity is a player (1 = player, 0 = not a player)
+    /// </summary>
     public int Player
     {
         get
@@ -61,8 +63,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // Vector3f类型属性 (origin)
+    /// <summary>
+    /// Gets the entity's origin position in world space
+    /// </summary>
     private Vector3f? _origin;
+    
+    /// <summary>
+    /// Gets the entity's origin position in world space
+    /// </summary>
     public Vector3f Origin
     {
         get
@@ -75,7 +83,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 指针类型属性 (model)
+    /// <summary>
+    /// Gets or sets the pointer to the entity's model structure
+    /// </summary>
     public nint Model
     {
         get
@@ -94,7 +104,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 指针类型属性 (studiomodel)
+    /// <summary>
+    /// Gets or sets the pointer to the entity's studio model structure (for animated models)
+    /// </summary>
     public nint StudioModel
     {
         get
@@ -113,8 +125,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // Vector3f类型属性 (mins)
+    /// <summary>
+    /// Gets the minimum bounds of the entity's bounding box (relative to origin)
+    /// </summary>
     private Vector3f? _mins;
+    
+    /// <summary>
+    /// Gets the minimum bounds of the entity's bounding box (relative to origin)
+    /// </summary>
     public Vector3f Mins
     {
         get
@@ -127,8 +145,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // Vector3f类型属性 (maxs)
+    /// <summary>
+    /// Gets the maximum bounds of the entity's bounding box (relative to origin)
+    /// </summary>
     private Vector3f? _maxs;
+    
+    /// <summary>
+    /// Gets the maximum bounds of the entity's bounding box (relative to origin)
+    /// </summary>
     public Vector3f Maxs
     {
         get
@@ -141,7 +165,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 基础int类型属性
+    /// <summary>
+    /// Gets or sets additional entity information flags
+    /// </summary>
     public int Info
     {
         get
@@ -160,8 +186,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // Vector3f类型属性 (angles)
+    /// <summary>
+    /// Gets the entity's rotation angles (pitch, yaw, roll)
+    /// </summary>
     private Vector3f? _angles;
+    
+    /// <summary>
+    /// Gets the entity's rotation angles (pitch, yaw, roll)
+    /// </summary>
     public Vector3f Angles
     {
         get
@@ -174,7 +206,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 基础int类型属性
+    /// <summary>
+    /// Gets or sets the entity's solid type (SOLID_NOT, SOLID_TRIGGER, SOLID_BBOX, SOLID_SLIDEBOX, SOLID_BSP)
+    /// </summary>
     public int Solid
     {
         get
@@ -193,6 +227,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity's skin index for model rendering
+    /// </summary>
     public int Skin
     {
         get
@@ -211,6 +248,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity's render mode (kRenderNormal, kRenderTransColor, kRenderTransTexture, etc.)
+    /// </summary>
     public int RenderMode
     {
         get
@@ -229,7 +269,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 基础float类型属性
+    /// <summary>
+    /// Gets or sets the current animation frame for the entity's model
+    /// </summary>
     public float Frame
     {
         get
@@ -248,6 +290,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the current animation sequence index for the entity's model
+    /// </summary>
     public int Sequence
     {
         get
@@ -266,7 +311,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 固定大小字节数组属性 (controller[4])
+    /// <summary>
+    /// Gets or sets the bone controller values for the entity's model (4 controllers)
+    /// </summary>
     public byte[] Controller
     {
         get
@@ -300,7 +347,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 固定大小字节数组属性 (blending[2])
+    /// <summary>
+    /// Gets or sets the animation blending values for the entity's model (2 blending parameters)
+    /// </summary>
     public byte[] Blending
     {
         get
@@ -334,7 +383,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 剩余基础类型属性
+    /// <summary>
+    /// Gets or sets the entity's movement type (MOVETYPE_NONE, MOVETYPE_WALK, MOVETYPE_FLY, MOVETYPE_PUSH, etc.)
+    /// </summary>
     public int MoveType
     {
         get
@@ -353,6 +404,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the entity can take damage (DAMAGE_NO, DAMAGE_YES, DAMAGE_AIM)
+    /// </summary>
     public int TakeDamage
     {
         get
@@ -371,6 +425,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the blood decal type for this entity when damaged
+    /// </summary>
     public int BloodDecal
     {
         get
@@ -389,6 +446,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity's team number
+    /// </summary>
     public int Team
     {
         get
@@ -407,6 +467,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity's class number for game-specific classification
+    /// </summary>
     public int ClassNumber
     {
         get
@@ -425,7 +488,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 用户自定义字段 (iuser1-iuser4)
+    /// <summary>
+    /// Gets or sets user-defined integer field 1 (game-specific usage)
+    /// </summary>
     public int IUser1
     {
         get
@@ -444,6 +509,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer field 2 (game-specific usage)
+    /// </summary>
     public int IUser2
     {
         get
@@ -462,6 +530,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer field 3 (game-specific usage)
+    /// </summary>
     public int IUser3
     {
         get
@@ -480,6 +551,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer field 4 (game-specific usage)
+    /// </summary>
     public int IUser4
     {
         get
@@ -498,7 +572,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 用户自定义字段 (fuser1-fuser4)
+    /// <summary>
+    /// Gets or sets user-defined float field 1 (game-specific usage)
+    /// </summary>
     public float FUser1
     {
         get
@@ -517,6 +593,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float field 2 (game-specific usage)
+    /// </summary>
     public float FUser2
     {
         get
@@ -535,6 +614,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float field 3 (game-specific usage)
+    /// </summary>
     public float FUser3
     {
         get
@@ -553,6 +635,9 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float field 4 (game-specific usage)
+    /// </summary>
     public float FUser4
     {
         get
@@ -571,8 +656,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
-    // 用户自定义字段 (vuser1-vuser4)
+    /// <summary>
+    /// Gets user-defined vector field 1 (game-specific usage)
+    /// </summary>
     private Vector3f? _vuser1;
+    
+    /// <summary>
+    /// Gets user-defined vector field 1 (game-specific usage)
+    /// </summary>
     public Vector3f VUser1
     {
         get
@@ -585,7 +676,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector field 2 (game-specific usage)
+    /// </summary>
     private Vector3f? _vuser2;
+    
+    /// <summary>
+    /// Gets user-defined vector field 2 (game-specific usage)
+    /// </summary>
     public Vector3f VUser2
     {
         get
@@ -598,7 +696,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector field 3 (game-specific usage)
+    /// </summary>
     private Vector3f? _vuser3;
+    
+    /// <summary>
+    /// Gets user-defined vector field 3 (game-specific usage)
+    /// </summary>
     public Vector3f VUser3
     {
         get
@@ -611,7 +716,14 @@ public class PhySent : BaseNativeWrapper<NativePhySent>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector field 4 (game-specific usage)
+    /// </summary>
     private Vector3f? _vuser4;
+    
+    /// <summary>
+    /// Gets user-defined vector field 4 (game-specific usage)
+    /// </summary>
     public Vector3f VUser4
     {
         get

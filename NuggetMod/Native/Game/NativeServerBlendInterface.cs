@@ -15,6 +15,9 @@ internal delegate void NativeSV_StudioSetupBonesDelegate(
        nint pEdict
    );
 
+/// <summary>
+/// Native Blend Interface
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeServerBlendInterface : INativeStruct
 {

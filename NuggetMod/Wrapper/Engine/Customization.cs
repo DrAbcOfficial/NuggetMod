@@ -16,6 +16,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
     internal unsafe Customization(NativeCustomization* nativePtr, bool ownsPointer = false)
         : base(nativePtr, ownsPointer) { }
 
+    /// <summary>
+    /// Gets or sets whether this customization slot is in use
+    /// </summary>
     public bool InUse
     {
         get
@@ -35,6 +38,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
     }
 
     private Resource? _resource;
+    /// <summary>
+    /// Gets the resource information for this customization
+    /// </summary>
     public Resource Resource
     {
         get
@@ -47,6 +53,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the customization has been translated/processed
+    /// </summary>
     public bool Translated
     {
         get
@@ -65,6 +74,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined data 1
+    /// </summary>
     public int UserData1
     {
         get
@@ -83,6 +95,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined data 2
+    /// </summary>
     public int UserData2
     {
         get
@@ -101,6 +116,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pointer to additional info
+    /// </summary>
     public nint Info
     {
         get
@@ -119,6 +137,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pointer to the data buffer
+    /// </summary>
     public nint Buffer
     {
         get
@@ -138,6 +159,9 @@ public class Customization : BaseNativeWrapper<NativeCustomization>
     }
 
     private Customization? _next;
+    /// <summary>
+    /// Gets or sets the next customization in the linked list
+    /// </summary>
     public Customization? Next
     {
         get

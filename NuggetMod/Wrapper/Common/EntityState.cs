@@ -36,6 +36,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity number
+    /// </summary>
     public int Number
     {
         get
@@ -54,6 +57,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the message time for network synchronization
+    /// </summary>
     public float MsgTime
     {
         get
@@ -72,6 +78,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the message number for delta compression
+    /// </summary>
     public int MessageNum
     {
         get
@@ -91,6 +100,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _origin;
+    /// <summary>
+    /// Gets the entity origin position
+    /// </summary>
     public Vector3f Origin
     {
         get
@@ -104,6 +116,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _angles;
+    /// <summary>
+    /// Gets the entity angles (pitch, yaw, roll)
+    /// </summary>
     public Vector3f Angles
     {
         get
@@ -116,6 +131,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model index
+    /// </summary>
     public int ModelIndex
     {
         get
@@ -134,6 +152,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation sequence number
+    /// </summary>
     public int Sequence
     {
         get
@@ -152,6 +173,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation frame
+    /// </summary>
     public float Frame
     {
         get
@@ -170,6 +194,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the color map for player models
+    /// </summary>
     public int Colormap
     {
         get
@@ -188,6 +215,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model skin number
+    /// </summary>
     public short Skin
     {
         get
@@ -206,6 +236,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the solid type for collision
+    /// </summary>
     public short Solid
     {
         get
@@ -224,6 +257,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the visual effects flags
+    /// </summary>
     public int Effects
     {
         get
@@ -242,6 +278,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model scale multiplier
+    /// </summary>
     public float Scale
     {
         get
@@ -260,6 +299,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity flags
+    /// </summary>
     public byte EFlags
     {
         get
@@ -278,6 +320,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the render mode (normal, additive, etc.)
+    /// </summary>
     public int RenderMode
     {
         get
@@ -296,6 +341,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the render amount (transparency level)
+    /// </summary>
     public int RenderAmt
     {
         get
@@ -314,6 +362,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets the render color (RGB)
+    /// </summary>
     public Color24 RenderColor
     {
         get
@@ -325,6 +376,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the render effects
+    /// </summary>
     public int RenderFx
     {
         get
@@ -342,7 +396,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Gets or sets the movement type identifier for the object.
+    /// </summary>
     public int MoveType
     {
         get
@@ -360,7 +416,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Get studio model animate time
+    /// </summary>
     public float AnimTime
     {
         get
@@ -378,7 +436,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Get studio model frame rate
+    /// </summary>
     public float FrameRate
     {
         get
@@ -396,6 +456,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
+    /// <summary>
+    /// Get studio model body
+    /// </summary>
 
     public int Body
     {
@@ -415,6 +478,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the bone controller values (4 bytes)
+    /// </summary>
     public byte[] Controller
     {
         get
@@ -450,6 +516,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation blending values (4 bytes)
+    /// </summary>
     public byte[] Blending
     {
         get
@@ -486,6 +555,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _velocity;
+    /// <summary>
+    /// Gets the entity velocity
+    /// </summary>
     public Vector3f Velocity
     {
         get
@@ -499,6 +571,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _mins;
+    /// <summary>
+    /// Gets the minimum bounding box coordinates
+    /// </summary>
     public Vector3f Mins
     {
         get
@@ -512,6 +587,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _maxs;
+    /// <summary>
+    /// Gets the maximum bounding box coordinates
+    /// </summary>
     public Vector3f Maxs
     {
         get
@@ -524,6 +602,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity this entity is aiming at
+    /// </summary>
     public int AimEnt
     {
         get
@@ -542,6 +623,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the owner entity index
+    /// </summary>
     public int Owner
     {
         get
@@ -559,7 +643,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Get move friction
+    /// </summary>
     public float Friction
     {
         get
@@ -577,7 +663,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Get gravity
+    /// </summary>
     public float Gravity
     {
         get
@@ -595,7 +683,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Team, for Team Death match
+    /// </summary>
     public int Team
     {
         get
@@ -613,7 +703,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Player class
+    /// </summary>
     public int PlayerClass
     {
         get
@@ -631,7 +723,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Health
+    /// </summary>
     public int Health
     {
         get
@@ -649,7 +743,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Is spectator
+    /// </summary>
     public bool Spectator
     {
         get
@@ -667,7 +763,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Weapon model index
+    /// </summary>
     public int WeaponModel
     {
         get
@@ -685,7 +783,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Gait sequence, for studio model blend
+    /// </summary>
     public int GaitSequence
     {
         get
@@ -705,6 +805,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _baseVelocity;
+    /// <summary>
+    /// Base veloctiy
+    /// </summary>
     public Vector3f BaseVelocity
     {
         get
@@ -716,7 +819,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Use hull
+    /// </summary>
     public int UseHull
     {
         get
@@ -734,7 +839,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Old pressed buttons
+    /// </summary>
     public int OldButtons
     {
         get
@@ -752,7 +859,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Is on ground or not
+    /// </summary>
     public int OnGround
     {
         get
@@ -770,7 +879,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Step left
+    /// </summary>
     public int IStepLeft
     {
         get
@@ -788,7 +899,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Fall velocity
+    /// </summary>
     public float FlFallVelocity
     {
         get
@@ -806,7 +919,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// FOV
+    /// </summary>
     public float Fov
     {
         get
@@ -824,7 +939,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Weapon animation index
+    /// </summary>
     public int WeaponAnim
     {
         get
@@ -844,6 +961,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _startPos;
+    /// <summary>
+    /// Beam or laser start position
+    /// </summary>
     public Vector3f StartPos
     {
         get
@@ -857,6 +977,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
     }
 
     private Vector3f? _endPos;
+    /// <summary>
+    /// Beam or laser end position
+    /// </summary>
     public Vector3f EndPos
     {
         get
@@ -868,7 +991,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Impact time
+    /// </summary>
     public float ImpactTime
     {
         get
@@ -886,7 +1011,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
             }
         }
     }
-
+    /// <summary>
+    /// Start time
+    /// </summary>
     public float StartTime
     {
         get
@@ -905,6 +1032,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 1
+    /// </summary>
     public int IUser1
     {
         get
@@ -923,6 +1053,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 2
+    /// </summary>
     public int IUser2
     {
         get
@@ -941,6 +1074,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 3
+    /// </summary>
     public int IUser3
     {
         get
@@ -959,6 +1095,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 4
+    /// </summary>
     public int IUser4
     {
         get
@@ -977,6 +1116,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 1
+    /// </summary>
     public float FUser1
     {
         get
@@ -995,6 +1137,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 2
+    /// </summary>
     public float FUser2
     {
         get
@@ -1013,6 +1158,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 3
+    /// </summary>
     public float FUser3
     {
         get
@@ -1031,6 +1179,9 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 4
+    /// </summary>
     public float FUser4
     {
         get
@@ -1049,7 +1200,11 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    
     private Vector3f? _vUser1;
+    /// <summary>
+    /// Gets user-defined vector variable 1
+    /// </summary>
     public Vector3f VUser1
     {
         get
@@ -1062,7 +1217,11 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    
     private Vector3f? _vUser2;
+    /// <summary>
+    /// Gets user-defined vector variable 2
+    /// </summary>
     public Vector3f VUser2
     {
         get
@@ -1075,7 +1234,11 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    
     private Vector3f? _vUser3;
+    /// <summary>
+    /// Gets user-defined vector variable 3
+    /// </summary>
     public Vector3f VUser3
     {
         get
@@ -1088,7 +1251,11 @@ public class EntityState : BaseNativeWrapper<NativeEntityState>
         }
     }
 
+    
     private Vector3f? _vUser4;
+    /// <summary>
+    /// Gets user-defined vector variable 4
+    /// </summary>
     public Vector3f VUser4
     {
         get

@@ -15,7 +15,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
 
     internal unsafe EntityTable(NativeEntityTable* nativePtr, bool ownsPointer = false)
         : base(nativePtr, ownsPointer) { }
-
+    /// <summary>
+    /// Entity Id
+    /// </summary>
     public int Id
     {
         get
@@ -33,7 +35,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
             }
         }
     }
-
+    /// <summary>
+    /// Entity edict
+    /// </summary>
     public nint Pent
     {
         get
@@ -51,7 +55,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
             }
         }
     }
-
+    /// <summary>
+    /// Location
+    /// </summary>
     public int Location
     {
         get
@@ -69,7 +75,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
             }
         }
     }
-
+    /// <summary>
+    /// Size
+    /// </summary>
     public int Size
     {
         get
@@ -87,7 +95,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
             }
         }
     }
-
+    /// <summary>
+    /// Flags
+    /// </summary>
     public int Flags
     {
         get
@@ -107,6 +117,9 @@ public class EntityTable : BaseNativeWrapper<NativeEntityTable>
     }
 
     private StringHandle? _classname;
+    /// <summary>
+    /// Class name
+    /// </summary>
     public string Classname
     {
         get

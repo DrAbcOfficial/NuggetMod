@@ -13,6 +13,10 @@ internal unsafe delegate void LoadCacheFileDelegate(byte* path, nint cacheUser);
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate nint Mod_ExtradataDelegate(nint model);
+
+/// <summary>
+/// Native Server Studio API
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeServerStudioAPI : INativeStruct
 {

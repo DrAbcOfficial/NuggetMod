@@ -30,6 +30,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the ammunition in the clip
+    /// </summary>
     public int Clip
     {
         get
@@ -48,6 +51,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time until next primary attack
+    /// </summary>
     public float NextPrimaryAttack
     {
         get
@@ -66,6 +72,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time until next secondary attack
+    /// </summary>
     public float NextSecondaryAttack
     {
         get
@@ -84,6 +93,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time until weapon idle animation
+    /// </summary>
     public float TimeWeaponIdle
     {
         get
@@ -102,6 +114,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the weapon is reloading
+    /// </summary>
     public int InReload
     {
         get
@@ -120,6 +135,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the weapon is in special reload (e.g., shotgun)
+    /// </summary>
     public int InSpecialReload
     {
         get
@@ -138,6 +156,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time until next reload
+    /// </summary>
     public float NextReload
     {
         get
@@ -156,6 +177,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pump time for pump-action weapons
+    /// </summary>
     public float PumpTime
     {
         get
@@ -174,6 +198,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the reload time
+    /// </summary>
     public float ReloadTime
     {
         get
@@ -192,6 +219,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the aimed damage multiplier
+    /// </summary>
     public float AimedDamage
     {
         get
@@ -210,6 +240,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time until next aim bonus
+    /// </summary>
     public float NextAimBonus
     {
         get
@@ -228,6 +261,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the weapon is zoomed
+    /// </summary>
     public int InZoom
     {
         get
@@ -246,6 +282,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the weapon state
+    /// </summary>
     public int WeaponState
     {
         get
@@ -263,7 +302,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom integer value 1 for mods.
+    /// </summary>
     public int IUser1
     {
         get
@@ -281,7 +322,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom integer value 2 for mods.
+    /// </summary>
     public int IUser2
     {
         get
@@ -299,7 +342,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom integer value 3 for mods.
+    /// </summary>
     public int IUser3
     {
         get
@@ -317,7 +362,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom integer value 4 for mods.
+    /// </summary>
     public int IUser4
     {
         get
@@ -335,7 +382,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom float value 1 for mods.
+    /// </summary>
     public float FUser1
     {
         get
@@ -353,7 +402,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom float value 2 for mods.
+    /// </summary>
     public float FUser2
     {
         get
@@ -371,7 +422,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom float value 3 for mods.
+    /// </summary>
     public float FUser3
     {
         get
@@ -389,7 +442,9 @@ public class WeaponData : BaseNativeWrapper<NativeWeaponData>
             }
         }
     }
-
+    /// <summary>
+    /// Custom float value 4 for mods.
+    /// </summary>
     public float FUser4
     {
         get

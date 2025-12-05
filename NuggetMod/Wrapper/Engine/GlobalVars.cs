@@ -81,10 +81,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private StringHandle? _mapname;
     /// <summary>
     /// Gets or sets the current map name
     /// </summary>
-    private StringHandle? _mapname;
     public string MapName
     {
         get
@@ -105,10 +105,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private StringHandle? _startspot;
     /// <summary>
     /// Gets or sets the start spot name for player spawning
     /// </summary>
-    private StringHandle? _startspot;
     public string StartSpot
     {
         get
@@ -234,10 +234,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private Vector3f? _vForward;
     /// <summary>
     /// Gets the forward direction vector (calculated from angles)
     /// </summary>
-    private Vector3f? _vForward;
     public Vector3f VForward
     {
         get
@@ -250,10 +250,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private Vector3f? _vUp;
     /// <summary>
     /// Gets the up direction vector (calculated from angles)
     /// </summary>
-    private Vector3f? _vUp;
     public Vector3f VUp
     {
         get
@@ -266,10 +266,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private Vector3f? _vRight;
     /// <summary>
     /// Gets the right direction vector (calculated from angles)
     /// </summary>
-    private Vector3f? _vRight;
     public Vector3f VRight
     {
         get
@@ -281,7 +281,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// Trace all solid
+    /// </summary>
     public float TraceAllSolid
     {
         get
@@ -299,7 +301,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// Global trace start solid
+    /// </summary>
     public float TraceStartSolid
     {
         get
@@ -317,7 +321,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// Global trace fraction
+    /// </summary>
     public float TraceFraction
     {
         get
@@ -337,6 +343,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
     }
 
     private Vector3f? _traceEndPos;
+    /// <summary>
+    /// Global trace end pos
+    /// </summary>
     public Vector3f TraceEndPos
     {
         get
@@ -350,6 +359,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
     }
 
     private Vector3f? _tracePlaneNormal;
+    /// <summary>
+    /// Global trace plane normal
+    /// </summary>
     public Vector3f TracePlaneNormal
     {
         get
@@ -361,7 +373,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// Trace plane dist
+    /// </summary>
     public float TracePlaneDist
     {
         get
@@ -379,25 +393,31 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
-    public nint TraceEnt
+    private Edict? _traceEnt;
+    /// <summary>
+    /// Global trace ent
+    /// </summary>
+    public Edict TraceEnt
     {
         get
         {
             unsafe
             {
-                return NativePtr->trace_ent;
+                _traceEnt ??= new Edict(NativePtr->trace_ent);
+                return _traceEnt;
             }
         }
         set
         {
             unsafe
             {
-                NativePtr->trace_ent = value;
+                NativePtr->trace_ent = value.GetPointer();
             }
         }
     }
-
+    /// <summary>
+    /// global trace in open
+    /// </summary>
     public float TraceInOpen
     {
         get
@@ -415,7 +435,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// global trace in water
+    /// </summary>
     public float TraceInWater
     {
         get
@@ -433,7 +455,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// global trace hit group
+    /// </summary>
     public int TraceHitgroup
     {
         get
@@ -451,7 +475,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// global trace flags
+    /// </summary>
     public int TraceFlags
     {
         get
@@ -469,7 +495,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// global Message entity
+    /// </summary>
     public int MsgEntity
     {
         get
@@ -487,7 +515,9 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
             }
         }
     }
-
+    /// <summary>
+    /// CD Audio track
+    /// </summary>
     public int CdAudioTrack
     {
         get
@@ -590,10 +620,10 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         }
     }
 
+    private Vector3f? _vecLandmarkOffset;
     /// <summary>
     /// Gets the landmark offset for level transitions
     /// </summary>
-    private Vector3f? _vecLandmarkOffset;
     public Vector3f VecLandmarkOffset
     {
         get

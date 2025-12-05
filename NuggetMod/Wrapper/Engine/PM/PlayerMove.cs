@@ -117,10 +117,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _forward;
     /// <summary>
     /// Gets the forward direction vector
     /// </summary>
-    private Vector3f? _forward;
     public Vector3f Forward
     {
         get
@@ -133,10 +133,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _right;
     /// <summary>
     /// Gets the right direction vector
     /// </summary>
-    private Vector3f? _right;
     public Vector3f Right
     {
         get
@@ -149,10 +149,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _up;
     /// <summary>
     /// Gets the up direction vector
     /// </summary>
-    private Vector3f? _up;
     public Vector3f Up
     {
         get
@@ -165,10 +165,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _origin;
     /// <summary>
     /// Gets the player origin position
     /// </summary>
-    private Vector3f? _origin;
     public Vector3f Origin
     {
         get
@@ -181,10 +181,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _angles;
     /// <summary>
     /// Gets the player view angles
     /// </summary>
-    private Vector3f? _angles;
     public Vector3f Angles
     {
         get
@@ -197,10 +197,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _oldAngles;
     /// <summary>
     /// Gets the previous frame's view angles
     /// </summary>
-    private Vector3f? _oldAngles;
     public Vector3f OldAngles
     {
         get
@@ -213,10 +213,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _velocity;
     /// <summary>
     /// Gets the player velocity
     /// </summary>
-    private Vector3f? _velocity;
     public Vector3f Velocity
     {
         get
@@ -229,10 +229,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _moveDir;
     /// <summary>
     /// Gets the movement direction
     /// </summary>
-    private Vector3f? _moveDir;
     public Vector3f MoveDir
     {
         get
@@ -245,10 +245,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _baseVelocity;
     /// <summary>
     /// Gets the base velocity (from conveyor belts, etc.)
     /// </summary>
-    private Vector3f? _baseVelocity;
     public Vector3f BaseVelocity
     {
         get
@@ -261,10 +261,10 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    private Vector3f? _viewOfs;
     /// <summary>
     /// Gets the view offset from the player origin
     /// </summary>
-    private Vector3f? _viewOfs;
     public Vector3f ViewOfs
     {
         get
@@ -319,6 +319,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when the next footstep sound should play
+    /// </summary>
     public int FlTimeStepSound
     {
         get
@@ -337,6 +340,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets which foot to use for the next footstep (0 = right, 1 = left)
+    /// </summary>
     public int IStepLeft
     {
         get
@@ -355,6 +361,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the velocity at which the player is falling (used for fall damage calculation)
+    /// </summary>
     public float FlFallVelocity
     {
         get
@@ -373,7 +382,14 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets the view punch angle (weapon recoil, damage feedback)
+    /// </summary>
     private Vector3f? _punchAngle;
+    
+    /// <summary>
+    /// Gets the view punch angle (weapon recoil, damage feedback)
+    /// </summary>
     public Vector3f PunchAngle
     {
         get
@@ -386,6 +402,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time spent swimming (used for swim sound timing)
+    /// </summary>
     public float FlSwimTime
     {
         get
@@ -404,6 +423,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when the next primary attack can occur
+    /// </summary>
     public float FlNextPrimaryAttack
     {
         get
@@ -422,6 +444,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity effects flags (EF_BRIGHTFIELD, EF_MUZZLEFLASH, etc.)
+    /// </summary>
     public int Effects
     {
         get
@@ -440,6 +465,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the player flags (FL_ONGROUND, FL_DUCKING, FL_WATERJUMP, FL_FROZEN, etc.)
+    /// </summary>
     public int Flags
     {
         get
@@ -458,6 +486,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the hull size to use for collision detection (0=point, 1=human, 2=large, 3=head)
+    /// </summary>
     public int UseHull
     {
         get
@@ -476,6 +507,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the gravity multiplier for this player (1.0 = normal gravity)
+    /// </summary>
     public float Gravity
     {
         get
@@ -494,6 +528,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the friction multiplier for this player (1.0 = normal friction)
+    /// </summary>
     public float Friction
     {
         get
@@ -512,6 +549,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the button state from the previous frame (for detecting button press/release)
+    /// </summary>
     public int OldButtons
     {
         get
@@ -530,6 +570,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when water jump ends (prevents movement control during water jump)
+    /// </summary>
     public float WaterJumpTime
     {
         get
@@ -548,6 +591,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the player is dead
+    /// </summary>
     public bool Dead
     {
         get
@@ -566,6 +612,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the dead flag state (DEAD_NO, DEAD_DYING, DEAD_DEAD, DEAD_RESPAWNABLE)
+    /// </summary>
     public int DeadFlag
     {
         get
@@ -584,6 +633,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the player is in spectator mode
+    /// </summary>
     public int Spectator
     {
         get
@@ -602,6 +654,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the player's movement type (MOVETYPE_WALK, MOVETYPE_NOCLIP, MOVETYPE_FLY, etc.)
+    /// </summary>
     public int MoveType
     {
         get
@@ -620,6 +675,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity index the player is standing on (-1 if not on ground)
+    /// </summary>
     public int OnGround
     {
         get
@@ -638,6 +696,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the water level (0=not in water, 1=feet, 2=waist, 3=head underwater)
+    /// </summary>
     public int WaterLevel
     {
         get
@@ -656,6 +717,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the type of water the player is in (CONTENTS_WATER, CONTENTS_SLIME, CONTENTS_LAVA)
+    /// </summary>
     public int WaterType
     {
         get
@@ -674,6 +738,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the water level from the previous frame (for detecting water entry/exit)
+    /// </summary>
     public int OldWaterLevel
     {
         get
@@ -692,6 +759,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the name of the texture the player is standing on
+    /// </summary>
     public string SzTextureName
     {
         get
@@ -726,6 +796,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the material type of the texture the player is standing on (for footstep sounds)
+    /// </summary>
     public byte ChTextureType
     {
         get
@@ -744,6 +817,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the maximum movement speed for the player
+    /// </summary>
     public float MaxSpeed
     {
         get
@@ -762,6 +838,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the client-side maximum speed (can be different from server maxspeed)
+    /// </summary>
     public float ClientMaxSpeed
     {
         get
@@ -801,6 +880,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 2 (game-specific usage)
+    /// </summary>
     public int IUser2
     {
         get
@@ -819,6 +901,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 3 (game-specific usage)
+    /// </summary>
     public int IUser3
     {
         get
@@ -837,6 +922,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined integer variable 4 (game-specific usage)
+    /// </summary>
     public int IUser4
     {
         get
@@ -855,6 +943,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 1 (game-specific usage)
+    /// </summary>
     public float FUser1
     {
         get
@@ -873,6 +964,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 2 (game-specific usage)
+    /// </summary>
     public float FUser2
     {
         get
@@ -891,6 +985,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 3 (game-specific usage)
+    /// </summary>
     public float FUser3
     {
         get
@@ -909,6 +1006,9 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets or sets user-defined float variable 4 (game-specific usage)
+    /// </summary>
     public float FUser4
     {
         get
@@ -927,7 +1027,14 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector variable 1 (game-specific usage)
+    /// </summary>
     private Vector3f? _vUser1;
+    
+    /// <summary>
+    /// Gets user-defined vector variable 1 (game-specific usage)
+    /// </summary>
     public Vector3f VUser1
     {
         get
@@ -940,7 +1047,14 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector variable 2 (game-specific usage)
+    /// </summary>
     private Vector3f? _vUser2;
+    
+    /// <summary>
+    /// Gets user-defined vector variable 2 (game-specific usage)
+    /// </summary>
     public Vector3f VUser2
     {
         get
@@ -953,7 +1067,14 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector variable 3 (game-specific usage)
+    /// </summary>
     private Vector3f? _vUser3;
+    
+    /// <summary>
+    /// Gets user-defined vector variable 3 (game-specific usage)
+    /// </summary>
     public Vector3f VUser3
     {
         get
@@ -966,7 +1087,14 @@ public class PlayerMove : BaseNativeWrapper<NativePlayerMove>
         }
     }
 
+    /// <summary>
+    /// Gets user-defined vector variable 4 (game-specific usage)
+    /// </summary>
     private Vector3f? _vUser4;
+    
+    /// <summary>
+    /// Gets user-defined vector variable 4 (game-specific usage)
+    /// </summary>
     public Vector3f VUser4
     {
         get

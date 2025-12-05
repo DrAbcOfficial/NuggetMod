@@ -96,6 +96,9 @@ public class Edict : BaseNativeWrapper<NativeEdict>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the number of BSP leafs this entity touches
+    /// </summary>
     public int NumLeafs
     {
         get
@@ -114,6 +117,9 @@ public class Edict : BaseNativeWrapper<NativeEdict>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the BSP leaf numbers this entity touches (max 48)
+    /// </summary>
     public short[] LeafNums
     {
         get
@@ -141,6 +147,9 @@ public class Edict : BaseNativeWrapper<NativeEdict>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when this edict was freed
+    /// </summary>
     public float FreeTime
     {
         get
@@ -159,6 +168,9 @@ public class Edict : BaseNativeWrapper<NativeEdict>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pointer to private entity data (game-specific)
+    /// </summary>
     public nint PrivateData
     {
         get
@@ -178,6 +190,9 @@ public class Edict : BaseNativeWrapper<NativeEdict>
     }
 
     private Entvars? _entVars;
+    /// <summary>
+    /// Gets the entity variables (entvars) for this edict
+    /// </summary>
     public Entvars EntVars
     {
         get

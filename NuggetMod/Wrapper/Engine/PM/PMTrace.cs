@@ -42,10 +42,11 @@ public class PMTrace : BaseNativeWrapper<NativePMTrace>
         }
     }
 
+    private PMPlane? _plane;
+
     /// <summary>
     /// Gets the plane information at the hit point
     /// </summary>
-    private PMPlane? _plane;
     public PMPlane Plane
     {
         get
@@ -58,10 +59,10 @@ public class PMTrace : BaseNativeWrapper<NativePMTrace>
         }
     }
 
+    private Vector3f? _deltavelocity;
     /// <summary>
     /// Gets or sets the change in velocity caused by the collision
     /// </summary>
-    private Vector3f? _deltavelocity;
     public Vector3f DeltAVelocity
     {
         get

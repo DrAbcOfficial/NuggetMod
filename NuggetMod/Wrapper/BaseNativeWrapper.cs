@@ -91,6 +91,10 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
         }
     }
 
+
+    /// <summary>
+    /// Base deconstructer
+    /// </summary>
     ~BaseNativeWrapper()
     {
         Dispose(false);

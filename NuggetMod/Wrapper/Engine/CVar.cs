@@ -25,13 +25,28 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         ExternalDLL = 1 << 3,
         /// <summary>Client DLL variable</summary>
         ClientDLL = 1 << 4,
+        /// <summary>
+        /// Protected, will not show args in console
+        /// </summary>
         Protected = 1 << 5,
+        /// <summary>
+        /// Single play only
+        /// </summary>
         SinglePlayOnly = 1 << 6,
+        /// <summary>
+        /// Printable characters only
+        /// </summary>
         PrintableOnly = 1 << 7,
+        /// <summary>
+        /// Won't log in console
+        /// </summary>
         Unlogged = 1 << 8,
     }
     internal unsafe CVar(nint ptr) : this((NativeCVar*)ptr) { }
     internal unsafe CVar(NativeCVar* native) : base(native) { }
+    /// <summary>
+    /// Gets or sets the console variable name
+    /// </summary>
     public string Name
     {
         get
@@ -52,6 +67,9 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the console variable string value
+    /// </summary>
     public string Str
     {
         get
@@ -72,6 +90,9 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the console variable flags
+    /// </summary>
     public int Flags
     {
         get
@@ -90,21 +111,37 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         }
     }
 
+    /// <summary>
+    /// Tests if a specific flag is set
+    /// </summary>
+    /// <param name="flag">Flag to test</param>
+    /// <returns>True if flag is set</returns>
     public bool TestFlag(FCVAR flag)
     {
         return (Flags & (int)flag) != 0;
     }
 
+    /// <summary>
+    /// Sets a specific flag
+    /// </summary>
+    /// <param name="flag">Flag to set</param>
     public void SetFlag(FCVAR flag)
     {
         Flags |= (int)flag;
     }
 
+    /// <summary>
+    /// Removes a specific flag
+    /// </summary>
+    /// <param name="flag">Flag to remove</param>
     public void RemoveFlag(FCVAR flag)
     {
         Flags &= ~(int)flag;
     }
 
+    /// <summary>
+    /// Gets or sets the console variable float value
+    /// </summary>
     public float Value
     {
         get
@@ -123,6 +160,9 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         }
     }
 
+    /// <summary>
+    /// Gets the next console variable in the linked list
+    /// </summary>
     public CVar? Next
     {
         get

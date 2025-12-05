@@ -248,10 +248,10 @@ public class SaveStoreData : BaseNativeWrapper<NativeSaveStoreData>
         }
     }
 
+    private IReadOnlyList<LevelList>? _levelList;
     /// <summary>
     /// Gets the list of level transitions (16 entries)
     /// </summary>
-    private IReadOnlyList<LevelList>? _levelList;
     public IReadOnlyList<LevelList> LevelList
     {
         get
@@ -331,10 +331,10 @@ public class SaveStoreData : BaseNativeWrapper<NativeSaveStoreData>
         }
     }
 
+    private Vector3f? _vecLandmarkOffset;
     /// <summary>
     /// Gets the landmark offset vector for level transitions
     /// </summary>
-    private Vector3f? _vecLandmarkOffset;
     public Vector3f VecLandmarkOffset
     {
         get

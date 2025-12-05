@@ -15,6 +15,9 @@ internal unsafe delegate int NativeGetEngineFunctionsDelegate(nint pengfuncsFrom
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal unsafe delegate int NativeGetStudioBlendingInterfaceDelegate(nint pStudioBlendingInterface, nint interfaceVersion);
 
+/// <summary>
+/// Native MetaMod Functions
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeMetaFuncs : INativeStruct
 {

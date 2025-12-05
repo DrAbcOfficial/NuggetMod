@@ -2,6 +2,9 @@
 
 namespace NuggetMod.Native.Game;
 
+/// <summary>
+/// Native Hook
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeHook : INativeStruct
 {

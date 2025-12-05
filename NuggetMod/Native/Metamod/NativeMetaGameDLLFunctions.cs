@@ -2,6 +2,9 @@
 
 namespace NuggetMod.Native.NuggetMod;
 
+/// <summary>
+/// Native Meta Game DLL Functions
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeMetaGameDLLFunctions : INativeStruct
 {

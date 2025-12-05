@@ -50,6 +50,9 @@ public class NetAdr : BaseNativeWrapper<NativeNetAdr>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the IP address (IPv4)
+    /// </summary>
     public IPAddress IPAddress
     {
         get
@@ -76,6 +79,10 @@ public class NetAdr : BaseNativeWrapper<NativeNetAdr>
             }
         }
     }
+    
+    /// <summary>
+    /// Gets or sets the IPX address (10 bytes)
+    /// </summary>
     public byte[] Ipx
     {
         get
@@ -106,6 +113,9 @@ public class NetAdr : BaseNativeWrapper<NativeNetAdr>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the network port number
+    /// </summary>
     public ushort Port
     {
         get

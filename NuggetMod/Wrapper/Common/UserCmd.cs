@@ -30,6 +30,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the milliseconds for this command
+    /// </summary>
     public byte Msec
     {
         get
@@ -49,6 +52,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
     }
 
     private Vector3f? _viewangles;
+    /// <summary>
+    /// Gets the view angles (pitch, yaw, roll)
+    /// </summary>
     public Vector3f ViewAngles
     {
         get
@@ -61,6 +67,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the forward movement speed
+    /// </summary>
     public float ForwardMove
     {
         get
@@ -79,6 +88,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the sideways movement speed
+    /// </summary>
     public float SideMove
     {
         get
@@ -97,6 +109,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the upward movement speed (jump/crouch)
+    /// </summary>
     public float UpMove
     {
         get
@@ -115,6 +130,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the light level at the player's position
+    /// </summary>
     public byte LightLevel
     {
         get
@@ -133,6 +151,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the button flags (attack, jump, duck, etc.)
+    /// </summary>
     public ushort Buttons
     {
         get
@@ -151,6 +172,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the impulse command number
+    /// </summary>
     public byte Impulse
     {
         get
@@ -169,6 +193,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the weapon selection
+    /// </summary>
     public byte WeaponSelect
     {
         get
@@ -187,6 +214,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the impact index for lag compensation
+    /// </summary>
     public int ImpactIndex
     {
         get
@@ -206,6 +236,9 @@ public class UserCmd : BaseNativeWrapper<NativeUserCmd>
     }
 
     private Vector3f? _impact_position;
+    /// <summary>
+    /// Gets the impact position for lag compensation
+    /// </summary>
     public Vector3f ImpactPosition
     {
         get

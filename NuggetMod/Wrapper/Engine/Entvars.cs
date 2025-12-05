@@ -17,8 +17,10 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     internal unsafe Entvars(NativeEntvars* nativePtr, bool ownsPointer = false)
         : base(nativePtr, ownsPointer) { }
 
-    // String handle fields
     private StringHandle? _classname;
+    /// <summary>
+    /// Gets or sets the entity classname (e.g., "player", "weapon_ak47")
+    /// </summary>
     public string ClassName
     {
         get
@@ -42,6 +44,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _globalname;
+    /// <summary>
+    /// Gets or sets the global entity name for cross-level persistence
+    /// </summary>
     public string GlobalName
     {
         get
@@ -64,8 +69,10 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
-    // Vector3f fields
     private Vector3f? _origin;
+    /// <summary>
+    /// Gets the entity origin position in world space
+    /// </summary>
     public Vector3f Origin
     {
         get
@@ -79,6 +86,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _oldorigin;
+    /// <summary>
+    /// Gets the previous frame's origin position
+    /// </summary>
     public Vector3f OldOrigin
     {
         get
@@ -92,6 +102,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _velocity;
+    /// <summary>
+    /// Gets the entity velocity vector
+    /// </summary>
     public Vector3f Velocity
     {
         get
@@ -105,6 +118,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _basevelocity;
+    /// <summary>
+    /// Gets the base velocity (from conveyor belts, moving platforms, etc.)
+    /// </summary>
     public Vector3f BaseVelocity
     {
         get
@@ -118,6 +134,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _clbasevelocity;
+    /// <summary>
+    /// Gets the client-side base velocity
+    /// </summary>
     public Vector3f ClBaseVelocity
     {
         get
@@ -131,6 +150,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _movedir;
+    /// <summary>
+    /// Gets the movement direction for entities with MOVETYPE_PUSH
+    /// </summary>
     public Vector3f MoveDir
     {
         get
@@ -144,6 +166,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _angles;
+    /// <summary>
+    /// Gets the entity angles (pitch, yaw, roll)
+    /// </summary>
     public Vector3f Angles
     {
         get
@@ -157,6 +182,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _avelocity;
+    /// <summary>
+    /// Gets the angular velocity for rotating entities
+    /// </summary>
     public Vector3f AVelocity
     {
         get
@@ -170,6 +198,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _punchangle;
+    /// <summary>
+    /// Gets the view punch angle for weapon recoil
+    /// </summary>
     public Vector3f PunchAngle
     {
         get
@@ -183,6 +214,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _vAngle;
+    /// <summary>
+    /// Gets the view angles for players
+    /// </summary>
     public Vector3f VAngle
     {
         get
@@ -196,6 +230,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _endpos;
+    /// <summary>
+    /// Gets the end position for beams and projectiles
+    /// </summary>
     public Vector3f EndPos
     {
         get
@@ -209,6 +246,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _startpos;
+    /// <summary>
+    /// Gets the start position for beams and projectiles
+    /// </summary>
     public Vector3f StartPos
     {
         get
@@ -221,7 +261,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
-    // Basic type fields
+    /// <summary>
+    /// Gets or sets the impact time for projectiles
+    /// </summary>
     public float ImpactTime
     {
         get
@@ -240,6 +282,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the start time for beams and projectiles
+    /// </summary>
     public float StartTime
     {
         get
@@ -258,6 +303,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether to fix the player's view angles (0=no, 1=force, 2=add offset)
+    /// </summary>
     public int FixAngle
     {
         get
@@ -276,6 +324,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the ideal pitch angle for AI
+    /// </summary>
     public float IdealPitch
     {
         get
@@ -294,6 +345,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the pitch rotation speed
+    /// </summary>
     public float PitchSpeed
     {
         get
@@ -312,6 +366,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the ideal yaw angle for AI
+    /// </summary>
     public float IdealYaw
     {
         get
@@ -330,6 +387,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the yaw rotation speed
+    /// </summary>
     public float YawSpeed
     {
         get
@@ -348,6 +408,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model index
+    /// </summary>
     public int ModelIndex
     {
         get
@@ -367,6 +430,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _model;
+    /// <summary>
+    /// Gets or sets the model file path
+    /// </summary>
     public string Model
     {
         get
@@ -389,6 +455,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the view model index (first-person weapon model)
+    /// </summary>
     public int ViewModel
     {
         get
@@ -407,6 +476,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the weapon model index (third-person weapon model)
+    /// </summary>
     public int WeaponModel
     {
         get
@@ -425,8 +497,10 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
-    // Additional Vector3f fields
     private Vector3f? _absmin;
+    /// <summary>
+    /// Gets the absolute minimum bounding box coordinates in world space
+    /// </summary>
     public Vector3f AbsMin
     {
         get
@@ -440,6 +514,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _absmax;
+    /// <summary>
+    /// Gets the absolute maximum bounding box coordinates in world space
+    /// </summary>
     public Vector3f AbsMax
     {
         get
@@ -453,6 +530,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _mins;
+    /// <summary>
+    /// Gets the minimum bounding box coordinates relative to origin
+    /// </summary>
     public Vector3f Mins
     {
         get
@@ -466,6 +546,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _maxs;
+    /// <summary>
+    /// Gets the maximum bounding box coordinates relative to origin
+    /// </summary>
     public Vector3f Maxs
     {
         get
@@ -479,6 +562,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _size;
+    /// <summary>
+    /// Gets the bounding box size (maxs - mins)
+    /// </summary>
     public Vector3f Size
     {
         get
@@ -491,7 +577,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
-    // Additional fields (truncated for brevity - follow same pattern for remaining fields)
+    /// <summary>
+    /// Gets or sets the local time for entity animations
+    /// </summary>
     public float LTime
     {
         get
@@ -510,6 +598,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the next time the entity will think
+    /// </summary>
     public float NextThink
     {
         get
@@ -529,6 +620,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
 
+    /// <summary>
+    /// Gets or sets the movement type (MOVETYPE_WALK, MOVETYPE_FLY, etc.)
+    /// </summary>
     public int MoveType
     {
         get
@@ -547,6 +641,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the solid type for collision (SOLID_NOT, SOLID_BBOX, etc.)
+    /// </summary>
     public int Solid
     {
         get
@@ -565,6 +662,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model skin number
+    /// </summary>
     public int Skin
     {
         get
@@ -583,6 +683,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model body group
+    /// </summary>
     public int Body
     {
         get
@@ -601,6 +704,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the visual effects flags (EF_BRIGHTFIELD, EF_DIMLIGHT, etc.)
+    /// </summary>
     public int Effects
     {
         get
@@ -619,6 +725,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the gravity multiplier (1.0 = normal gravity)
+    /// </summary>
     public float Gravity
     {
         get
@@ -637,6 +746,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the friction multiplier
+    /// </summary>
     public float Friction
     {
         get
@@ -655,6 +767,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the light level at the entity's position
+    /// </summary>
     public int LightLevel
     {
         get
@@ -673,6 +788,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation sequence number
+    /// </summary>
     public int Sequence
     {
         get
@@ -691,6 +809,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the gait (walking) animation sequence for players
+    /// </summary>
     public int GaitSequence
     {
         get
@@ -709,6 +830,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the current animation frame
+    /// </summary>
     public float Frame
     {
         get
@@ -727,6 +851,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation time
+    /// </summary>
     public float AnimTime
     {
         get
@@ -745,6 +872,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation playback rate
+    /// </summary>
     public float FrameRate
     {
         get
@@ -763,6 +893,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the bone controller values (0-255) for model animation control
+    /// </summary>
     public byte[] Controller
     {
         get
@@ -790,6 +923,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the animation blending values (0-255) for smooth animation transitions
+    /// </summary>
     public byte[] Blending
     {
         get
@@ -817,6 +953,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the model scale multiplier (1.0 = normal size)
+    /// </summary>
     public float Scale
     {
         get
@@ -835,6 +974,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the rendering mode (kRenderNormal, kRenderTransColor, kRenderGlow, etc.)
+    /// </summary>
     public int RenderMode
     {
         get
@@ -853,6 +995,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the render amount/transparency (0-255, where 0 is fully transparent)
+    /// </summary>
     public float RenderAmt
     {
         get
@@ -872,6 +1017,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _rendercolor;
+    /// <summary>
+    /// Gets the render color (RGB values 0-255)
+    /// </summary>
     public Vector3f RenderColor
     {
         get
@@ -884,6 +1032,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the render effects (kRenderFxNone, kRenderFxPulseSlow, kRenderFxGlowShell, etc.)
+    /// </summary>
     public int RenderFx
     {
         get
@@ -902,6 +1053,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity's current health points
+    /// </summary>
     public float Health
     {
         get
@@ -920,6 +1074,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the player's frag count (kills minus suicides)
+    /// </summary>
     public float Frags
     {
         get
@@ -938,6 +1095,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the weapon bitfield indicating which weapons the player owns
+    /// </summary>
     public int Weapons
     {
         get
@@ -956,6 +1116,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the entity can take damage (DAMAGE_NO, DAMAGE_YES, DAMAGE_AIM)
+    /// </summary>
     public float TakeDamage
     {
         get
@@ -974,6 +1137,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the dead flag status (DEAD_NO, DEAD_DYING, DEAD_DEAD, DEAD_RESPAWNABLE, DEAD_DISCARDBODY)
+    /// </summary>
     public int DeadFlag
     {
         get
@@ -993,6 +1159,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _viewOfs;
+    /// <summary>
+    /// Gets the view offset from the entity origin (eye position for players)
+    /// </summary>
     public Vector3f ViewOfs
     {
         get
@@ -1005,6 +1174,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the currently pressed button flags (IN_ATTACK, IN_JUMP, IN_DUCK, etc.)
+    /// </summary>
     public int Button
     {
         get
@@ -1023,6 +1195,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the impulse command number (used for special commands like flashlight toggle)
+    /// </summary>
     public int Impulse
     {
         get
@@ -1042,6 +1217,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _chain;
+    /// <summary>
+    /// Gets or sets the next entity in a linked list chain
+    /// </summary>
     public Edict? Chain
     {
         get
@@ -1068,6 +1246,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _dmgInflictor;
+    /// <summary>
+    /// Gets or sets the entity that inflicted damage (e.g., the grenade that exploded)
+    /// </summary>
     public Edict? DmgInflictor
     {
         get
@@ -1094,6 +1275,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _enemy;
+    /// <summary>
+    /// Gets or sets the entity's current enemy target (used by AI)
+    /// </summary>
     public Edict? Enemy
     {
         get
@@ -1120,6 +1304,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _aiment;
+    /// <summary>
+    /// Gets or sets the entity to aim at (used for turrets and tracking entities)
+    /// </summary>
     public Edict? Aiment
     {
         get
@@ -1146,6 +1333,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _owner;
+    /// <summary>
+    /// Gets or sets the entity's owner (e.g., the player who threw a grenade)
+    /// </summary>
     public Edict? Owner
     {
         get
@@ -1172,6 +1362,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _groundEntity;
+    /// <summary>
+    /// Gets or sets the entity the player/entity is standing on (null if in air)
+    /// </summary>
     public Edict? GroundEntity
     {
         get
@@ -1197,6 +1390,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the spawn flags from the map editor (entity-specific behavior flags)
+    /// </summary>
     public int SpawnFlags
     {
         get
@@ -1215,6 +1411,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the entity flags (FL_ONGROUND, FL_DUCKING, FL_SWIM, FL_FLY, etc.)
+    /// </summary>
     public int Flags
     {
         get
@@ -1233,6 +1432,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the color map for player model coloring (top and bottom colors)
+    /// </summary>
     public int ColorMap
     {
         get
@@ -1251,6 +1453,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the team number (0 = no team, 1+ = team ID)
+    /// </summary>
     public int Team
     {
         get
@@ -1269,6 +1474,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the maximum health points for this entity
+    /// </summary>
     public float MaxHealth
     {
         get
@@ -1287,6 +1495,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when the entity was last teleported
+    /// </summary>
     public float TeleportTime
     {
         get
@@ -1305,6 +1516,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the armor type (0 = no armor, 0.3 = light armor, 0.6 = heavy armor)
+    /// </summary>
     public float ArmorType
     {
         get
@@ -1323,6 +1537,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the armor points remaining
+    /// </summary>
     public float ArmorValue
     {
         get
@@ -1341,6 +1558,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the water level (0 = not in water, 1 = feet, 2 = waist, 3 = head underwater)
+    /// </summary>
     public int WaterLevel
     {
         get
@@ -1359,6 +1579,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the type of water the entity is in (CONTENTS_EMPTY, CONTENTS_WATER, CONTENTS_SLIME, CONTENTS_LAVA)
+    /// </summary>
     public int WaterType
     {
         get
@@ -1378,6 +1601,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _target;
+    /// <summary>
+    /// Gets or sets the target entity name to trigger or interact with
+    /// </summary>
     public string Target
     {
         get
@@ -1399,6 +1625,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _targetname;
+    /// <summary>
+    /// Gets or sets the entity's unique name for targeting by other entities
+    /// </summary>
     public string TargetName
     {
         get
@@ -1420,6 +1649,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _netname;
+    /// <summary>
+    /// Gets or sets the network name (player name or entity identifier)
+    /// </summary>
     public string NetName
     {
         get
@@ -1441,6 +1673,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _message;
+    /// <summary>
+    /// Gets or sets the message string (used for displaying text or entity-specific data)
+    /// </summary>
     public string Message
     {
         get
@@ -1461,6 +1696,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the damage taken in the last frame
+    /// </summary>
     public float DmgTake
     {
         get
@@ -1479,6 +1717,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the damage absorbed by armor in the last frame
+    /// </summary>
     public float DmgSave
     {
         get
@@ -1497,6 +1738,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the damage amount this entity inflicts
+    /// </summary>
     public float Dmg
     {
         get
@@ -1515,6 +1759,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when damage was last dealt
+    /// </summary>
     public float DmgTime
     {
         get
@@ -1534,6 +1781,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _noise;
+    /// <summary>
+    /// Gets or sets the sound file path for the entity's primary sound
+    /// </summary>
     public string Noise
     {
         get
@@ -1555,6 +1805,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _noise1;
+    /// <summary>
+    /// Gets or sets the sound file path for the entity's secondary sound
+    /// </summary>
     public string Noise1
     {
         get
@@ -1576,6 +1829,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _noise2;
+    /// <summary>
+    /// Gets or sets the sound file path for the entity's tertiary sound
+    /// </summary>
     public string Noise2
     {
         get
@@ -1597,6 +1853,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private StringHandle? _noise3;
+    /// <summary>
+    /// Gets or sets the sound file path for the entity's quaternary sound
+    /// </summary>
     public string Noise3
     {
         get
@@ -1618,6 +1877,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
 
+    /// <summary>
+    /// Gets or sets the entity's movement speed
+    /// </summary>
     public float Speed
     {
         get
@@ -1636,6 +1898,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when the entity runs out of air (for drowning)
+    /// </summary>
     public float AirFinished
     {
         get
@@ -1654,6 +1919,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when pain sound can be played again
+    /// </summary>
     public float PainFinished
     {
         get
@@ -1672,6 +1940,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time when radiation suit protection expires
+    /// </summary>
     public float RadsuitFinished
     {
         get
@@ -1691,6 +1962,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _pContainingEntity;
+    /// <summary>
+    /// Gets or sets the edict that contains these entvars (back-pointer to parent edict)
+    /// </summary>
     public Edict? PContainingEntity
     {
         get
@@ -1716,6 +1990,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the player class (used in team-based games like TFC)
+    /// </summary>
     public int PlayerClass
     {
         get
@@ -1734,6 +2011,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the maximum movement speed for the player
+    /// </summary>
     public float MaxSpeed
     {
         get
@@ -1752,6 +2032,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the field of view angle in degrees (default is 90)
+    /// </summary>
     public float Fov
     {
         get
@@ -1770,6 +2053,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the weapon animation sequence to play
+    /// </summary>
     public int WeaponAnim
     {
         get
@@ -1788,6 +2074,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the milliseconds to push the player movement
+    /// </summary>
     public int Pushmsec
     {
         get
@@ -1806,6 +2095,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether the player is currently ducking/crouching
+    /// </summary>
     public bool BInDuck
     {
         get
@@ -1824,6 +2116,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time for the next footstep sound
+    /// </summary>
     public int FlTimeStepSound
     {
         get
@@ -1842,6 +2137,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time for swimming sound effects
+    /// </summary>
     public int FlSwimTime
     {
         get
@@ -1860,6 +2158,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the time tracking for duck/crouch animation
+    /// </summary>
     public int FlDuckTime
     {
         get
@@ -1878,6 +2179,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets which foot to use for the next footstep (0 = right, 1 = left)
+    /// </summary>
     public int IStepLeft
     {
         get
@@ -1896,6 +2200,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the falling velocity for calculating fall damage
+    /// </summary>
     public float FlFallVelocity
     {
         get
@@ -1914,6 +2221,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the game state (used for special game modes or entity states)
+    /// </summary>
     public int GameState
     {
         get
@@ -1932,6 +2242,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the button flags from the previous frame (for detecting button press/release)
+    /// </summary>
     public int OldButtons
     {
         get
@@ -1950,6 +2263,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the group info for entity collision filtering
+    /// </summary>
     public int GroupInfo
     {
         get
@@ -1968,6 +2284,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the first custom integer field for mod-specific data
+    /// </summary>
     public int IUser1
     {
         get
@@ -1986,6 +2305,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the second custom integer field for mod-specific data
+    /// </summary>
     public int IUser2
     {
         get
@@ -2004,6 +2326,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the third custom integer field for mod-specific data
+    /// </summary>
     public int IUser3
     {
         get
@@ -2022,6 +2347,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the fourth custom integer field for mod-specific data
+    /// </summary>
     public int IUser4
     {
         get
@@ -2040,6 +2368,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the first custom float field for mod-specific data
+    /// </summary>
     public float FUser1
     {
         get
@@ -2058,6 +2389,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the second custom float field for mod-specific data
+    /// </summary>
     public float FUser2
     {
         get
@@ -2076,6 +2410,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the third custom float field for mod-specific data
+    /// </summary>
     public float FUser3
     {
         get
@@ -2094,6 +2431,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
     }
 
+    /// <summary>
+    /// Gets or sets the fourth custom float field for mod-specific data
+    /// </summary>
     public float FUser4
     {
         get
@@ -2113,6 +2453,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _vUser1;
+    /// <summary>
+    /// Gets the first custom vector field for mod-specific data
+    /// </summary>
     public Vector3f VUser1
     {
         get
@@ -2126,6 +2469,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _vUser2;
+    /// <summary>
+    /// Gets the second custom vector field for mod-specific data
+    /// </summary>
     public Vector3f VUser2
     {
         get
@@ -2139,6 +2485,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _vUser3;
+    /// <summary>
+    /// Gets the third custom vector field for mod-specific data
+    /// </summary>
     public Vector3f VUser3
     {
         get
@@ -2152,6 +2501,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Vector3f? _vUser4;
+    /// <summary>
+    /// Gets the fourth custom vector field for mod-specific data
+    /// </summary>
     public Vector3f VUser4
     {
         get
@@ -2165,6 +2517,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _eUser1;
+    /// <summary>
+    /// Gets or sets the first custom entity field for mod-specific data
+    /// </summary>
     public Edict? EUser1
     {
         get
@@ -2191,6 +2546,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _eUser2;
+    /// <summary>
+    /// Gets or sets the second custom entity field for mod-specific data
+    /// </summary>
     public Edict? EUser2
     {
         get
@@ -2217,6 +2575,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _eUser3;
+    /// <summary>
+    /// Gets or sets the third custom entity field for mod-specific data
+    /// </summary>
     public Edict? EUser3
     {
         get
@@ -2243,6 +2604,9 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
     }
 
     private Edict? _eUser4;
+    /// <summary>
+    /// Gets or sets the fourth custom entity field for mod-specific data
+    /// </summary>
     public Edict? EUser4
     {
         get

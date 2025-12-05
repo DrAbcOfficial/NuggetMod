@@ -68,10 +68,10 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
         }
     }
 
+    private Edict? _pentlandmark;
     /// <summary>
     /// Gets or sets the landmark entity for this level transition
     /// </summary>
-    private Edict? _pentlandmark;
     public Edict PentLandmark
     {
         get
@@ -91,10 +91,10 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
         }
     }
 
+    private Vector3f? _vecLandmarkOrigin;
     /// <summary>
     /// Gets the landmark origin position
     /// </summary>
-    private Vector3f? _vecLandmarkOrigin;
     public Vector3f VecLandmarkOrigin
     {
         get

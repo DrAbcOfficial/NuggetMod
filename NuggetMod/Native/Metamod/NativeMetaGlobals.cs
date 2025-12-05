@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.NuggetMod;
 
+/// <summary>
+/// Native MetaMod Globals
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeMetaGlobals : INativeStruct
 {

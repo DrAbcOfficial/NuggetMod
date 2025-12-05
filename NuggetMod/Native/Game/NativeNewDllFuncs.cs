@@ -8,6 +8,9 @@ internal delegate int NativeShouldCollideDelegate(nint pentTouched, nint pentOth
 internal delegate void NativeCvarValueDelegate(nint pEnt, nint value);
 internal delegate void NativeCvarValue2Delegate(nint pEnt, int requestID, nint cvarName, nint value);
 
+/// <summary>
+/// Native New DLL Functions
+/// </summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeNewDllFuncs : INativeStruct
 {
