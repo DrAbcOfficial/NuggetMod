@@ -18,7 +18,7 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>False</IncludeSymbols>
-    <Version>0.0.2-alpha</Version>
+    <Version>0.0.2-beta</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
