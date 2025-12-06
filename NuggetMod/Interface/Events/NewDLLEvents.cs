@@ -58,19 +58,19 @@ public class NewDLLEvents
     internal void InvokeOnFreeEntPrivateData(Edict pEnt)
     {
         var result = OnFreeEntPrivateData?.Invoke(pEnt);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeGameShutdown()
     {
         var result = GameShutdown?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeShouldCollide(Edict pentTouched, Edict pentOther)
     {
         var result = ShouldCollide?.Invoke(pentTouched, pentOther);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -82,12 +82,12 @@ public class NewDLLEvents
     internal void InvokeCvarValue(Edict pEnt, string value)
     {
         var result = CvarValue?.Invoke(pEnt, value);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeCvarValue2(Edict pEnt, int requestID, string cvarName, string value)
     {
         var result = CvarValue2?.Invoke(pEnt, requestID, cvarName, value);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     #endregion
 

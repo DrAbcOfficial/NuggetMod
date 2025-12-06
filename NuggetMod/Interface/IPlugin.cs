@@ -16,7 +16,7 @@ public interface IPlugin
     /// <summary>
     /// Initializes the plugin
     /// </summary>
-    public void Meta_Init();
+    public void MetaInit();
     
     /// <summary>
     /// Queries the plugin for compatibility and initialization
@@ -24,7 +24,7 @@ public interface IPlugin
     /// <param name="interfaceVersion">MetaMod interface version</param>
     /// <param name="pMetaUtilFuncs">MetaMod utility functions</param>
     /// <returns>True if the plugin can load successfully</returns>
-    public bool Meta_Query(InterfaceVersion interfaceVersion, MetaUtilFunctions pMetaUtilFuncs);
+    public bool MetaQuery(InterfaceVersion interfaceVersion, MetaUtilFunctions pMetaUtilFuncs);
     
     /// <summary>
     /// Attaches the plugin to the game
@@ -33,7 +33,7 @@ public interface IPlugin
     /// <param name="pMGlobals">MetaMod global variables</param>
     /// <param name="pGamedllFuncs">Game DLL functions</param>
     /// <returns>True if attachment was successful</returns>
-    public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, MetaGameDLLFunctions pGamedllFuncs);
+    public bool MetaAttach(PluginLoadTime now, MetaGlobals pMGlobals, MetaGameDLLFunctions pGamedllFuncs);
     
     /// <summary>
     /// Detaches the plugin from the game
@@ -41,5 +41,5 @@ public interface IPlugin
     /// <param name="now">Current plugin load time</param>
     /// <param name="reason">Reason for unloading</param>
     /// <returns>True if detachment was successful</returns>
-    public bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason);
+    public bool MetaDetach(PluginLoadTime now, PluginUnloadReason reason);
 }

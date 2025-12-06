@@ -8,21 +8,21 @@ public enum PluginLoadTime
     /// <summary>
     /// Plugin should never be loaded.
     /// </summary>
-    PT_NEVER = 0,
+    Never = 0,
     /// <summary>
     /// Plugin should only be loaded/unloaded at initial HLDS execution.
     /// </summary>
-    PT_STARTUP,
+    Startup,
     /// <summary>
     /// Plugin can be loaded/unloaded between maps.
     /// </summary>
-    PT_CHANGELEVEL,
+    ChangeLevel,
     /// <summary>
     /// Plugin can be loaded/unloaded at any time.
     /// </summary>
-    PT_ANYTIME,
+    Anytime,
     /// <summary>
     /// Plugin can be loaded/unloaded at any time, and can be "paused" during a map.
     /// </summary>
-    PT_ANYPAUSE,
+    AnyPause,
 };

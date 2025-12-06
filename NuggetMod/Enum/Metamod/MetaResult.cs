@@ -9,21 +9,21 @@ public enum MetaResult
     /// <summary>
     /// Result not set.
     /// </summary>
-    MRES_UNSET = 0,
+    UnSet = 0,
     /// <summary>
     /// Plugin didn't take any action.
     /// </summary>
-    MRES_IGNORED,
+    Ignored,
     /// <summary>
     /// Plugin did something, but real function should still be called.
     /// </summary>
-    MRES_HANDLED,
+    Handled,
     /// <summary>
     /// Call real function, but use my return value.
     /// </summary>
-    MRES_OVERRIDE,
+    Override,
     /// <summary>
     /// Skip real function; use my return value.
     /// </summary>
-    MRES_SUPERCEDE,
+    SuperCEDE,
 }

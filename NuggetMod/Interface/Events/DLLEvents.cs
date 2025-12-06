@@ -421,14 +421,14 @@ public class DLLEvents
     internal void InvokeGameInit()
     {
         var result = GameInit?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeSpawn(Edict pent)
     {
         var result = Spawn?.Invoke(pent);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -440,39 +440,39 @@ public class DLLEvents
     internal void InvokeThink(Edict pent)
     {
         var result = Think?.Invoke(pent);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeUse(Edict pentUsed, Edict pentOther)
     {
         var result = Use?.Invoke(pentUsed, pentOther);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeTouch(Edict pentTouched, Edict pentOther)
     {
         var result = Touch?.Invoke(pentTouched, pentOther);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeBlocked(Edict pentBlocked, Edict pentOther)
     {
         var result = Blocked?.Invoke(pentBlocked, pentOther);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeKeyValue(Edict pentKeyvalue, KeyValueData pkvd)
     {
         var result = KeyValue?.Invoke(pentKeyvalue, pkvd);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSave(Edict pent, nint pSaveData)
     {
         var result = Save?.Invoke(pent, pSaveData);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeRestore(Edict pent, nint pSaveData, int globalEntity)
     {
         var result = Restore?.Invoke(pent, pSaveData, globalEntity);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 1;
         }
         else
@@ -484,39 +484,39 @@ public class DLLEvents
     internal void InvokeSetAbsBox(Edict pent)
     {
         var result = SetAbsBox?.Invoke(pent);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSaveWriteFields(nint a, nint b, nint c, nint d, int max)
     {
         var result = SaveWriteFields?.Invoke(a, b, c, d, max);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSaveReadFields(nint a, nint b, nint c, nint d, int max)
     {
         var result = SaveReadFields?.Invoke(a, b, c, d, max);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSaveGlobalState(nint pSaveData)
     {
         var result = SaveGlobalState?.Invoke(pSaveData);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeRestoreGlobalState(nint pSaveData)
     {
         var result = RestoreGlobalState?.Invoke(pSaveData);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeResetGlobalState()
     {
         var result = ResetGlobalState?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal bool InvokeClientConnect(Edict pEntity, string pszName, string pszAddress, ref string szRejectReason)
     {
         var result = ClientConnect?.Invoke(pEntity, pszName, pszAddress, ref szRejectReason);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return true;
         }
         else
@@ -528,69 +528,69 @@ public class DLLEvents
     internal void InvokeClientDisconnect(Edict pEntity)
     {
         var result = ClientDisconnect?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeClientKill(Edict pEntity)
     {
         var result = ClientKill?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeClientPutInServer(Edict pEntity)
     {
         var result = ClientPutInServer?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeClientCommand(Edict pEntity)
     {
         var result = ClientCommand?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeClientUserInfoChanged(Edict pEntity, ref string infobuffer)
     {
         var result = ClientUserInfoChanged?.Invoke(pEntity, ref infobuffer);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeServerActivate(Edict pEdictList, int edictCount, int clientMax)
     {
         var result = ServerActivate?.Invoke(pEdictList, edictCount, clientMax);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeServerDeactivate()
     {
         var result = ServerDeactivate?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokePlayerPreThink(Edict pEntity)
     {
         var result = PlayerPreThink?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokePlayerPostThink(Edict pEntity)
     {
         var result = PlayerPostThink?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeStartFrame()
     {
         var result = StartFrame?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeParmsNewLevel()
     {
         var result = ParmsNewLevel?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeParmsChangeLevel()
     {
         var result = ParmsChangeLevel?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal string InvokeGetGameDescription()
     {
         var result = GetGameDescription?.Invoke();
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return string.Empty;
         }
         else
@@ -602,60 +602,60 @@ public class DLLEvents
     internal void InvokePlayerCustomization(Edict pEntity, Customization pCustom)
     {
         var result = PlayerCustomization?.Invoke(pEntity, pCustom);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSpectatorConnect(Edict pEntity)
     {
         var result = SpectatorConnect?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSpectatorDisconnect(Edict pEntity)
     {
         var result = SpectatorDisconnect?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSpectatorThink(Edict pEntity)
     {
         var result = SpectatorThink?.Invoke(pEntity);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeSysError(string error_string)
     {
         var result = SysError?.Invoke(error_string);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokePM_Move(PlayerMove pm, bool server)
     {
         var result = PM_Move?.Invoke(pm, server);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokePM_Init(PlayerMove pm)
     {
         var result = PM_Init?.Invoke(pm);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal byte InvokePM_FindTextureType(string name)
     {
         var result = PM_FindTextureType?.Invoke(name);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
         return 0;
     }
     internal void InvokeSetupVisibility(Edict pViewEntity, Edict pClient, ref byte[] pvs, ref byte[] pas)
     {
         var result = SetupVisibility?.Invoke(pViewEntity, pClient, ref pvs, ref pas);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeUpdateClientData(Edict ent, int sendweapons, ClientData cd)
     {
         var result = UpdateClientData?.Invoke(ent, sendweapons, cd);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeAddToFullPack(EntityState state, int e, Edict ent, Edict host, int hostflags, int player, byte[] pSet)
     {
         var result = AddToFullPack?.Invoke(state, e, ent, host, hostflags, player, pSet);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -667,19 +667,19 @@ public class DLLEvents
     internal void InvokeCreateBaseline(int player, int eindex, EntityState baseline, Edict entity, int playermodelindex, Vector3f player_mins, Vector3f player_maxs)
     {
         var result = CreateBaseline?.Invoke(player, eindex, baseline, entity, playermodelindex, player_mins, player_maxs);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeRegisterEncoders()
     {
         var result = RegisterEncoders?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeGetWeaponData(Edict player, WeaponData info)
     {
         var result = GetWeaponData?.Invoke(player, info);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -691,19 +691,19 @@ public class DLLEvents
     internal void InvokeCmdStart(Edict plyer, UserCmd cmd, uint random_seed)
     {
         var result = CmdStart?.Invoke(plyer, cmd, random_seed);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal void InvokeCmdEnd(Edict plyer)
     {
         var result = CmdEnd?.Invoke(plyer);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeConnectionlessPacket(NetAdr net_from, string args, ref string response_buffer, ref int response_buffer_size)
     {
         var result = ConnectionlessPacket?.Invoke(net_from, args, ref response_buffer, ref response_buffer_size);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -717,7 +717,7 @@ public class DLLEvents
         var result = GetHullBounds?.Invoke(hullnumber, ref mins, ref maxs);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -729,14 +729,14 @@ public class DLLEvents
     internal void InvokeCreateInstancedBaselines()
     {
         var result = CreateInstancedBaselines?.Invoke();
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal int InvokeInconsistentFile(Edict player, string filename, ref string disconnect_message)
     {
         var result = InconsistentFile?.Invoke(player, filename, ref disconnect_message);
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else
@@ -750,7 +750,7 @@ public class DLLEvents
         var result = AllowLagCompensation?.Invoke();
         if (result == null)
         {
-            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.MetaGlobals.Result = MetaResult.Ignored;
             return 0;
         }
         else

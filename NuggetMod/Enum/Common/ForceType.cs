@@ -8,20 +8,20 @@ public enum ForceType
     /// <summary>
     /// File on client must exactly match server's file
     /// </summary>
-    force_exactfile,
+    ExactFile,
     
     /// <summary>
     /// For model files only, the geometry must fit in the same bounding box
     /// </summary>
-    force_model_samebounds,
+    ModelSameBounds,
     
     /// <summary>
     /// For model files only, the geometry must fit in the specified bounding box
     /// </summary>
-    force_model_specifybounds,
+    ModelSpecifyBounds,
     
     /// <summary>
     /// For Steam model files only, the geometry must fit in the specified bounding box (if the file is available)
     /// </summary>
-    force_model_specifybounds_if_avail,
+    ModelSpecifyBoundsIfAvailable,
 }

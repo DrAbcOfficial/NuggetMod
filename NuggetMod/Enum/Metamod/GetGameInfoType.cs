@@ -8,25 +8,25 @@ public enum GetGameInfoType
     /// <summary>
     /// Game name.
     /// </summary>
-    GINFO_NAME = 0,
+    Name = 0,
     /// <summary>
     /// Game description.
     /// </summary>
-    GINFO_DESC,
+    Description,
     /// <summary>
     /// Game directory path.
     /// </summary>
-    GINFO_GAMEDIR,
+    GameDirectory,
     /// <summary>
     /// Full path to the game DLL.
     /// </summary>
-    GINFO_DLL_FULLPATH,
+    DLLFullPath,
     /// <summary>
     /// Filename of the game DLL.
     /// </summary>
-    GINFO_DLL_FILENAME,
+    DLLFileName,
     /// <summary>
     /// Full path to the real game DLL (unwrapped).
     /// </summary>
-    GINFO_REALDLL_FULLPATH,
+    RealDLLFullPath,
 }

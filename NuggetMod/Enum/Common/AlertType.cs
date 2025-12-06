@@ -8,30 +8,30 @@ public enum AlertType
     /// <summary>
     /// Notice message
     /// </summary>
-    at_notice,
+    Notice,
     
     /// <summary>
     /// Console message (same as at_notice, but forces a ConPrintf, not a message box)
     /// </summary>
-    at_console,
+    Console,
     
     /// <summary>
     /// AI console message (same as at_console, but only shown if developer level is 2)
     /// </summary>
-    at_aiconsole,
+    DeveloperConsole,
     
     /// <summary>
     /// Warning message
     /// </summary>
-    at_warning,
+    Warning,
     
     /// <summary>
     /// Error message
     /// </summary>
-    at_error,
+    Error,
     
     /// <summary>
     /// Logged message (server print to console, only in multiplayer games)
     /// </summary>
-    at_logged
+    Logged
 }

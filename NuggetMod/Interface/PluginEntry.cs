@@ -102,7 +102,7 @@ public abstract class PluginEntry
         var pinfo = GetPluginInfo();
         MetaMod._pluginInfo = pinfo;
         MetaMod._metaUtilFuncs = new MetaUtilFunctions(pMetaUtilFuncs);
-        bool result = pinterface.Meta_Query(ifver, MetaMod.MetaUtilFuncs);
+        bool result = pinterface.MetaQuery(ifver, MetaMod.MetaUtilFuncs);
         unsafe
         {
             nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
@@ -137,7 +137,7 @@ public abstract class PluginEntry
         MetaMod._metaGlobals = metaGlobals;
         MetaMod._gameDllFuncs = gameDllFuncs;
         var pinterface = GetPluginInterface();
-        bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
+        bool result = pinterface.MetaAttach(now, metaGlobals, gameDllFuncs);
 
 
         // Local method: Convert managed delegate to function pointer and write to host memory (by field offset)
@@ -173,7 +173,7 @@ public abstract class PluginEntry
     protected static int Native_Meta_Detach(PluginLoadTime now, PluginUnloadReason reason)
     {
         var pinterface = GetPluginInterface();
-        bool result = pinterface.Meta_Detach(now, reason);
+        bool result = pinterface.MetaDetach(now, reason);
         return result ? 1 : 0;
     }
 }

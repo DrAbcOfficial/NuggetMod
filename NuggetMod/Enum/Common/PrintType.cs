@@ -8,15 +8,15 @@ public enum PrintType
     /// <summary>
     /// Print to console
     /// </summary>
-    print_console,
+    Console,
     
     /// <summary>
     /// Print to center of screen
     /// </summary>
-    print_center,
+    Center,
     
     /// <summary>
     /// Print to chat area
     /// </summary>
-    print_chat,
+    Chat,
 }

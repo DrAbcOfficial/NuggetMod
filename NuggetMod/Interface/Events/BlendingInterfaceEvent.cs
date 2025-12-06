@@ -27,7 +27,7 @@ public class BlendingInterfaceEvent
     internal void InvokeSV_StudioSetupBones(nint pModel, float frame, int sequence, Vector3f angles, Vector3f origin, nint pcontroller, nint pblending, int iBone, Edict pEdict)
     {
         var result = SV_StudioSetupBones?.Invoke(pModel, frame, sequence, angles, origin, pcontroller, pblending, iBone, pEdict);
-        MetaMod.MetaGlobals.Result = result ?? MetaResult.MRES_IGNORED;
+        MetaMod.MetaGlobals.Result = result ?? MetaResult.Ignored;
     }
     internal bool IsSV_StudioSetupBonesNull => SV_StudioSetupBones == null;
 }

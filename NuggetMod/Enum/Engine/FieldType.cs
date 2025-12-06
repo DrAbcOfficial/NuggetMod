@@ -8,78 +8,78 @@ public enum FieldType
     /// <summary>
     /// Any floating point value.
     /// </summary>
-    FIELD_FLOAT = 0,
+    Float = 0,
     /// <summary>
     /// A string ID (return from ALLOC_STRING).
     /// </summary>
-    FIELD_STRING,
+    String,
     /// <summary>
     /// An entity offset (EOFFSET).
     /// </summary>
-    FIELD_ENTITY,
+    Entity,
     /// <summary>
     /// CBaseEntity pointer.
     /// </summary>
-    FIELD_CLASSPTR,
+    ClassPointer,
     /// <summary>
     /// Entity handle.
     /// </summary>
-    FIELD_EHANDLE,
+    EHandle,
     /// <summary>
     /// EVARS pointer.
     /// </summary>
-    FIELD_EVARS,
+    EntityVars,
     /// <summary>
     /// edict_t pointer.
     /// </summary>
-    FIELD_EDICT,
+    Edict,
     /// <summary>
     /// Any vector.
     /// </summary>
-    FIELD_VECTOR,
+    Vector,
     /// <summary>
     /// A world coordinate (these are fixed up across level transitions automatically).
     /// </summary>
-    FIELD_POSITION_VECTOR,
+    PositionVector,
     /// <summary>
     /// Arbitrary data pointer (deprecated, use an array of FIELD_CHARACTER instead).
     /// </summary>
-    FIELD_POINTER,
+    Pointer,
     /// <summary>
     /// Any integer or enum.
     /// </summary>
-    FIELD_INTEGER,
+    Interger,
     /// <summary>
     /// A class function pointer (Think, Use, etc).
     /// </summary>
-    FIELD_FUNCTION,
+    Function,
     /// <summary>
     /// Boolean value, implemented as an int, may be used as a hint for compression.
     /// </summary>
-    FIELD_BOOLEAN,
+    Boolean,
     /// <summary>
     /// 2 byte integer.
     /// </summary>
-    FIELD_SHORT,
+    Short,
     /// <summary>
     /// A single byte.
     /// </summary>
-    FIELD_CHARACTER,
+    Character,
     /// <summary>
     /// A floating point time (these are fixed up automatically too).
     /// </summary>
-    FIELD_TIME,
+    Time,
     /// <summary>
     /// Engine string that is a model name (needs precache).
     /// </summary>
-    FIELD_MODELNAME,
+    ModelName,
     /// <summary>
     /// Engine string that is a sound name (needs precache).
     /// </summary>
-    FIELD_SOUNDNAME,
+    SoundName,
 
     /// <summary>
     /// Total count of field types (MUST BE LAST).
     /// </summary>
-    FIELD_TYPECOUNT,
+    TypeCount,
 }

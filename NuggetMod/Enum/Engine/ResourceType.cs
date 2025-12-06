@@ -8,29 +8,29 @@ public enum ResourceType
     /// <summary>
     /// Sound resource.
     /// </summary>
-    t_sound = 0,
+    Sound = 0,
     /// <summary>
     /// Skin resource.
     /// </summary>
-    t_skin,
+    Skin,
     /// <summary>
     /// Model resource.
     /// </summary>
-    t_model,
+    Model,
     /// <summary>
     /// Decal resource.
     /// </summary>
-    t_decal,
+    Decal,
     /// <summary>
     /// Generic resource.
     /// </summary>
-    t_generic,
+    Generic,
     /// <summary>
     /// Event script resource.
     /// </summary>
-    t_eventscript,
+    EventScript,
     /// <summary>
     /// World resource (fake type for world, is really t_model).
     /// </summary>
-    t_world,
+    World,
 }

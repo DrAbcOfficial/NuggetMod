@@ -1,5 +1,4 @@
-﻿using NuggetMod.Enum.Common;
-using NuggetMod.Enum.Engine;
+﻿using NuggetMod.Enum.Engine;
 using NuggetMod.Interface;
 using NuggetMod.Wrapper.Common;
 using NuggetMod.Wrapper.Engine;
