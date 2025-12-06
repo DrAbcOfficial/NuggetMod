@@ -103,7 +103,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeFindEntityByStringDelegate nativeFindEntityByStringCaller = (nint pEdictStartSearchAfter, nint pszField, nint pszValue) =>
     {
         var res = _engineEvents?.InvokeFindEntityByString(new Edict(pEdictStartSearchAfter), Marshal.PtrToStringUTF8(pszField) ?? string.Empty, Marshal.PtrToStringUTF8(pszValue) ?? string.Empty);
-        return res?.GetPointer() ?? 0;
+        return res?.GetNative() ?? 0;
     };
 
     internal static NativeGetEntityIllumDelegate nativeGetEntityIllumCaller = (nint pEnt) =>
@@ -114,19 +114,19 @@ internal static class <#= cls #>NativeCaller
     internal static NativeFindEntityInSphereDelegate nativeFindEntityInSphereCaller = (nint pEdictStartSearchAfter, nint org, float rad) =>
     {
         var res = _engineEvents?.InvokeFindEntityInSphere(new Edict(pEdictStartSearchAfter), new Vector3f(org), rad);
-        return res?.GetPointer() ?? 0;
+        return res?.GetNative() ?? 0;
     };
 
     internal static NativeFindClientInPVSDelegate nativeFindClientInPVSCaller = (nint pEdict) =>
     {
         var res = _engineEvents?.InvokeFindClientInPVS(new Edict(pEdict));
-        return res?.GetPointer() ?? 0;
+        return res?.GetNative() ?? 0;
     };
 
     internal static NativeEntitiesInPVSDelegate nativeEntitiesInPVSCaller = (nint pplayer) =>
     {
         var res = _engineEvents?.InvokeEntitiesInPVS(new Edict(pplayer));
-        return res?.GetPointer() ?? 0;
+        return res?.GetNative() ?? 0;
     };
 
     internal static NativeMakeVectorsDelegate nativeMakeVectorsCaller = (nint rgflVector) =>
@@ -142,7 +142,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateEntityDelegate nativeCreateEntityCaller = () =>
     {
         var e = _engineEvents?.InvokeCreateEntity();
-        return e?.GetPointer() ?? 0;
+        return e?.GetNative() ?? 0;
     };
 
     internal static NativeRemoveEntityDelegate nativeRemoveEntityCaller = (nint e) =>
@@ -153,7 +153,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateNamedEntityDelegate nativeCreateNamedEntityCaller = (int className) =>
     {
         var e = _engineEvents?.InvokeCreateNamedEntity(className);
-        return e?.GetPointer() ?? 0;
+        return e?.GetNative() ?? 0;
     };
 
     internal static NativeMakeStaticDelegate nativeMakeStaticCaller = (nint ent) =>
@@ -538,7 +538,7 @@ internal static class <#= cls #>NativeCaller
             if(ret == null)
                 return new NativeCRC32();
             else
-                return *((NativeCRC32*)ret.GetPointer());
+                return *((NativeCRC32*)ret.GetNative());
         }
     };
 
@@ -618,7 +618,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateFakeClientDelegate nativeCreateFakeClientCaller = (nint netname) =>
     {
         var e = _engineEvents?.InvokeCreateFakeClient(Marshal.PtrToStringUTF8(netname) ?? string.Empty);
-        return e?.GetPointer() ?? 0;
+        return e?.GetNative() ?? 0;
     };
 
     internal static NativeRunPlayerMoveDelegate nativeRunPlayerMoveCaller = (nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec) =>
@@ -693,7 +693,7 @@ internal static class <#= cls #>NativeCaller
         return _engineEvents?.InvokeIsDedicatedServer() ?? false ? 1 : 0;
     };
 
-    internal static NativeCVarGetPointerDelegate nativeCVarGetPointerCaller = (nint szVarName) =>
+    internal static NativeCVarGetPointerDelegate nativeCVarGetNativeCaller = (nint szVarName) =>
     {
         var c = _engineEvents?.InvokeCVarGetPointer(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty);
         return c != null ? nint.Zero : nint.Zero;
@@ -1071,7 +1071,7 @@ internal static class <#= cls #>NativeCaller
             pfnGetPlayerUserId = _engineEvents.IsGetPlayerUserIdNull ? null : nativeGetPlayerUserIdCaller,
             pfnBuildSoundMsg = _engineEvents.IsBuildSoundMsgNull ? null : nativeBuildSoundMsgCaller,
             pfnIsDedicatedServer = _engineEvents.IsIsDedicatedServerNull ? null : nativeIsDedicatedServerCaller,
-            pfnCVarGetPointer = _engineEvents.IsCVarGetPointerNull ? null : nativeCVarGetPointerCaller,
+            pfnCVarGetPointer = _engineEvents.IsCVarGetPointerNull ? null : nativeCVarGetNativeCaller,
             pfnGetPlayerWONId = _engineEvents.IsGetPlayerWONIdNull ? null : nativeGetPlayerWONIdCaller,
             pfnInfo_RemoveKey = _engineEvents.IsInfo_RemoveKeyNull ? null : nativeInfo_RemoveKeyCaller,
             pfnGetPhysicsKeyValue = _engineEvents.IsGetPhysicsKeyValueNull ? null : nativeGetPhysicsKeyValueCaller,
