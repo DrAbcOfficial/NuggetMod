@@ -1,4 +1,5 @@
 ﻿using NuggetMod.Enum.Common;
+using NuggetMod.Enum.Engine;
 using NuggetMod.Helper;
 using NuggetMod.Native.Common;
 using NuggetMod.Native.Engine;
@@ -463,8 +464,11 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="msg_dest">Message destination (MSG_BROADCAST, MSG_ONE, etc.)</param>
     /// <param name="msg_type">Message type ID</param>
     /// <param name="pOrigin">Origin for PVS/PAS filtering (can be null)</param>
-    /// <param name="ed">Target client entity (for MSG_ONE)</param>
-    public void MessageBegin(int msg_dest, int msg_type, Vector3f pOrigin, Edict ed) => Base.pfnMessageBegin(msg_dest, msg_type, pOrigin.GetPointer(), ed.GetPointer());
+    /// <param name="ed">Target client entity (for MSG_ONE) (can be null)</param>
+    public void MessageBegin(MessageDestination msg_dest, int msg_type, Vector3f? pOrigin, Edict? ed)
+    {
+        Base.pfnMessageBegin((int)msg_dest, msg_type, pOrigin?.GetPointer() ?? nint.Zero, ed?.GetPointer() ?? nint.Zero);
+    }
     
     /// <summary>
     /// Ends and sends the current network message

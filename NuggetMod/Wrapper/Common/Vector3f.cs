@@ -89,4 +89,10 @@ public class Vector3f : BaseNativeWrapper<NativeVector3f>
             }
         }
     }
+
+    private static readonly Vector3f _zero = new(0,0,0);
+    /// <summary>
+    /// Zero Vector (0,0,0)
+    /// </summary>
+    public static Vector3f Zero => _zero;
 }
