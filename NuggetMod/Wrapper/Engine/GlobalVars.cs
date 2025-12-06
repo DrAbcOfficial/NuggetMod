@@ -411,7 +411,7 @@ public class GlobalVars : BaseNativeWrapper<NativeGlobalVars>
         {
             unsafe
             {
-                NativePtr->trace_ent = value.GetPointer();
+                NativePtr->trace_ent = value.GetNative();
             }
         }
     }

@@ -1240,7 +1240,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->chain = null;
                 else
-                    NativePtr->chain = (NativeEdict*)value.GetPointer();
+                    NativePtr->chain = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1269,7 +1269,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->dmg_inflictor = null;
                 else
-                    NativePtr->dmg_inflictor = (NativeEdict*)value.GetPointer();
+                    NativePtr->dmg_inflictor = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1298,7 +1298,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->enemy = null;
                 else
-                    NativePtr->enemy = (NativeEdict*)value.GetPointer();
+                    NativePtr->enemy = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1327,7 +1327,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->aiment = null;
                 else
-                    NativePtr->aiment = (NativeEdict*)value.GetPointer();
+                    NativePtr->aiment = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1356,7 +1356,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->owner = null;
                 else
-                    NativePtr->owner = (NativeEdict*)value.GetPointer();
+                    NativePtr->owner = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1385,7 +1385,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->groundentity = null;
                 else
-                    NativePtr->groundentity = (NativeEdict*)value.GetPointer();
+                    NativePtr->groundentity = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -1985,7 +1985,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->pContainingEntity = null;
                 else
-                    NativePtr->pContainingEntity = (NativeEdict*)value.GetPointer();
+                    NativePtr->pContainingEntity = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -2540,7 +2540,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser1 = null;
                 else
-                    NativePtr->euser1 = (NativeEdict*)value.GetPointer();
+                    NativePtr->euser1 = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -2569,7 +2569,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser2 = null;
                 else
-                    NativePtr->euser2 = (NativeEdict*)value.GetPointer();
+                    NativePtr->euser2 = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -2598,7 +2598,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser3 = null;
                 else
-                    NativePtr->euser3 = (NativeEdict*)value.GetPointer();
+                    NativePtr->euser3 = (NativeEdict*)value.GetNative();
             }
         }
     }
@@ -2627,7 +2627,7 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser4 = null;
                 else
-                    NativePtr->euser4 = (NativeEdict*)value.GetPointer();
+                    NativePtr->euser4 = (NativeEdict*)value.GetNative();
             }
         }
     }

@@ -106,7 +106,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnCenterSayParms((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, *((NativeHudParams*)hudParams.GetPointer()), (byte*)strptr);
+            Base.pfnCenterSayParms((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, *((NativeHudParams*)hudParams.GetNative()), (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -121,7 +121,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(entStr);
         unsafe
         {
-            Base.pfnCallGameEntity((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (NativeEntvars*)pev.GetPointer());
+            Base.pfnCallGameEntity((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (NativeEntvars*)pev.GetNative());
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -263,7 +263,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint result = nint.Zero;
         unsafe
         {
-            result = Base.pfnIsQueryingClientCvar((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (NativeEdict*)player.GetPointer());
+            result = Base.pfnIsQueryingClientCvar((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (NativeEdict*)player.GetNative());
         }
         return Marshal.PtrToStringUTF8(result) ?? string.Empty;
     }
@@ -441,7 +441,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         bool res = false;
         unsafe
         {
-            res = Base.pfnUnHook(*(NativeHook*)pHook.GetPointer()) == 1;
+            res = Base.pfnUnHook(*(NativeHook*)pHook.GetNative()) == 1;
         }
         return res;
     }

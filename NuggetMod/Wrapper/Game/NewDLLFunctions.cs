@@ -19,7 +19,7 @@ public class NewDLLFunctions(nint ptr) : BaseFunctionWrapper<NativeNewDllFuncs>(
         {
             throw new NullReferenceException($"{nameof(Base.pfnOnFreeEntPrivateData)} is null"!);
         }
-        Base.pfnOnFreeEntPrivateData(pEnt.GetPointer());
+        Base.pfnOnFreeEntPrivateData(pEnt.GetNative());
     }
     
     /// <summary>
@@ -45,7 +45,7 @@ public class NewDLLFunctions(nint ptr) : BaseFunctionWrapper<NativeNewDllFuncs>(
         {
             throw new NullReferenceException($"{nameof(Base.pfnShouldCollide)} is null"!);
         }
-        return Base.pfnShouldCollide(pentTouched.GetPointer(), pentOther.GetPointer());
+        return Base.pfnShouldCollide(pentTouched.GetNative(), pentOther.GetNative());
     }
     
     /// <summary>
@@ -60,7 +60,7 @@ public class NewDLLFunctions(nint ptr) : BaseFunctionWrapper<NativeNewDllFuncs>(
             throw new NullReferenceException($"{nameof(Base.pfnCvarValue)} is null"!);
         }
         nint ns = Marshal.StringToHGlobalAnsi(value);
-        Base.pfnCvarValue(pEnt.GetPointer(), ns);
+        Base.pfnCvarValue(pEnt.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
     
@@ -81,7 +81,7 @@ public class NewDLLFunctions(nint ptr) : BaseFunctionWrapper<NativeNewDllFuncs>(
         }
         nint ns1 = Marshal.StringToHGlobalAnsi(cvarName);
         nint ns2 = Marshal.StringToHGlobalAnsi(value);
-        Base.pfnCvarValue2(pEnt.GetPointer(), requestID, ns1, ns2);
+        Base.pfnCvarValue2(pEnt.GetNative(), requestID, ns1, ns2);
         Marshal.FreeHGlobal(ns1);
         Marshal.FreeHGlobal(ns2);
     }

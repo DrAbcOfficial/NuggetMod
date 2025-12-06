@@ -86,7 +86,7 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
         {
             unsafe
             {
-                NativePtr->pentLandmark = (NativeEdict*)value.GetPointer();
+                NativePtr->pentLandmark = (NativeEdict*)value.GetNative();
             }
         }
     }

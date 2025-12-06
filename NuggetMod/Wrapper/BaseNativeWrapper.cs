@@ -46,7 +46,7 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
     /// Gets the raw pointer
     /// </summary>
     /// <returns>Unmanaged pointer</returns>
-    public nint GetPointer()
+    public nint GetNative()
     {
         unsafe
         {
@@ -59,7 +59,14 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
     /// </summary>
     public void Dispose()
     {
-        Dispose(true);
+        unsafe
+        {
+            if (NativePtr != null && _ownsPointer)
+            {
+                Marshal.FreeHGlobal((nint)NativePtr);
+                NativePtr = null;
+            }
+        }
         GC.SuppressFinalize(this);
     }
 
@@ -73,30 +80,5 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
         {
             return NativePtr != null;
         }
-    }
-
-    /// <summary>
-    /// Releases unmanaged resources and optionally releases managed resources
-    /// </summary>
-    /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources</param>
-    protected virtual void Dispose(bool disposing)
-    {
-        unsafe
-        {
-            if (NativePtr != null && _ownsPointer)
-            {
-                Marshal.FreeHGlobal((nint)NativePtr);
-                NativePtr = null;
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// Base deconstructer
-    /// </summary>
-    ~BaseNativeWrapper()
-    {
-        Dispose(false);
     }
 }

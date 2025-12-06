@@ -43,7 +43,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void SetModel(Edict e, string m)
     {
         nint ns = Marshal.StringToHGlobalAnsi(m);
-        Base.pfnSetModel(e.GetPointer(), ns);
+        Base.pfnSetModel(e.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -70,7 +70,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="e">Entity to set size for</param>
     /// <param name="min">Minimum bounds vector (e.g., Vector(-1,-1,-1))</param>
     /// <param name="max">Maximum bounds vector (e.g., Vector(1, 1, 1))</param>
-    public void SetSize(Edict e, Vector3f min, Vector3f max) => Base.pfnSetSize(e.GetPointer(), min.GetPointer(), max.GetPointer());
+    public void SetSize(Edict e, Vector3f min, Vector3f max) => Base.pfnSetSize(e.GetNative(), min.GetNative(), max.GetNative());
     /// <summary>
     /// Changes the current map/level
     /// </summary>
@@ -89,27 +89,27 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// Retrieves spawn parameters for an entity
     /// </summary>
     /// <param name="ent">Entity to get spawn parameters for</param>
-    public void GetSpawnParms(Edict ent) => Base.pfnGetSpawnParms(ent.GetPointer());
+    public void GetSpawnParms(Edict ent) => Base.pfnGetSpawnParms(ent.GetNative());
     
     /// <summary>
     /// Saves spawn parameters for an entity
     /// </summary>
     /// <param name="ent">Entity to save spawn parameters for</param>
-    public void SaveSpawnParms(Edict ent) => Base.pfnSaveSpawnParms(ent.GetPointer());
+    public void SaveSpawnParms(Edict ent) => Base.pfnSaveSpawnParms(ent.GetNative());
     
     /// <summary>
     /// Converts a direction vector to a yaw angle
     /// </summary>
     /// <param name="vec">Direction vector</param>
     /// <returns>Yaw angle in degrees</returns>
-    public float VecToYaw(Vector3f vec) => Base.pfnVecToYaw(vec.GetPointer());
+    public float VecToYaw(Vector3f vec) => Base.pfnVecToYaw(vec.GetNative());
     
     /// <summary>
     /// Converts a direction vector to angle values
     /// </summary>
     /// <param name="vec">Direction vector</param>
     /// <param name="angles">Output angles (pitch, yaw, roll)</param>
-    public void VecToAngles(Vector3f vec, Vector3f angles) => Base.pfnVecToAngles((nint)vec.GetPointer(), angles.GetPointer());
+    public void VecToAngles(Vector3f vec, Vector3f angles) => Base.pfnVecToAngles((nint)vec.GetNative(), angles.GetNative());
     
     /// <summary>
     /// Moves an entity towards a goal position
@@ -118,19 +118,19 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="goal">Target position</param>
     /// <param name="dist">Distance to move</param>
     /// <param name="moveType">Type of movement</param>
-    public void MoveToOrigin(Edict ent, Vector3f goal, float dist, int moveType) => Base.pfnMoveToOrigin(ent.GetPointer(), goal.GetPointer(), dist, moveType);
+    public void MoveToOrigin(Edict ent, Vector3f goal, float dist, int moveType) => Base.pfnMoveToOrigin(ent.GetNative(), goal.GetNative(), dist, moveType);
     
     /// <summary>
     /// Gradually changes an entity's yaw towards its ideal yaw
     /// </summary>
     /// <param name="edict">Entity to change yaw for</param>
-    public void ChangeYaw(Edict edict) => Base.pfnChangeYaw(edict.GetPointer());
+    public void ChangeYaw(Edict edict) => Base.pfnChangeYaw(edict.GetNative());
     
     /// <summary>
     /// Gradually changes an entity's pitch towards its ideal pitch
     /// </summary>
     /// <param name="ent">Entity to change pitch for</param>
-    public void ChangePitch(Edict ent) => Base.pfnChangePitch(ent.GetPointer());
+    public void ChangePitch(Edict ent) => Base.pfnChangePitch(ent.GetNative());
     /// <summary>
     /// Finds an entity by matching a field value
     /// </summary>
@@ -144,7 +144,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
         {
             nint ns1 = Marshal.StringToHGlobalAnsi(field);
             nint ns2 = Marshal.StringToHGlobalAnsi(value);
-            Edict ret = new((NativeEdict*)Base.pfnFindEntityByString(e.GetPointer(), ns1, ns2));
+            Edict ret = new((NativeEdict*)Base.pfnFindEntityByString(e.GetNative(), ns1, ns2));
             Marshal.FreeHGlobal(ns1);
             Marshal.FreeHGlobal(ns2);
             return ret;
@@ -155,7 +155,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="ent">Entity to get illumination for</param>
     /// <returns>Illumination value (0-255)</returns>
-    public int GetEntityIllum(Edict ent) => Base.pfnGetEntityIllum(ent.GetPointer());
+    public int GetEntityIllum(Edict ent) => Base.pfnGetEntityIllum(ent.GetNative());
     
     /// <summary>
     /// Finds entities within a spherical radius
@@ -168,7 +168,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         unsafe
         {
-            return new((NativeEdict*)Base.pfnFindEntityInSphere(e.GetPointer(), origin.GetPointer(), radius));
+            return new((NativeEdict*)Base.pfnFindEntityInSphere(e.GetNative(), origin.GetNative(), radius));
         }
     }
     /// <summary>
@@ -180,7 +180,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         unsafe
         {
-            return new((NativeEdict*)Base.pfnFindClientInPVS(e.GetPointer()));
+            return new((NativeEdict*)Base.pfnFindClientInPVS(e.GetNative()));
         }
     }
     /// <summary>
@@ -192,14 +192,14 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         unsafe
         {
-            return new((NativeEdict*)Base.pfnEntitiesInPVS(e.GetPointer()));
+            return new((NativeEdict*)Base.pfnEntitiesInPVS(e.GetNative()));
         }
     }
     /// <summary>
     /// Converts angles to global direction vectors (sets v_forward, v_right, v_up)
     /// </summary>
     /// <param name="vec">Angle vector (pitch, yaw, roll)</param>
-    public void MakeVectors(Vector3f vec) => Base.pfnMakeVectors(vec.GetPointer());
+    public void MakeVectors(Vector3f vec) => Base.pfnMakeVectors(vec.GetNative());
     
     /// <summary>
     /// Converts angles to direction vectors
@@ -208,7 +208,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="forward">Output forward vector</param>
     /// <param name="right">Output right vector</param>
     /// <param name="up">Output up vector</param>
-    public void AngleVectors(Vector3f vec, Vector3f forward, Vector3f right, Vector3f up) => Base.pfnAngleVectors(vec.GetPointer(), forward.GetPointer(), right.GetPointer(), up.GetPointer());
+    public void AngleVectors(Vector3f vec, Vector3f forward, Vector3f right, Vector3f up) => Base.pfnAngleVectors(vec.GetNative(), forward.GetNative(), right.GetNative(), up.GetNative());
     /// <summary>
     /// Creates a new entity
     /// </summary>
@@ -224,7 +224,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// Removes an entity from the world
     /// </summary>
     /// <param name="e">Entity to remove</param>
-    public void RemoveEntity(Edict e) => Base.pfnRemoveEntity(e.GetPointer());
+    public void RemoveEntity(Edict e) => Base.pfnRemoveEntity(e.GetNative());
 
     /// <summary>
     /// Creates a new entity with a specific class name
@@ -243,21 +243,21 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// Makes an entity static (non-interactive, optimized for rendering)
     /// </summary>
     /// <param name="ent">Entity to make static</param>
-    public void MakeStatic(Edict ent) => Base.pfnMakeStatic(ent.GetPointer());
+    public void MakeStatic(Edict ent) => Base.pfnMakeStatic(ent.GetNative());
     
     /// <summary>
     /// Checks if an entity is on the floor
     /// </summary>
     /// <param name="ent">Entity to check</param>
     /// <returns>Non-zero if entity is on floor, 0 otherwise</returns>
-    public int EntIsOnFloor(Edict ent) => Base.pfnEntIsOnFloor(ent.GetPointer());
+    public int EntIsOnFloor(Edict ent) => Base.pfnEntIsOnFloor(ent.GetNative());
     
     /// <summary>
     /// Drops an entity to the floor
     /// </summary>
     /// <param name="ent">Entity to drop</param>
     /// <returns>-1 if entity is stuck in world, 0 if dropped successfully</returns>
-    public int DropToFloor(Edict ent) => Base.pfnDropToFloor(ent.GetPointer());
+    public int DropToFloor(Edict ent) => Base.pfnDropToFloor(ent.GetNative());
     
     /// <summary>
     /// Moves an entity in a direction, checking for collisions
@@ -267,14 +267,14 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="dist">Distance to move</param>
     /// <param name="mode">Walk mode flags</param>
     /// <returns>Non-zero if move was successful</returns>
-    public int WalkMove(Edict ent, float yaw, float dist, int mode) => Base.pfnWalkMove(ent.GetPointer(), yaw, dist, mode);
+    public int WalkMove(Edict ent, float yaw, float dist, int mode) => Base.pfnWalkMove(ent.GetNative(), yaw, dist, mode);
     
     /// <summary>
     /// Sets the origin (position) of an entity
     /// </summary>
     /// <param name="ent">Entity to set origin for</param>
     /// <param name="origin">New origin position</param>
-    public void SetOrigin(Edict ent, Vector3f origin) => Base.pfnSetOrigin(ent.GetPointer(), origin.GetPointer());
+    public void SetOrigin(Edict ent, Vector3f origin) => Base.pfnSetOrigin(ent.GetNative(), origin.GetNative());
     /// <summary>
     /// Emits a sound from an entity
     /// </summary>
@@ -288,7 +288,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void EmitSound(Edict ent, int channel, string sample, float volume, float attenuation, int fFlags, int pitch)
     {
         nint ns = Marshal.StringToHGlobalAnsi(sample);
-        Base.pfnEmitSound(ent.GetPointer(), channel, ns, volume, attenuation, fFlags, pitch);
+        Base.pfnEmitSound(ent.GetNative(), channel, ns, volume, attenuation, fFlags, pitch);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -304,7 +304,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void EmitAmbientSound(Edict ent, Vector3f pos, string sample, float volume, float attenuation, int fFlags, int pitch)
     {
         nint ns = Marshal.StringToHGlobalAnsi(sample);
-        Base.pfnEmitAmbientSound(ent.GetPointer(), pos.GetPointer(), ns, volume, attenuation, fFlags, pitch);
+        Base.pfnEmitAmbientSound(ent.GetNative(), pos.GetNative(), ns, volume, attenuation, fFlags, pitch);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -316,7 +316,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pentToSkip">Entity to skip during trace</param>
     /// <param name="ptr">Trace result output</param>
     public void TraceLine(Vector3f v1, Vector3f v2, int fNoMonsters, Edict pentToSkip, ref TraceResult ptr) =>
-        Base.pfnTraceLine(v1.GetPointer(), v2.GetPointer(), fNoMonsters, pentToSkip.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceLine(v1.GetNative(), v2.GetNative(), fNoMonsters, pentToSkip.GetNative(), ptr.GetNative());
     
     /// <summary>
     /// Traces the trajectory of a tossed entity
@@ -325,7 +325,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pentToIgnore">Entity to ignore during trace</param>
     /// <param name="ptr">Trace result output</param>
     public void TraceToss(Edict pent, Edict pentToIgnore, ref TraceResult ptr) =>
-        Base.pfnTraceToss(pent.GetPointer(), pentToIgnore.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceToss(pent.GetNative(), pentToIgnore.GetNative(), ptr.GetNative());
     
     /// <summary>
     /// Traces using a monster's hull size
@@ -338,7 +338,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="ptr">Trace result output</param>
     /// <returns>Non-zero if trace hit something</returns>
     public int TraceMonsterHull(Edict pent, Vector3f v1, Vector3f v2, int fNoMonsters, Edict pentToSkip, ref TraceResult ptr) =>
-        Base.pfnTraceMonsterHull(pent.GetPointer(), v1.GetPointer(), v2.GetPointer(), fNoMonsters, pentToSkip.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceMonsterHull(pent.GetNative(), v1.GetNative(), v2.GetNative(), fNoMonsters, pentToSkip.GetNative(), ptr.GetNative());
     
     /// <summary>
     /// Traces using a specific hull size
@@ -350,7 +350,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pentToSkip">Entity to skip during trace</param>
     /// <param name="ptr">Trace result output</param>
     public void TraceHull(Vector3f v1, Vector3f v2, int fNoMonsters, int hullNumber, Edict pentToSkip, ref TraceResult ptr) =>
-        Base.pfnTraceHull(v1.GetPointer(), v2.GetPointer(), fNoMonsters, hullNumber, pentToSkip.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceHull(v1.GetNative(), v2.GetNative(), fNoMonsters, hullNumber, pentToSkip.GetNative(), ptr.GetNative());
     
     /// <summary>
     /// Traces against a specific model
@@ -361,7 +361,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pent">Entity with model to trace against</param>
     /// <param name="ptr">Trace result output</param>
     public void TraceModel(Vector3f v1, Vector3f v2, int hullNumber, Edict pent, ref TraceResult ptr) =>
-        Base.pfnTraceModel(v1.GetPointer(), v2.GetPointer(), hullNumber, pent.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceModel(v1.GetNative(), v2.GetNative(), hullNumber, pent.GetNative(), ptr.GetNative());
     /// <summary>
     /// Gets the texture name at a trace hit point
     /// </summary>
@@ -371,7 +371,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>Texture name at hit point</returns>
     public string TraceTexture(Edict pTextureEntity, Vector3f v1, Vector3f v2)
     {
-        nint ptr = Base.pfnTraceTexture(pTextureEntity.GetPointer(), v1.GetPointer(), v2.GetPointer());
+        nint ptr = Base.pfnTraceTexture(pTextureEntity.GetNative(), v1.GetNative(), v2.GetNative());
         return Marshal.PtrToStringUTF8(ptr) ?? string.Empty;
     }
     /// <summary>
@@ -384,7 +384,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pentToSkip">Entity to skip during trace</param>
     /// <param name="ptr">Trace result output</param>
     public void TraceSphere(Vector3f v1, Vector3f v2, int fNoMonsters, float radius, Edict pentToSkip, ref TraceResult ptr) =>
-        Base.pfnTraceSphere(v1.GetPointer(), v2.GetPointer(), fNoMonsters, radius, pentToSkip.GetPointer(), ptr.GetPointer());
+        Base.pfnTraceSphere(v1.GetNative(), v2.GetNative(), fNoMonsters, radius, pentToSkip.GetNative(), ptr.GetNative());
     
     /// <summary>
     /// Gets the aim vector for auto-aim
@@ -392,7 +392,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="ent">Entity to get aim for</param>
     /// <param name="speed">Projectile speed for aim prediction</param>
     /// <param name="vec">Output aim vector</param>
-    public void GetAimVector(Edict ent, float speed, ref Vector3f vec) => Base.pfnGetAimVector(ent.GetPointer(), speed, vec.GetPointer());
+    public void GetAimVector(Edict ent, float speed, ref Vector3f vec) => Base.pfnGetAimVector(ent.GetNative(), speed, vec.GetNative());
     /// <summary>
     /// Queues a server command to be executed
     /// </summary>
@@ -416,7 +416,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void ClientCommand(Edict ent, string str)
     {
         nint ns = Marshal.StringToHGlobalAnsi(str);
-        Base.pfnClientCommand(ent.GetPointer(), ns);
+        Base.pfnClientCommand(ent.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -426,7 +426,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="dir">Direction vector for particles</param>
     /// <param name="color">Particle color</param>
     /// <param name="count">Number of particles</param>
-    public void ParticleEffect(Vector3f org, Vector3f dir, float color, float count) => Base.pfnParticleEffect(org.GetPointer(), dir.GetPointer(), color, count);
+    public void ParticleEffect(Vector3f org, Vector3f dir, float color, float count) => Base.pfnParticleEffect(org.GetNative(), dir.GetNative(), color, count);
     
     /// <summary>
     /// Sets a light style for dynamic lighting
@@ -456,7 +456,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="vec">Point to check</param>
     /// <returns>Contents type constant</returns>
-    public int PointContents(Vector3f vec) => Base.pfnPointContents(vec.GetPointer());
+    public int PointContents(Vector3f vec) => Base.pfnPointContents(vec.GetNative());
     
     /// <summary>
     /// Begins a network message
@@ -467,7 +467,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="ed">Target client entity (for MSG_ONE) (can be null)</param>
     public void MessageBegin(MessageDestination msg_dest, int msg_type, Vector3f? pOrigin, Edict? ed)
     {
-        Base.pfnMessageBegin((int)msg_dest, msg_type, pOrigin?.GetPointer() ?? nint.Zero, ed?.GetPointer() ?? nint.Zero);
+        Base.pfnMessageBegin((int)msg_dest, msg_type, pOrigin?.GetNative() ?? nint.Zero, ed?.GetNative() ?? nint.Zero);
     }
     
     /// <summary>
@@ -531,7 +531,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// Registers a console variable (cvar)
     /// </summary>
     /// <param name="cvar">CVar structure to register</param>
-    public void CVarRegister(CVar cvar) => Base.pfnCVarRegister(cvar.GetPointer());
+    public void CVarRegister(CVar cvar) => Base.pfnCVarRegister(cvar.GetNative());
     
     /// <summary>
     /// Gets the float value of a console variable
@@ -610,20 +610,20 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="ed">Entity to allocate data for</param>
     /// <param name="size">Size of private data in bytes</param>
     /// <returns>Pointer to allocated private data</returns>
-    public nint PvAllocEntPrivateData(Edict ed, int size) => Base.pfnPvAllocEntPrivateData(ed.GetPointer(), size);
+    public nint PvAllocEntPrivateData(Edict ed, int size) => Base.pfnPvAllocEntPrivateData(ed.GetNative(), size);
     
     /// <summary>
     /// Gets the private data pointer for an entity
     /// </summary>
     /// <param name="ed">Entity to get private data from</param>
     /// <returns>Pointer to entity's private data</returns>
-    public nint PvEntPrivateData(Edict ed) => Base.pfnPvEntPrivateData(ed.GetPointer());
+    public nint PvEntPrivateData(Edict ed) => Base.pfnPvEntPrivateData(ed.GetNative());
     
     /// <summary>
     /// Frees the private data for an entity
     /// </summary>
     /// <param name="ed">Entity to free private data for</param>
-    public void FreeEntPrivateData(Edict ed) => Base.pfnFreeEntPrivateData(ed.GetPointer());
+    public void FreeEntPrivateData(Edict ed) => Base.pfnFreeEntPrivateData(ed.GetNative());
     /// <summary>
     /// Gets a string from the string pool by index
     /// </summary>
@@ -653,7 +653,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         unsafe
         {
-             return new((NativeEntvars*)Base.pfnGetVarsOfEnt(pEdict.GetPointer()));
+             return new((NativeEntvars*)Base.pfnGetVarsOfEnt(pEdict.GetNative()));
         }
     }
     /// <summary>
@@ -673,14 +673,14 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="pEdict">Entity to get offset from</param>
     /// <returns>Entity offset</returns>
-    public int EntOffsetOfPEntity(Edict pEdict) => Base.pfnEntOffsetOfPEntity(pEdict.GetPointer());
+    public int EntOffsetOfPEntity(Edict pEdict) => Base.pfnEntOffsetOfPEntity(pEdict.GetNative());
     
     /// <summary>
     /// Gets the index of an entity
     /// </summary>
     /// <param name="pEdict">Entity to get index from</param>
     /// <returns>Entity index (1-based)</returns>
-    public int IndexOfEdict(Edict pEdict) => Base.pfnIndexOfEdict(pEdict.GetPointer());
+    public int IndexOfEdict(Edict pEdict) => Base.pfnIndexOfEdict(pEdict.GetNative());
     /// <summary>
     /// Gets an entity from an entity index
     /// </summary>
@@ -702,7 +702,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         unsafe
         {
-            return new((NativeEdict*)Base.pfnFindEntityByVars(pvars.GetPointer()));
+            return new((NativeEdict*)Base.pfnFindEntityByVars(pvars.GetNative()));
         }
     }
     /// <summary>
@@ -710,7 +710,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="pEdict">Entity to get model from</param>
     /// <returns>Pointer to model data</returns>
-    public nint GetModelPtr(Edict pEdict) => Base.pfnGetModelPtr(pEdict.GetPointer());
+    public nint GetModelPtr(Edict pEdict) => Base.pfnGetModelPtr(pEdict.GetNative());
     
     /// <summary>
     /// Registers a user message for network communication
@@ -730,7 +730,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="ent">Entity to move</param>
     /// <param name="flTime">Time delta</param>
-    public void AnimationAutomove(Edict ent, float flTime) => Base.pfnAnimationAutomove(ent.GetPointer(), flTime);
+    public void AnimationAutomove(Edict ent, float flTime) => Base.pfnAnimationAutomove(ent.GetNative(), flTime);
     
     /// <summary>
     /// Gets the position and angles of a bone in a model
@@ -739,7 +739,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="iBone">Bone index</param>
     /// <param name="origin">Output bone position</param>
     /// <param name="angles">Output bone angles</param>
-    public void GetBonePosition(Edict ent, int iBone, ref Vector3f origin, ref Vector3f angles) => Base.pfnGetBonePosition(ent.GetPointer(), iBone, origin.GetPointer(), angles.GetPointer());
+    public void GetBonePosition(Edict ent, int iBone, ref Vector3f origin, ref Vector3f angles) => Base.pfnGetBonePosition(ent.GetNative(), iBone, origin.GetNative(), angles.GetNative());
     /// <summary>
     /// Gets a function address from a function name
     /// </summary>
@@ -767,7 +767,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void ClientPrintf(Edict ent, PrintType ptype, string szMsg)
     {
         nint ns = Marshal.StringToHGlobalAnsi(szMsg);
-        Base.pfnClientPrintf(ent.GetPointer(), (int)ptype, ns);
+        Base.pfnClientPrintf(ent.GetNative(), (int)ptype, ns);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -806,13 +806,13 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="origin">Output attachment position</param>
     /// <param name="angles">Output attachment angles</param>
     public void GetAttachment(Edict ent, int iAttachment, ref Vector3f origin, ref Vector3f angles) =>
-        Base.pfnGetAttachment(ent.GetPointer(), iAttachment, origin.GetPointer(), angles.GetPointer());
+        Base.pfnGetAttachment(ent.GetNative(), iAttachment, origin.GetNative(), angles.GetNative());
     
     /// <summary>
     /// Initializes a CRC32 checksum
     /// </summary>
     /// <param name="pulCRC">CRC32 structure to initialize</param>
-    public void CRC32_Init(CRC32 pulCRC) => Base.pfnCRC32_Init(pulCRC.GetPointer());
+    public void CRC32_Init(CRC32 pulCRC) => Base.pfnCRC32_Init(pulCRC.GetNative());
     
     /// <summary>
     /// Processes a buffer for CRC32 checksum calculation
@@ -821,7 +821,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="buffer">Buffer pointer</param>
     /// <param name="len">Buffer length</param>
     public void CRC32_ProcessBuffer(CRC32 pulCRC, nint buffer, int len) =>
-        Base.pfnCRC32_ProcessBuffer(pulCRC.GetPointer(), buffer, len);
+        Base.pfnCRC32_ProcessBuffer(pulCRC.GetNative(), buffer, len);
     
     /// <summary>
     /// Processes a single byte for CRC32 checksum calculation
@@ -829,7 +829,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="pulCRC">CRC32 structure</param>
     /// <param name="ch">Byte to process</param>
     public void CRC32_ProcessByte(CRC32 pulCRC, byte ch) =>
-        Base.pfnCRC32_ProcessByte(pulCRC.GetPointer(), ch);
+        Base.pfnCRC32_ProcessByte(pulCRC.GetNative(), ch);
     /// <summary>
     /// Finalizes a CRC32 checksum calculation
     /// </summary>
@@ -866,7 +866,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="ent">Client entity</param>
     /// <param name="viewent">Entity to view from</param>
-    public void SetView(Edict ent, Edict viewent) => Base.pfnSetView(ent.GetPointer(), viewent.GetPointer());
+    public void SetView(Edict ent, Edict viewent) => Base.pfnSetView(ent.GetNative(), viewent.GetNative());
     
     /// <summary>
     /// Gets the current server time
@@ -880,7 +880,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="ent">Client entity</param>
     /// <param name="pitch">Pitch angle</param>
     /// <param name="yaw">Yaw angle</param>
-    public void CrosshairAngle(Edict ent, float pitch, float yaw) => Base.pfnCrosshairAngle(ent.GetPointer(), pitch, yaw);
+    public void CrosshairAngle(Edict ent, float pitch, float yaw) => Base.pfnCrosshairAngle(ent.GetNative(), pitch, yaw);
     /// <summary>
     /// Loads a file into memory
     /// </summary>
@@ -948,7 +948,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// Registers a console variable (alternative to CVarRegister)
     /// </summary>
     /// <param name="cvar">CVar structure to register</param>
-    public void CVar_RegisterVariable(CVar cvar) => Base.pfnCvar_RegisterVariable(cvar.GetPointer());
+    public void CVar_RegisterVariable(CVar cvar) => Base.pfnCvar_RegisterVariable(cvar.GetNative());
     
     /// <summary>
     /// Fades a client's sound volume
@@ -959,14 +959,14 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="holdTime">Hold duration at target volume</param>
     /// <param name="fadeInSeconds">Fade in duration</param>
     public void FadeClientVolume(Edict ent, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds) =>
-        Base.pfnFadeClientVolume(ent.GetPointer(), fadePercent, fadeOutSeconds, holdTime, fadeInSeconds);
+        Base.pfnFadeClientVolume(ent.GetNative(), fadePercent, fadeOutSeconds, holdTime, fadeInSeconds);
     
     /// <summary>
     /// Sets the maximum movement speed for a client
     /// </summary>
     /// <param name="ent">Client entity</param>
     /// <param name="fNewMaxspeed">New maximum speed</param>
-    public void SetClientMaxspeed(Edict ent, float fNewMaxspeed) => Base.pfnSetClientMaxspeed(ent.GetPointer(), fNewMaxspeed);
+    public void SetClientMaxspeed(Edict ent, float fNewMaxspeed) => Base.pfnSetClientMaxspeed(ent.GetNative(), fNewMaxspeed);
     /// <summary>
     /// Creates a fake client (bot)
     /// </summary>
@@ -994,7 +994,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="impulse">Impulse command</param>
     /// <param name="msec">Milliseconds for this frame</param>
     public void RunPlayerMove(Edict fakeClient, Vector3f viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec) =>
-        Base.pfnRunPlayerMove(fakeClient.GetPointer(), viewangles.GetPointer(), forwardmove, sidemove, upmove, buttons, impulse, msec);
+        Base.pfnRunPlayerMove(fakeClient.GetNative(), viewangles.GetNative(), forwardmove, sidemove, upmove, buttons, impulse, msec);
     
     /// <summary>
     /// Gets the total number of entities in the world
@@ -1006,7 +1006,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="ent">Entity to get info buffer from</param>
     /// <returns>Info buffer string</returns>
-    public string GetInfoKeyBuffer(Edict ent) => Marshal.PtrToStringUTF8(Base.pfnGetInfoKeyBuffer(ent.GetPointer())) ?? string.Empty;
+    public string GetInfoKeyBuffer(Edict ent) => Marshal.PtrToStringUTF8(Base.pfnGetInfoKeyBuffer(ent.GetNative())) ?? string.Empty;
     
     /// <summary>
     /// Gets a value from an info key buffer
@@ -1077,7 +1077,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="entityIndex">Entity to apply decal to</param>
     /// <param name="modelIndex">Model index</param>
     public void StaticDecal(Vector3f origin, int decalIndex, int entityIndex, int modelIndex) =>
-        Base.pfnStaticDecal(origin.GetPointer(), decalIndex, entityIndex, modelIndex);
+        Base.pfnStaticDecal(origin.GetNative(), decalIndex, entityIndex, modelIndex);
     
     /// <summary>
     /// Precaches a generic file
@@ -1094,7 +1094,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="e">Player entity</param>
     /// <returns>User ID</returns>
-    public int GetPlayerUserId(Edict e) => Base.pfnGetPlayerUserId(e.GetPointer());
+    public int GetPlayerUserId(Edict e) => Base.pfnGetPlayerUserId(e.GetNative());
     
     /// <summary>
     /// Builds a sound message for network transmission
@@ -1113,7 +1113,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void BuildSoundMsg(Edict entity, int channel, string sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, Vector3f pOrigin, Edict ed)
     {
         nint ns = Marshal.StringToHGlobalAnsi(sample);
-        Base.pfnBuildSoundMsg(entity.GetPointer(), channel, ns, volume, attenuation, fFlags, pitch, msg_dest, msg_type, pOrigin.GetPointer(), ed.GetPointer());
+        Base.pfnBuildSoundMsg(entity.GetNative(), channel, ns, volume, attenuation, fFlags, pitch, msg_dest, msg_type, pOrigin.GetNative(), ed.GetNative());
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -1142,7 +1142,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="e">Player entity</param>
     /// <returns>WON ID</returns>
-    public uint GetPlayerWONId(Edict e) => Base.pfnGetPlayerWONId(e.GetPointer());
+    public uint GetPlayerWONId(Edict e) => Base.pfnGetPlayerWONId(e.GetNative());
     
     /// <summary>
     /// Removes a key from an info string
@@ -1167,7 +1167,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public string GetPhysicsKeyValue(Edict ent, string key)
     {
         nint ns1 = Marshal.StringToHGlobalAnsi(key);
-        nint res = Base.pfnGetPhysicsKeyValue(ent.GetPointer(), ns1);
+        nint res = Base.pfnGetPhysicsKeyValue(ent.GetNative(), ns1);
         Marshal.FreeHGlobal(ns1);
         return Marshal.PtrToStringUTF8(res) ?? string.Empty;
     }
@@ -1181,7 +1181,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         nint ns1 = Marshal.StringToHGlobalAnsi(key);
         nint ns2 = Marshal.StringToHGlobalAnsi(value);
-        Base.pfnSetPhysicsKeyValue(ent.GetPointer(), ns1, ns2);
+        Base.pfnSetPhysicsKeyValue(ent.GetNative(), ns1, ns2);
         Marshal.FreeHGlobal(ns1);
         Marshal.FreeHGlobal(ns2);
     }
@@ -1192,7 +1192,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>Physics info string</returns>
     public string GetPhysicsInfoString(Edict ent)
     {
-        nint res = Base.pfnGetPhysicsInfoString(ent.GetPointer());
+        nint res = Base.pfnGetPhysicsInfoString(ent.GetNative());
         return Marshal.PtrToStringUTF8(res) ?? string.Empty;
     }
     /// <summary>
@@ -1224,7 +1224,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="bparam1">Boolean parameter 1</param>
     /// <param name="bparam2">Boolean parameter 2</param>
     public void PlaybackEvent(int flags, Edict ed, ushort eventindex, float delay, Vector3f origin, Vector3f angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2)
-        => Base.pfnPlaybackEvent(flags, ed.GetPointer(), eventindex, delay, origin.GetPointer(), angles.GetPointer(), fparam1, fparam2, iparam1, iparam2, bparam1, bparam2);
+        => Base.pfnPlaybackEvent(flags, ed.GetNative(), eventindex, delay, origin.GetNative(), angles.GetNative(), fparam1, fparam2, iparam1, iparam2, bparam1, bparam2);
 
     /// <summary>
     /// Sets up a "fat" Potentially Visible Set for an origin
@@ -1233,7 +1233,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>PVS data</returns>
     public string SetFatPVS(Vector3f org)
     {
-        nint ns = Base.pfnSetFatPVS(org.GetPointer());
+        nint ns = Base.pfnSetFatPVS(org.GetNative());
         return Marshal.PtrToStringUTF8(ns) ?? string.Empty;
     }
     /// <summary>
@@ -1243,7 +1243,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>PAS data</returns>
     public string SetFatPAS(Vector3f org)
     {
-        nint ns = Base.pfnSetFatPAS(org.GetPointer());
+        nint ns = Base.pfnSetFatPAS(org.GetNative());
         return Marshal.PtrToStringUTF8(ns) ?? string.Empty;
     }
     /// <summary>
@@ -1254,7 +1254,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>True if entity is visible</returns>
     public bool CheckVisibility(Edict entity, nint pset)
     {
-        int res = Base.pfnCheckVisibility(entity.GetPointer(), pset);
+        int res = Base.pfnCheckVisibility(entity.GetNative(), pset);
         return res != 0;
     }
     /// <summary>
@@ -1301,7 +1301,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     /// <param name="player">Player entity to check</param>
     /// <returns>Non-zero if player can be skipped</returns>
-    public int CanSkipPlayer(Edict player) => Base.pfnCanSkipPlayer(player.GetPointer());
+    public int CanSkipPlayer(Edict player) => Base.pfnCanSkipPlayer(player.GetNative());
     
     /// <summary>
     /// Finds a delta field by name
@@ -1346,7 +1346,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <param name="baseline">Baseline entity state</param>
     /// <returns>Non-zero on success</returns>
     public int CreateInstancedBaseline(int classname, EntityState baseline)
-        => Base.pfnCreateInstancedBaseline(classname, baseline.GetPointer());
+        => Base.pfnCreateInstancedBaseline(classname, baseline.GetNative());
     /// <summary>
     /// Directly sets a cvar value without triggering callbacks
     /// </summary>
@@ -1355,7 +1355,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void Cvar_DirectSet(CVar cvar, string value)
     {
         nint ns = Marshal.StringToHGlobalAnsi(value);
-        Base.pfnCvar_DirectSet(cvar.GetPointer(), ns);
+        Base.pfnCvar_DirectSet(cvar.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -1368,7 +1368,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void ForceUnmodified(ForceType type, Vector3f mins, Vector3f maxs, string filename)
     {
         nint ns = Marshal.StringToHGlobalAnsi(filename);
-        Base.pfnForceUnmodified((int)type, mins.GetPointer(), maxs.GetPointer(), ns);
+        Base.pfnForceUnmodified((int)type, mins.GetNative(), maxs.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
     /// <summary>
@@ -1381,7 +1381,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     {
         nint ni1 = Marshal.AllocHGlobal(sizeof(int));
         nint ni2 = Marshal.AllocHGlobal(sizeof(int));
-        Base.pfnGetPlayerStats(ent.GetPointer(), ni1, ni2);
+        Base.pfnGetPlayerStats(ent.GetNative(), ni1, ni2);
         ping = Marshal.ReadInt32(ni1);
         packet_loss = Marshal.ReadInt32(ni2);
         Marshal.FreeHGlobal(ni2);
@@ -1433,7 +1433,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// <returns>Authentication ID string</returns>
     public string GetPlayerAuthId(Edict e)
     {
-        nint res = Base.pfnGetPlayerAuthId(e.GetPointer());
+        nint res = Base.pfnGetPlayerAuthId(e.GetNative());
         return Marshal.PtrToStringUTF8(res) ?? string.Empty;
     }
     /// <summary>
@@ -1552,7 +1552,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void QueryClientCvarValue(Edict player, string cvarName)
     {
         nint ns = Marshal.StringToHGlobalAnsi(cvarName);
-        Base.pfnQueryClientCvarValue(player.GetPointer(), ns);
+        Base.pfnQueryClientCvarValue(player.GetNative(), ns);
         Marshal.FreeHGlobal(ns);
     }
 
@@ -1565,7 +1565,7 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public void QueryClientCvarValue2(Edict player, string cvarName, int requestID)
     {
         nint ns = Marshal.StringToHGlobalAnsi(cvarName);
-        Base.pfnQueryClientCvarValue2(player.GetPointer(), ns, requestID);
+        Base.pfnQueryClientCvarValue2(player.GetNative(), ns, requestID);
         Marshal.FreeHGlobal(ns);
     }
 

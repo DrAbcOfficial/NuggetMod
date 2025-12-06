@@ -21,47 +21,47 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// </summary>
     /// <param name="pent">Entity to spawn</param>
     /// <returns>Spawn result code</returns>
-    public int Spawn(Edict pent) => Base.pfnSpawn(pent.GetPointer());
+    public int Spawn(Edict pent) => Base.pfnSpawn(pent.GetNative());
     /// <summary>
     /// Called every frame for entities that need to think
     /// </summary>
     /// <param name="pent">Entity to think</param>
-    public void Think(Edict pent) => Base.pfnThink(pent.GetPointer());
+    public void Think(Edict pent) => Base.pfnThink(pent.GetNative());
     
     /// <summary>
     /// Called when an entity is used by another entity
     /// </summary>
     /// <param name="pentUsed">Entity being used</param>
     /// <param name="pentOther">Entity doing the using</param>
-    public void Use(Edict pentUsed, Edict pentOther) => Base.pfnUse(pentUsed.GetPointer(), pentOther.GetPointer());
+    public void Use(Edict pentUsed, Edict pentOther) => Base.pfnUse(pentUsed.GetNative(), pentOther.GetNative());
     
     /// <summary>
     /// Called when two entities touch each other
     /// </summary>
     /// <param name="pentTouched">Entity being touched</param>
     /// <param name="pentOther">Entity doing the touching</param>
-    public void Touch(Edict pentTouched, Edict pentOther) => Base.pfnTouch(pentTouched.GetPointer(), pentOther.GetPointer());
+    public void Touch(Edict pentTouched, Edict pentOther) => Base.pfnTouch(pentTouched.GetNative(), pentOther.GetNative());
     
     /// <summary>
     /// Called when an entity is blocked by another entity
     /// </summary>
     /// <param name="pentBlocked">Entity being blocked</param>
     /// <param name="pentOther">Entity doing the blocking</param>
-    public void Blocked(Edict pentBlocked, Edict pentOther) => Base.pfnBlocked(pentBlocked.GetPointer(), pentOther.GetPointer());
+    public void Blocked(Edict pentBlocked, Edict pentOther) => Base.pfnBlocked(pentBlocked.GetNative(), pentOther.GetNative());
     
     /// <summary>
     /// Called to set a key-value pair on an entity during map loading
     /// </summary>
     /// <param name="pentKeyvalue">Entity receiving the key-value</param>
     /// <param name="pkvd">Key-value data</param>
-    public void KeyValue(Edict pentKeyvalue, KeyValueData pkvd) => Base.pfnKeyValue(pentKeyvalue.GetPointer(), pkvd.GetPointer());
+    public void KeyValue(Edict pentKeyvalue, KeyValueData pkvd) => Base.pfnKeyValue(pentKeyvalue.GetNative(), pkvd.GetNative());
 
     /// <summary>
     /// Saves entity data to persistent storage
     /// </summary>
     /// <param name="pent">Entity to save</param>
     /// <param name="pSaveData">Save data structure</param>
-    public void Save(Edict pent, nint pSaveData) => Base.pfnSave(pent.GetPointer(), pSaveData);
+    public void Save(Edict pent, nint pSaveData) => Base.pfnSave(pent.GetNative(), pSaveData);
     
     /// <summary>
     /// Restores entity data from persistent storage
@@ -70,13 +70,13 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="pSaveData">Save data structure</param>
     /// <param name="globalEntity">Whether this is a global entity</param>
     /// <returns>Restore result code</returns>
-    public int Restore(Edict pent, nint pSaveData, int globalEntity) => Base.pfnRestore(pent.GetPointer(), pSaveData, globalEntity);
+    public int Restore(Edict pent, nint pSaveData, int globalEntity) => Base.pfnRestore(pent.GetNative(), pSaveData, globalEntity);
     
     /// <summary>
     /// Sets the absolute bounding box for an entity
     /// </summary>
     /// <param name="pent">Entity to update</param>
-    public void SetAbsBox(Edict pent) => Base.pfnSetAbsBox(pent.GetPointer());
+    public void SetAbsBox(Edict pent) => Base.pfnSetAbsBox(pent.GetNative());
     
     /// <summary>
     /// Writes save fields to storage
@@ -121,7 +121,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
         {
             Marshal.WriteByte(ns3, i, (byte)szRejectReason[i]);
         }
-        bool res = Base.pfnClientConnect(pEntity.GetPointer(), ns1, ns2, ns3) == 1;
+        bool res = Base.pfnClientConnect(pEntity.GetNative(), ns1, ns2, ns3) == 1;
         szRejectReason = Marshal.PtrToStringUTF8(ns3) ?? string.Empty;
         Marshal.FreeHGlobal(ns3);
         Marshal.FreeHGlobal(ns2);
@@ -132,25 +132,25 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// Called when a client disconnects from the server
     /// </summary>
     /// <param name="pEntity">Client entity</param>
-    public void ClientDisconnect(Edict pEntity) => Base.pfnClientDisconnect(pEntity.GetPointer());
+    public void ClientDisconnect(Edict pEntity) => Base.pfnClientDisconnect(pEntity.GetNative());
     
     /// <summary>
     /// Called when a client is killed
     /// </summary>
     /// <param name="pEntity">Client entity</param>
-    public void ClientKill(Edict pEntity) => Base.pfnClientKill(pEntity.GetPointer());
+    public void ClientKill(Edict pEntity) => Base.pfnClientKill(pEntity.GetNative());
     
     /// <summary>
     /// Called when a client is spawned into the game
     /// </summary>
     /// <param name="pEntity">Client entity</param>
-    public void ClientPutInServer(Edict pEntity) => Base.pfnClientPutInServer(pEntity.GetPointer());
+    public void ClientPutInServer(Edict pEntity) => Base.pfnClientPutInServer(pEntity.GetNative());
     
     /// <summary>
     /// Called when a client executes a command
     /// </summary>
     /// <param name="pEntity">Client entity</param>
-    public void ClientCommand(Edict pEntity) => Base.pfnClientCommand(pEntity.GetPointer());
+    public void ClientCommand(Edict pEntity) => Base.pfnClientCommand(pEntity.GetNative());
     /// <summary>
     /// Called when a client's user info changes (name, model, etc.)
     /// </summary>
@@ -159,7 +159,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     public void ClientUserInfoChanged(Edict pEntity, ref string infobuffer)
     {
         nint ns = Marshal.StringToHGlobalAnsi(infobuffer);
-        Base.pfnClientUserInfoChanged(pEntity.GetPointer(), ns);
+        Base.pfnClientUserInfoChanged(pEntity.GetNative(), ns);
         infobuffer = Marshal.PtrToStringUTF8(ns) ?? string.Empty;
         Marshal.FreeHGlobal(ns);
     }
@@ -170,7 +170,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="pEdictList">List of all edicts</param>
     /// <param name="edictCount">Number of edicts</param>
     /// <param name="clientMax">Maximum number of clients</param>
-    public void ServerActivate(Edict pEdictList, int edictCount, int clientMax) => Base.pfnServerActivate(pEdictList.GetPointer(), edictCount, clientMax);
+    public void ServerActivate(Edict pEdictList, int edictCount, int clientMax) => Base.pfnServerActivate(pEdictList.GetNative(), edictCount, clientMax);
     
     /// <summary>
     /// Called when the server is deactivated
@@ -181,13 +181,13 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// Called before player physics simulation
     /// </summary>
     /// <param name="pEntity">Player entity</param>
-    public void PlayerPreThink(Edict pEntity) => Base.pfnPlayerPreThink(pEntity.GetPointer());
+    public void PlayerPreThink(Edict pEntity) => Base.pfnPlayerPreThink(pEntity.GetNative());
     
     /// <summary>
     /// Called after player physics simulation
     /// </summary>
     /// <param name="pEntity">Player entity</param>
-    public void PlayerPostThink(Edict pEntity) => Base.pfnPlayerPostThink(pEntity.GetPointer());
+    public void PlayerPostThink(Edict pEntity) => Base.pfnPlayerPostThink(pEntity.GetNative());
 
     /// <summary>
     /// Called at the start of each server frame
@@ -219,25 +219,25 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// </summary>
     /// <param name="pEntity">Player entity</param>
     /// <param name="pCustom">Customization data</param>
-    public void PlayerCustomization(Edict pEntity, Customization pCustom) => Base.pfnPlayerCustomization(pEntity.GetPointer(), pCustom.GetPointer());
+    public void PlayerCustomization(Edict pEntity, Customization pCustom) => Base.pfnPlayerCustomization(pEntity.GetNative(), pCustom.GetNative());
 
     /// <summary>
     /// Called when a spectator connects
     /// </summary>
     /// <param name="pEntity">Spectator entity</param>
-    public void SpectatorConnect(Edict pEntity) => Base.pfnSpectatorConnect(pEntity.GetPointer());
+    public void SpectatorConnect(Edict pEntity) => Base.pfnSpectatorConnect(pEntity.GetNative());
     
     /// <summary>
     /// Called when a spectator disconnects
     /// </summary>
     /// <param name="pEntity">Spectator entity</param>
-    public void SpectatorDisconnect(Edict pEntity) => Base.pfnSpectatorDisconnect(pEntity.GetPointer());
+    public void SpectatorDisconnect(Edict pEntity) => Base.pfnSpectatorDisconnect(pEntity.GetNative());
     
     /// <summary>
     /// Called every frame for spectators
     /// </summary>
     /// <param name="pEntity">Spectator entity</param>
-    public void SpectatorThink(Edict pEntity) => Base.pfnSpectatorThink(pEntity.GetPointer());
+    public void SpectatorThink(Edict pEntity) => Base.pfnSpectatorThink(pEntity.GetNative());
 
     /// <summary>
     /// Notifies the game DLL that the engine is shutting down (allows mod authors to set a breakpoint)
@@ -255,13 +255,13 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// </summary>
     /// <param name="pm">Player movement structure</param>
     /// <param name="server">True if running on server, false if on client</param>
-    public void PMMove(PlayerMove pm, bool server) => Base.pfnPMMove(pm.GetPointer(), server ? 1 : 0);
+    public void PMMove(PlayerMove pm, bool server) => Base.pfnPMMove(pm.GetNative(), server ? 1 : 0);
     
     /// <summary>
     /// Initializes player movement structure
     /// </summary>
     /// <param name="pm">Player movement structure</param>
-    public void PMInit(PlayerMove pm) => Base.pfnPMInit(pm.GetPointer());
+    public void PMInit(PlayerMove pm) => Base.pfnPMInit(pm.GetNative());
 
     /// <summary>
     /// Finds the texture type by name for footstep sounds
@@ -291,7 +291,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
             {
                 fixed (byte* ppas = pas)
                 {
-                    Base.pfnSetupVisibility(pViewEntity.GetPointer(), pClient.GetPointer(), (nint)(&ppvs), (nint)(&ppas));
+                    Base.pfnSetupVisibility(pViewEntity.GetNative(), pClient.GetNative(), (nint)(&ppvs), (nint)(&ppas));
                 }
             }
         }
@@ -303,7 +303,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="ent">Client entity</param>
     /// <param name="sendweapons">Whether to send weapon data</param>
     /// <param name="cd">Client data structure</param>
-    public void UpdateClientData(Edict ent, int sendweapons, ClientData cd) => Base.pfnUpdateClientData(ent.GetPointer(), sendweapons, cd.GetPointer());
+    public void UpdateClientData(Edict ent, int sendweapons, ClientData cd) => Base.pfnUpdateClientData(ent.GetNative(), sendweapons, cd.GetNative());
     
     /// <summary>
     /// Adds entity state to the full pack for network transmission
@@ -323,7 +323,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
         {
             fixed (byte* ppSet = pSet)
             {
-                res = Base.pfnAddToFullPack(state.GetPointer(), e, ent.GetPointer(), host.GetPointer(), hostflags, player, (nint)ppSet);
+                res = Base.pfnAddToFullPack(state.GetNative(), e, ent.GetNative(), host.GetNative(), hostflags, player, (nint)ppSet);
             }
         }
         return res;
@@ -339,7 +339,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="playermodelindex">Player model index</param>
     /// <param name="player_mins">Player minimum bounds</param>
     /// <param name="player_maxs">Player maximum bounds</param>
-    public void CreateBaseline(int player, int eindex, EntityState baseline, Edict entity, int playermodelindex, Vector3f player_mins, Vector3f player_maxs) => Base.pfnCreateBaseline(player, eindex, baseline.GetPointer(), entity.GetPointer(), playermodelindex, player_mins.GetPointer(), player_maxs.GetPointer());
+    public void CreateBaseline(int player, int eindex, EntityState baseline, Edict entity, int playermodelindex, Vector3f player_mins, Vector3f player_maxs) => Base.pfnCreateBaseline(player, eindex, baseline.GetNative(), entity.GetNative(), playermodelindex, player_mins.GetNative(), player_maxs.GetNative());
     
     /// <summary>
     /// Registers custom network message encoders
@@ -352,7 +352,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="player">Player entity</param>
     /// <param name="info">Weapon data structure to fill</param>
     /// <returns>Non-zero if successful</returns>
-    public int GetWeaponData(Edict player, WeaponData info) => Base.pfnGetWeaponData(player.GetPointer(), info.GetPointer());
+    public int GetWeaponData(Edict player, WeaponData info) => Base.pfnGetWeaponData(player.GetNative(), info.GetNative());
     
     /// <summary>
     /// Called when a client command starts
@@ -360,13 +360,13 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="plyer">Player entity</param>
     /// <param name="cmd">User command</param>
     /// <param name="random_seed">Random seed for prediction</param>
-    public void CmdStart(Edict plyer, UserCmd cmd, uint random_seed) => Base.pfnCmdStart(plyer.GetPointer(), cmd.GetPointer(), random_seed);
+    public void CmdStart(Edict plyer, UserCmd cmd, uint random_seed) => Base.pfnCmdStart(plyer.GetNative(), cmd.GetNative(), random_seed);
     
     /// <summary>
     /// Called when a client command ends
     /// </summary>
     /// <param name="plyer">Player entity</param>
-    public void CmdEnd(Edict plyer) => Base.pfnCmdEnd(plyer.GetPointer());
+    public void CmdEnd(Edict plyer) => Base.pfnCmdEnd(plyer.GetNative());
 
     /// <summary>
     /// Handles a connectionless packet (server browser queries, etc.).
@@ -382,7 +382,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
         nint ns1 = Marshal.StringToHGlobalAnsi(args);
         nint ns2 = Marshal.AllocHGlobal(response_buffer_size);
         nint ni = Marshal.AllocHGlobal(sizeof(int));
-        int res = Base.pfnConnectionlessPacket(net_from.GetPointer(), ns1, ns2, ni);
+        int res = Base.pfnConnectionlessPacket(net_from.GetNative(), ns1, ns2, ni);
         response_buffer = Marshal.PtrToStringUTF8(ns2) ?? string.Empty;
         response_buffer_size = Marshal.ReadInt32(ni);
         Marshal.FreeHGlobal(ni);
@@ -398,7 +398,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
     /// <param name="mins">Minimum bounds output</param>
     /// <param name="maxs">Maximum bounds output</param>
     /// <returns>1 if hull exists, 0 otherwise</returns>
-    public int GetHullBounds(int hullnumber, ref Vector3f mins, ref Vector3f maxs) => Base.pfnGetHullBounds(hullnumber, mins.GetPointer(), maxs.GetPointer());
+    public int GetHullBounds(int hullnumber, ref Vector3f mins, ref Vector3f maxs) => Base.pfnGetHullBounds(hullnumber, mins.GetNative(), maxs.GetNative());
 
     /// <summary>
     /// Creates baselines for certain "unplaced" items
@@ -421,7 +421,7 @@ public class DLLFunctions(nint ptr) : BaseFunctionWrapper<NativeDllFuncs>(ptr)
         {
             Marshal.WriteByte(ns2, i, (byte)disconnect_message[i]);
         }
-        int res = Base.pfnInconsistentFile(player.GetPointer(), ns1, ns2);
+        int res = Base.pfnInconsistentFile(player.GetNative(), ns1, ns2);
         disconnect_message = Marshal.PtrToStringUTF8(ns2) ?? string.Empty;
         Marshal.FreeHGlobal(ns2);
         Marshal.FreeHGlobal(ns1);
