@@ -14,6 +14,8 @@ To quickly set up your first MetaMod plugin, refer to the template repository:
 
 [NuggetMod.Template](https://github.com/DrAbcOfficial/NuggetMod.Template)
 
+Or refer [ChatEngine](https://github.com/DrAbcOfficial/ChatEngine)
+
 ### Basic Workflow
 
 1. Create new project from the template repository
