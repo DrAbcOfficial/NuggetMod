@@ -25,7 +25,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnLogConsole((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
+            Base.pfnLogConsole((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -41,7 +41,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnLogMessage((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
+            Base.pfnLogMessage((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -57,7 +57,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnLogError((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
+            Base.pfnLogError((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -73,7 +73,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnLogDeveloper((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
+            Base.pfnLogDeveloper((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -89,7 +89,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnCenterSay((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
+            Base.pfnCenterSay((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -106,7 +106,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            Base.pfnCenterSayParms((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, *((NativeHudParams*)hudParams.GetNative()), (byte*)strptr);
+            Base.pfnCenterSayParms((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, *((NativeHudParams*)hudParams.GetNative()), (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -121,7 +121,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint strptr = Marshal.StringToHGlobalAnsi(entStr);
         unsafe
         {
-            Base.pfnCallGameEntity((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (NativeEntvars*)pev.GetNative());
+            Base.pfnCallGameEntity((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr, (NativeEntvars*)pev.GetNative());
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -139,7 +139,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         int result = 0;
         unsafe
         {
-            result = Base.pfnGetUserMsgID((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (int*)temp);
+            result = Base.pfnGetUserMsgID((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr, (int*)temp);
         }
         size = Marshal.ReadInt32(temp);
         Marshal.FreeHGlobal(strptr);
@@ -159,7 +159,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint result = nint.Zero;
         unsafe
         {
-            result = Base.pfnGetUserMsgName((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, msgid, (int*)temp);
+            result = Base.pfnGetUserMsgName((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, msgid, (int*)temp);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         size = Marshal.ReadInt32(temp);
@@ -176,7 +176,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint result = nint.Zero;
         unsafe
         {
-            result = Base.pfnGetPluginPath((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr);
+            result = Base.pfnGetPluginPath((NativePluginInfo*)MetaMod.PluginInfo.NativePtr);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         return str ?? string.Empty;
@@ -192,7 +192,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint result = nint.Zero;
         unsafe
         {
-            result = Base.pfnGetGameInfo((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, type);
+            result = Base.pfnGetGameInfo((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, type);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         return str ?? string.Empty;
@@ -211,7 +211,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         int res = 0;
         unsafe
         {
-            res = Base.pfnLoadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, now, out pluginHandle);
+            res = Base.pfnLoadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr, now, out pluginHandle);
         }
         Marshal.FreeHGlobal(strptr);
         return res != 0;
@@ -230,7 +230,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         int res = 0;
         unsafe
         {
-            res = Base.pfnUnloadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, now, reason);
+            res = Base.pfnUnloadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (byte*)strptr, now, reason);
         }
         Marshal.FreeHGlobal(strptr);
         return res != 0;
@@ -248,7 +248,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         int res = 0;
         unsafe
         {
-            res = Base.pfnUnloadPluginByHandle((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, handle, now, reason);
+            res = Base.pfnUnloadPluginByHandle((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, handle, now, reason);
         }
         return res != 0;
     }
@@ -263,7 +263,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         nint result = nint.Zero;
         unsafe
         {
-            result = Base.pfnIsQueryingClientCvar((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (NativeEdict*)player.GetNative());
+            result = Base.pfnIsQueryingClientCvar((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, (NativeEdict*)player.GetNative());
         }
         return Marshal.PtrToStringUTF8(result) ?? string.Empty;
     }
@@ -277,7 +277,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         int res = 0;
         unsafe
         {
-            res = Base.pfnMakeRequestID((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr);
+            res = Base.pfnMakeRequestID((NativePluginInfo*)MetaMod.PluginInfo.NativePtr);
         }
         return res;
     }
@@ -297,7 +297,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
             NativeDllFuncs* pDllFuncs;
             NativeNewDllFuncs* pNewDllFuncs;
             
-            Base.pfnGetHookTables((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, out pEngineFuncs, out pDllFuncs, out pNewDllFuncs);
+            Base.pfnGetHookTables((NativePluginInfo*)MetaMod.PluginInfo.NativePtr, out pEngineFuncs, out pDllFuncs, out pNewDllFuncs);
             
             peng = new EngineFuncs((nint)pEngineFuncs);
             pdll = new DLLFunctions((nint)pDllFuncs);

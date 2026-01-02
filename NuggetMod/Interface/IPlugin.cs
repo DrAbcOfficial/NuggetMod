@@ -12,12 +12,12 @@ public interface IPlugin
     /// </summary>
     /// <returns>Plugin metadata</returns>
     public MetaPluginInfo GetPluginInfo();
-    
+
     /// <summary>
     /// Initializes the plugin
     /// </summary>
     public void MetaInit();
-    
+
     /// <summary>
     /// Queries the plugin for compatibility and initialization
     /// </summary>
@@ -25,7 +25,7 @@ public interface IPlugin
     /// <param name="pMetaUtilFuncs">MetaMod utility functions</param>
     /// <returns>True if the plugin can load successfully</returns>
     public bool MetaQuery(InterfaceVersion interfaceVersion, MetaUtilFunctions pMetaUtilFuncs);
-    
+
     /// <summary>
     /// Attaches the plugin to the game
     /// </summary>
@@ -34,7 +34,7 @@ public interface IPlugin
     /// <param name="pGamedllFuncs">Game DLL functions</param>
     /// <returns>True if attachment was successful</returns>
     public bool MetaAttach(PluginLoadTime now, MetaGlobals pMGlobals, MetaGameDLLFunctions pGamedllFuncs);
-    
+
     /// <summary>
     /// Detaches the plugin from the game
     /// </summary>

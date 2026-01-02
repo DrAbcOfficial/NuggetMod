@@ -1,4 +1,4 @@
-﻿using NuggetMod.Enum.Metamod;
+using NuggetMod.Enum.Metamod;
 using NuggetMod.Native.Metamod;
 using NuggetMod.Wrapper.Engine;
 using NuggetMod.Wrapper.Metamod;
@@ -15,7 +15,7 @@ public abstract class PluginEntry
     /// The plugin interface implementation
     /// </summary>
     protected static IPlugin? Interface;
-    
+
     /// <summary>
     /// Gets the plugin interface instance
     /// </summary>
@@ -27,7 +27,7 @@ public abstract class PluginEntry
             throw new NullReferenceException(nameof(Interface));
         return Interface;
     }
-    
+
     /// <summary>
     /// Gets the plugin information
     /// </summary>
@@ -72,7 +72,7 @@ public abstract class PluginEntry
     /// <returns>1 if successful, 0 otherwise.</returns>
     protected static int Native_Meta_Query(nint interfaceVersion, nint plinfo, nint pMetaUtilFuncs)
     {
-        string? version = Marshal.PtrToStringAnsi(interfaceVersion) ?? throw new Exception("Interface version is null");
+        string? version = Marshal.PtrToStringAnsi(interfaceVersion) ?? throw new InvalidOperationException("Interface version string is null");
         var ifver = version switch
         {
             "1" => InterfaceVersion.V1,
@@ -96,7 +96,7 @@ public abstract class PluginEntry
             "5:14" => InterfaceVersion.V5_14,
             "5:15" => InterfaceVersion.V5_15,
             "5:16" => InterfaceVersion.V5_16,
-            _ => throw new Exception("Unknown interface version"),
+            _ => throw new NotSupportedException($"Unsupported MetaMod interface version: {version}"),
         };
 
         var pinterface = GetPluginInterface();
@@ -106,18 +106,7 @@ public abstract class PluginEntry
         bool result = pinterface.MetaQuery(ifver, MetaMod.MetaUtilFuncs);
         unsafe
         {
-            nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
-            *(NativePluginInfo**)plinfo = (NativePluginInfo*)ptr;
-            (*(NativePluginInfo**)plinfo)->ifvers = Marshal.StringToHGlobalAnsi(pinfo.GetInterfaceVersionString());
-            (*(NativePluginInfo**)plinfo)->name = Marshal.StringToHGlobalAnsi(pinfo.Name);
-            (*(NativePluginInfo**)plinfo)->version = Marshal.StringToHGlobalAnsi(pinfo.Version);
-            (*(NativePluginInfo**)plinfo)->date = Marshal.StringToHGlobalAnsi(pinfo.Date);
-            (*(NativePluginInfo**)plinfo)->author = Marshal.StringToHGlobalAnsi(pinfo.Author);
-            (*(NativePluginInfo**)plinfo)->url = Marshal.StringToHGlobalAnsi(pinfo.Url);
-            (*(NativePluginInfo**)plinfo)->logtag = Marshal.StringToHGlobalAnsi(pinfo.LogTag);
-            (*(NativePluginInfo**)plinfo)->loadable = (int)pinfo.Loadable;
-            (*(NativePluginInfo**)plinfo)->unloadable = (int)pinfo.Unloadable;
-            pinfo.NavitePtr = ptr;
+            *(NativePluginInfo**)plinfo = pinfo.NativePtr;
         }
         return result ? 1 : 0;
     }
@@ -175,6 +164,10 @@ public abstract class PluginEntry
     {
         var pinterface = GetPluginInterface();
         bool result = pinterface.MetaDetach(now, reason);
+
+        var pluginInfo = GetPluginInfo();
+        pluginInfo.Dispose();
+
         return result ? 1 : 0;
     }
 }

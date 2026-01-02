@@ -1,4 +1,4 @@
-﻿using NuggetMod.Native;
+using NuggetMod.Native;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Wrapper;
@@ -31,6 +31,14 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
     }
 
     /// <summary>
+    /// Finalizer to ensure unmanaged memory is released
+    /// </summary>
+    ~BaseNativeWrapper()
+    {
+        Dispose(false);
+    }
+
+    /// <summary>
     /// Constructor (allocates new unmanaged memory)
     /// </summary>
     public BaseNativeWrapper()
@@ -59,6 +67,16 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
     /// </summary>
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Releases unmanaged resources
+    /// </summary>
+    /// <param name="disposing">True if called from Dispose, false if called from finalizer</param>
+    protected virtual void Dispose(bool disposing)
+    {
         unsafe
         {
             if (NativePtr != null && _ownsPointer)
@@ -67,7 +85,6 @@ public abstract class BaseNativeWrapper<T> : IDisposable where T : unmanaged, IN
                 NativePtr = null;
             }
         }
-        GC.SuppressFinalize(this);
     }
 
     /// <summary>

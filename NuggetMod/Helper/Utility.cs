@@ -1,4 +1,4 @@
-﻿using NuggetMod.Interface;
+using NuggetMod.Interface;
 using NuggetMod.Wrapper.Engine;
 
 namespace NuggetMod.Helper;
@@ -8,6 +8,9 @@ namespace NuggetMod.Helper;
 /// </summary>
 public class Utility
 {
+    private const int MaxPlayers = 33;
+    private const int FirstPlayerIndex = 1;
+
     /// <summary>
     /// get all player list
     /// </summary>
@@ -15,7 +18,7 @@ public class Utility
     public static List<Edict> GetAllPlayers()
     {
         List<Edict> edicts = [];
-        for (int i = 1; i <= 33; i++)
+        for (int i = FirstPlayerIndex; i <= MaxPlayers; i++)
         {
             var edict = MetaMod.EngineFuncs.PEntityOfEntIndex(i);
             if (edict != null)
