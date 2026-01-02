@@ -1,6 +1,6 @@
 # NuggetMod
 
-Write metamod plugin based on .NET 9 and later
+Write metamod plugin based on .NET 10 and later
 
 [![](https://img.shields.io/nuget/v/DrAbc.NuggetMod.svg?label=NuggetMod&logo=NuGet)](https://www.nuget.org/packages/DrAbc.NuggetMod)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/DrAbc.NuggetMod?label=Downloads)
@@ -20,7 +20,7 @@ Or refer [ChatEngine](https://github.com/DrAbcOfficial/ChatEngine)
 
 1. Create new project from the template repository
 2. Customize the plugin logic for your needs
-3. Publish with .NET 9 AOT
+3. Publish with .NET 10 AOT
 
 ```
 //In your project

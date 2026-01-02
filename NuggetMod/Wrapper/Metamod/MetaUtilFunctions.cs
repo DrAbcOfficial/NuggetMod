@@ -1,4 +1,4 @@
-﻿using NuggetMod.Enum.Metamod;
+using NuggetMod.Enum.Metamod;
 using NuggetMod.Interface;
 using NuggetMod.Native.Engine;
 using NuggetMod.Native.Game;
@@ -283,14 +283,25 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
     }
 
     /// <summary>
-    /// Gets hook tables for engine and DLL functions (TODO: Finish implementation).
+    /// Gets hook tables for engine and DLL functions.
     /// </summary>
     /// <param name="peng">Engine functions output.</param>
     /// <param name="pdll">DLL functions output.</param>
     /// <param name="pnewdll">New DLL functions output.</param>
-    public void GetHookTables(/*out*/ EngineFuncs peng, /*out*/ int pdll, /*out*/ int pnewdll)
+    public void GetHookTables(out EngineFuncs peng, out DLLFunctions pdll, out NewDLLFunctions pnewdll)
     {
-
+        unsafe
+        {
+            NativeEngineFuncs* pEngineFuncs;
+            NativeDllFuncs* pDllFuncs;
+            NativeNewDllFuncs* pNewDllFuncs;
+            
+            Base.pfnGetHookTables((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, out pEngineFuncs, out pDllFuncs, out pNewDllFuncs);
+            
+            peng = new EngineFuncs((nint)pEngineFuncs);
+            pdll = new DLLFunctions((nint)pDllFuncs);
+            pnewdll = new NewDLLFunctions((nint)pNewDllFuncs);
+        }
     }
 
     /// <summary>

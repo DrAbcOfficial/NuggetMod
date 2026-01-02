@@ -1,4 +1,4 @@
-﻿using NuggetMod.Native.Common;
+using NuggetMod.Native.Common;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Engine.PM;
@@ -80,72 +80,63 @@ public struct NativePlayerMove : INativeStruct
     // world state
     // Number of entities to clip against.
     internal int numphysent;
+    internal unsafe fixed byte physents[16384];
+    
+    // Number of movement entities (ladders)
+    internal int nummoveent;
+    internal unsafe fixed byte moveents[16384];
+    
+    // All things being rendered, for tracing against things you don't actually collide with
+    internal int numvisent;
+    internal unsafe fixed byte visents[16384];
 
-    //TODO: FUCK ME
-    //internal unsafe fixed NativePhySent physents[64];
-    //// Number of momvement entities (ladders)
-    //internal int nummoveent;
-    //// just a list of ladders
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    //internal NativePhySent[] moveents;
+    // input to run through physics.
+    internal NativeUserCmd cmd;
 
-    //// All things being rendered, for tracing against things you don't actually collide with
-    //internal int numvisent;
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    //internal NativePhySent[] visents;
+    // Trace results for objects we collided with.
+    internal int numtouch;
+    internal unsafe fixed byte touchindex[1280];
 
-    //// input to run through physics.
-    //NativeUserCmd cmd;
+    internal unsafe fixed byte physinfo[256]; // Physics info string
 
-    //// Trace results for objects we collided with.
-    //int numtouch;
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    //NativePMTrace[] touchindex;
-
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-    //byte[] physinfo; // Physics info string
-
-    //nint movevars;
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    //NativeVector3f[] player_mins;
-    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    //NativeVector3f[] player_maxs;
+    internal nint movevars;
+    internal unsafe fixed byte player_mins[48];
+    internal unsafe fixed byte player_maxs[48];
 
     // Common functions
-    //TODO: Implement these
-    //const char*(*PM_Info_ValueForKey) ( const char* s, const char* key );
-    //void (* PM_Particle) (float* origin, int color, float life, int zpos, int zvel);
-    //int (* PM_TestPlayerPosition) (float* pos, pmtrace_t* ptrace);
-    //void (* Con_NPrintf) (int idx, char* fmt, ... );
-    //void (* Con_DPrintf) (char* fmt, ... );
-    //void (* Con_Printf) (char* fmt, ... );
-    //double (* Sys_FloatTime) (void );
-    //void (* PM_StuckTouch) (int hitent, pmtrace_t* ptraceresult);
-    //int (* PM_PointContents) (float* p, int* truecontents /*filled in if this is non-null*/ );
-    //int (* PM_TruePointContents) (float* p);
-    //int (* PM_HullPointContents) ( struct hull_s *hull, int num, float* p);
-    //pmtrace_t(*PM_PlayerTrace) (float* start, float* end, int traceFlags, int ignore_pe);
-    //struct pmtrace_s *(* PM_TraceLine) (float* start, float* end, int flags, int usehulll, int ignore_pe);
-    //long (* RandomLong) (long lLow, long lHigh);
-    //float (* RandomFloat) (float flLow, float flHigh);
-    //int (* PM_GetModelType) ( struct model_s *mod );
-    //void (* PM_GetModelBounds) ( struct model_s *mod, float* mins, float* maxs );
-    //void* (* PM_HullForBsp) (physent_t* pe, float* offset);
-    //float (* PM_TraceModel) (physent_t* pEnt, float* start, float* end, trace_t* trace);
-    //int (* COM_FileSize) (char* filename);
-    //byte* (* COM_LoadFile) (char* path, int usehunk, int* pLength);
-    //void (* COM_FreeFile) (void* buffer );
-    //char* (* memfgets) (byte* pMemFile, int fileSize, int* pFilePos, char* pBuffer, int bufferSize);
-    //
-    //// Functions
-    //// Run functions for this frame?
-    //qboolean runfuncs;
-    //void (* PM_PlaySound) (int channel, const char* sample, float volume, float attenuation, int fFlags, int pitch );
-    //const char*(*PM_TraceTexture) (int ground, float* vstart, float* vend);
-    //void (* PM_PlaybackEventFull) (int flags, int clientindex, unsigned short eventindex, float delay, float* origin, float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
-    //
-    //pmtrace_t(*PM_PlayerTraceEx) (float* start, float* end, int traceFlags, int (* pfnIgnore) (physent_t* pe ) );
-    //int (* PM_TestPlayerPositionEx) (float* pos, pmtrace_t* ptrace, int (* pfnIgnore) (physent_t* pe ) );
-    //struct pmtrace_s *(* PM_TraceLineEx) (float* start, float* end, int flags, int usehulll, int (* pfnIgnore) (physent_t* pe ) );
+    internal nint PM_Info_ValueForKey;
+    internal nint PM_Particle;
+    internal nint PM_TestPlayerPosition;
+    internal nint Con_NPrintf;
+    internal nint Con_DPrintf;
+    internal nint Con_Printf;
+    internal nint Sys_FloatTime;
+    internal nint PM_StuckTouch;
+    internal nint PM_PointContents;
+    internal nint PM_TruePointContents;
+    internal nint PM_HullPointContents;
+    internal nint PM_PlayerTrace;
+    internal nint PM_TraceLine;
+    internal nint RandomLong;
+    internal nint RandomFloat;
+    internal nint PM_GetModelType;
+    internal nint PM_GetModelBounds;
+    internal nint PM_HullForBsp;
+    internal nint PM_TraceModel;
+    internal nint COM_FileSize;
+    internal nint COM_LoadFile;
+    internal nint COM_FreeFile;
+    internal nint memfgets;
+
+    // Functions
+    // Run functions for this frame?
+    internal int runfuncs;
+    internal nint PM_PlaySound;
+    internal nint PM_TraceTexture;
+    internal nint PM_PlaybackEventFull;
+
+    internal nint PM_PlayerTraceEx;
+    internal nint PM_TestPlayerPositionEx;
+    internal nint PM_TraceLineEx;
 
 }

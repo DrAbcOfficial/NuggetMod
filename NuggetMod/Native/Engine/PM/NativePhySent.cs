@@ -1,4 +1,4 @@
-﻿using NuggetMod.Native.Common;
+using NuggetMod.Native.Common;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Engine.PM;
@@ -11,9 +11,8 @@ public struct NativePhySent : INativeStruct
     internal unsafe fixed byte name[32];             // Name of model, or "player" or "world".
     internal int player;
     internal NativeVector3f origin;               // Model's origin in world coordinates.
-    //TODO: Finish model_t
-    internal /* model_s */ nint model;               // only for bsp models
-    internal /* model_s */ nint studiomodel;         // SOLID_BBOX, but studio clip intersections.
+    internal nint model;                           // Pointer to model_s (only for bsp models)
+    internal nint studiomodel;                     // Pointer to model_s (SOLID_BBOX, but studio clip intersections)
     internal NativeVector3f mins, maxs;            // only for non-bsp models
     internal int info;                 // For client or server to use to identify (index into edicts or cl_entities)
     internal NativeVector3f angles;               // rotated entities need this info for hull testing to work.
