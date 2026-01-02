@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Game;
 
@@ -6,7 +6,7 @@ namespace NuggetMod.Native.Game;
 /// Native DLL Functions
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeDllFuncs : INativeStruct
+public unsafe struct NativeDllFuncs : INativeStruct
 {
     internal NativeGameInitDelegate pfnGameInit;
     internal NativeSpawnDelegate pfnSpawn;
@@ -71,7 +71,6 @@ public struct NativeDllFuncs : INativeStruct
     internal NativeInconsistentFileDelegate pfnInconsistentFile;
     internal NativeAllowLagCompensationDelegate pfnAllowLagCompensation;
 
-#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void NativeGameInitDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -187,5 +186,4 @@ public struct NativeDllFuncs : INativeStruct
     internal delegate int NativeInconsistentFileDelegate(nint player, nint filename, nint disconnect_message);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int NativeAllowLagCompensationDelegate();
-#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 }

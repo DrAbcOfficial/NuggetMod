@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace NuggetMod.Native.Game;
 
@@ -12,7 +12,7 @@ internal delegate void NativeCvarValue2Delegate(nint pEnt, int requestID, nint c
 /// Native New DLL Functions
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeNewDllFuncs : INativeStruct
+public unsafe struct NativeNewDllFuncs : INativeStruct
 {
     // Called right before the object's memory is freed. 
     // Calls its destructor.
