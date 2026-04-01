@@ -111,6 +111,10 @@ public struct NativeMetaUtilFunctions : INativeStruct
     internal GetBoneMatrixDelegate pfnGetBoneMatrix;
     /// <summary>Function pointer for getting engine type</summary>
     internal GetEngineTypeDelegate pfnGetEngineType;
+    /// <summary>Function pointer for getting code base of an image (Added 2024-10 by hzqst, v5:16)</summary>
+    internal GetCodeBaseDelegate pfnGetCodeBase;
+    /// <summary>Function pointer for getting code size of an image (Added 2024-10 by hzqst, v5:16)</summary>
+    internal GetCodeSizeDelegate pfnGetCodeSize;
 
 #pragma warning disable CS8500 // Taking address of managed type, size, or declaring pointer to it
     /// <summary>
@@ -394,6 +398,18 @@ public struct NativeMetaUtilFunctions : INativeStruct
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate byte* GetEngineTypeDelegate();
+
+    /// <summary>
+    /// Delegate for getting code base of an image (Added 2024-10 by hzqst, v5:16)
+    /// </summary>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate nint GetCodeBaseDelegate(nint imageBase);
+
+    /// <summary>
+    /// Delegate for getting code size of an image (Added 2024-10 by hzqst, v5:16)
+    /// </summary>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate uint GetCodeSizeDelegate(nint imageBase);
 #pragma warning restore CS8500 // Taking address of managed type, size, or declaring pointer to it
 }
 

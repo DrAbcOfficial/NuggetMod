@@ -1,6 +1,7 @@
 using NuggetMod.Interface;
 using NuggetMod.Interface.Events;
 using NuggetMod.Interface.Events.NativeCaller;
+using System.Runtime.InteropServices;
 
 namespace NuggetMod.Helper;
 
@@ -98,6 +99,14 @@ public static class SafeEventRegistration
     {
         lock (s_lock)
         {
+            // 释放所有GCHandle
+            foreach (var handle in s_gcHandles.Values)
+            {
+                if (handle.IsAllocated)
+                    handle.Free();
+            }
+            s_gcHandles.Clear();
+
             // 清理所有相关委托
             foreach (var prefix in s_registeredPrefixes)
             {
@@ -128,6 +137,149 @@ public static class SafeEventRegistration
             return s_registeredPrefixes.Contains(prefix);
         }
     }
+
+    /// <summary>
+    /// 获取所有已注册的事件类型。
+    /// </summary>
+    /// <returns>已注册的事件类型集合</returns>
+    public static IReadOnlyCollection<EventRegistrationType> GetRegisteredTypes()
+    {
+        lock (s_lock)
+        {
+            var result = new List<EventRegistrationType>();
+            foreach (var prefix in s_registeredPrefixes)
+            {
+                var eventType = GetEventTypeFromPrefix(prefix);
+                if (eventType.HasValue)
+                {
+                    result.Add(eventType.Value);
+                }
+            }
+            return result.AsReadOnly();
+        }
+    }
+
+    /// <summary>
+    /// 验证事件注册是否安全（无重复注册风险）。
+    /// </summary>
+    /// <param name="builder">事件注册构建器</param>
+    /// <returns>验证结果，包含是否可以安全注册</returns>
+    public static ValidationResult ValidateRegistration(EventRegistrationBuilder builder)
+    {
+        ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+
+        var conflicts = new List<string>();
+
+        lock (s_lock)
+        {
+            var prefixesToCheck = GetPrefixesFromBuilder(builder);
+            foreach (var prefix in prefixesToCheck)
+            {
+                if (s_registeredPrefixes.Contains(prefix))
+                {
+                    conflicts.Add(prefix);
+                }
+            }
+        }
+
+        return new ValidationResult
+        {
+            CanRegister = conflicts.Count == 0,
+            ConflictingTypes = conflicts.AsReadOnly()
+        };
+    }
+
+    /// <summary>
+    /// 尝试注册事件，如果存在冲突则返回false而不抛出异常。
+    /// </summary>
+    /// <param name="builder">事件注册构建器</param>
+    /// <returns>是否成功注册</returns>
+    public static bool TryRegister(EventRegistrationBuilder builder)
+    {
+        try
+        {
+            Register(builder);
+            return true;
+        }
+        catch (InvalidOperationException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 确保所有事件处理器都被正确保持引用，防止GC回收。
+    /// 此方法在Register中自动调用，但也可以手动调用以验证。
+    /// </summary>
+    /// <param name="builder">事件注册构建器</param>
+    /// <returns>已保持引用的委托数量</returns>
+    public static int EnsureDelegatesPinned(EventRegistrationBuilder builder)
+    {
+        int count = 0;
+
+        if (builder.EntityApi != null)
+        {
+            PinEventHandlers(builder.EntityApi, PREFIX_ENTITY_API);
+            count++;
+        }
+        if (builder.EntityApiPost != null)
+        {
+            PinEventHandlers(builder.EntityApiPost, PREFIX_ENTITY_API_POST);
+            count++;
+        }
+        if (builder.EntityApi2 != null)
+        {
+            PinEventHandlers(builder.EntityApi2, PREFIX_ENTITY_API2);
+            count++;
+        }
+        if (builder.EntityApi2Post != null)
+        {
+            PinEventHandlers(builder.EntityApi2Post, PREFIX_ENTITY_API2_POST);
+            count++;
+        }
+        if (builder.NewDllFunctions != null)
+        {
+            PinEventHandlers(builder.NewDllFunctions, PREFIX_NEW_DLL);
+            count++;
+        }
+        if (builder.NewDllFunctionsPost != null)
+        {
+            PinEventHandlers(builder.NewDllFunctionsPost, PREFIX_NEW_DLL_POST);
+            count++;
+        }
+        if (builder.EngineFunctions != null)
+        {
+            PinEventHandlers(builder.EngineFunctions, PREFIX_ENGINE);
+            count++;
+        }
+        if (builder.EngineFunctionsPost != null)
+        {
+            PinEventHandlers(builder.EngineFunctionsPost, PREFIX_ENGINE_POST);
+            count++;
+        }
+        if (builder.BlendingInterface != null)
+        {
+            PinEventHandlers(builder.BlendingInterface, PREFIX_BLENDING);
+            count++;
+        }
+        if (builder.BlendingInterfacePost != null)
+        {
+            PinEventHandlers(builder.BlendingInterfacePost, PREFIX_BLENDING_POST);
+            count++;
+        }
+
+        return count;
+    }
+
+    private static void PinEventHandlers(object eventHandler, string prefix)
+    {
+        // 通过GCHandle保持事件处理器对象存活
+        // 这确保事件处理器及其所有委托都不会被GC回收
+        var handle = GCHandle.Alloc(eventHandler, GCHandleType.Normal);
+        s_gcHandles[prefix] = handle;
+    }
+
+    private static readonly Dictionary<string, GCHandle> s_gcHandles = new();
 
     private static void RegisterDelegates(EventRegistrationBuilder builder)
     {
@@ -235,6 +387,24 @@ public static class SafeEventRegistration
             EventRegistrationType.BlendingInterface => PREFIX_BLENDING,
             EventRegistrationType.BlendingInterfacePost => PREFIX_BLENDING_POST,
             _ => throw new ArgumentOutOfRangeException(nameof(eventType))
+        };
+    }
+
+    private static EventRegistrationType? GetEventTypeFromPrefix(string prefix)
+    {
+        return prefix switch
+        {
+            PREFIX_ENTITY_API => EventRegistrationType.EntityApi,
+            PREFIX_ENTITY_API_POST => EventRegistrationType.EntityApiPost,
+            PREFIX_ENTITY_API2 => EventRegistrationType.EntityApi2,
+            PREFIX_ENTITY_API2_POST => EventRegistrationType.EntityApi2Post,
+            PREFIX_NEW_DLL => EventRegistrationType.NewDllFunctions,
+            PREFIX_NEW_DLL_POST => EventRegistrationType.NewDllFunctionsPost,
+            PREFIX_ENGINE => EventRegistrationType.EngineFunctions,
+            PREFIX_ENGINE_POST => EventRegistrationType.EngineFunctionsPost,
+            PREFIX_BLENDING => EventRegistrationType.BlendingInterface,
+            PREFIX_BLENDING_POST => EventRegistrationType.BlendingInterfacePost,
+            _ => null
         };
     }
 }
@@ -361,4 +531,25 @@ public sealed class EventRegistrationBuilder
         BlendingInterfacePost = events;
         return this;
     }
+}
+
+/// <summary>
+/// 事件注册验证结果。
+/// </summary>
+public readonly struct ValidationResult
+{
+    /// <summary>
+    /// 是否可以安全注册。
+    /// </summary>
+    public required bool CanRegister { get; init; }
+
+    /// <summary>
+    /// 冲突的事件类型列表。
+    /// </summary>
+    public required IReadOnlyCollection<string> ConflictingTypes { get; init; }
+
+    /// <summary>
+    /// 是否有冲突。
+    /// </summary>
+    public bool HasConflicts => ConflictingTypes.Count > 0;
 }

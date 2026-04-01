@@ -702,4 +702,60 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
         }
         return str ?? string.Empty;
     }
+
+    /// <summary>
+    /// Gets the code section base address of a module.
+    /// </summary>
+    /// <param name="imageBase">Base address of the module.</param>
+    /// <returns>Code section base address.</returns>
+    /// <remarks>
+    /// This is useful for finding the executable code region of a loaded module
+    /// for hooking or code analysis purposes.
+    /// </remarks>
+    public nint GetCodeBase(nint imageBase) => Base.pfnGetCodeBase(imageBase);
+
+    /// <summary>
+    /// Gets the code section size of a module.
+    /// </summary>
+    /// <param name="imageBase">Base address of the module.</param>
+    /// <returns>Code section size in bytes.</returns>
+    /// <remarks>
+    /// Combined with GetCodeBase, this can be used to iterate through the
+    /// executable code section of a module for pattern scanning.
+    /// </remarks>
+    public uint GetCodeSize(nint imageBase) => Base.pfnGetCodeSize(imageBase);
+
+    /// <summary>
+    /// Gets the code section address range of a module.
+    /// </summary>
+    /// <param name="imageBase">Base address of the module.</param>
+    /// <returns>Tuple containing (codeBase, codeSize).</returns>
+    /// <remarks>
+    /// Convenience method that returns both code base and size in one call.
+    /// </remarks>
+    public (nint CodeBase, uint CodeSize) GetCodeSection(nint imageBase)
+    {
+        nint codeBase = Base.pfnGetCodeBase(imageBase);
+        uint codeSize = Base.pfnGetCodeSize(imageBase);
+        return (codeBase, codeSize);
+    }
+
+    /// <summary>
+    /// Searches for a byte pattern within a module's code section.
+    /// </summary>
+    /// <param name="imageBase">Base address of the module.</param>
+    /// <param name="pattern">Byte pattern to search for.</param>
+    /// <returns>Address where the pattern was found, or zero if not found.</returns>
+    /// <remarks>
+    /// This is a convenience method that automatically searches within the
+    /// module's code section bounds.
+    /// </remarks>
+    public nint SearchPatternInCodeSection(nint imageBase, byte[] pattern)
+    {
+        var (codeBase, codeSize) = GetCodeSection(imageBase);
+        if (codeBase == nint.Zero || codeSize == 0)
+            return nint.Zero;
+
+        return SearchPattern(codeBase, codeSize, pattern, (uint)pattern.Length);
+    }
 }
