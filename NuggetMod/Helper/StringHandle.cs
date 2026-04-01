@@ -42,8 +42,9 @@ public sealed class StringHandle : IDisposable
     /// </summary>
     internal void SetHandle(int handle)
     {
-        _safeHandle.Dispose();
-        _safeHandle = SafeStringHandle.FromStringBase(handle);
+        var newHandle = SafeStringHandle.FromStringBase(handle);
+        _safeHandle?.Dispose();
+        _safeHandle = newHandle;
     }
 
     /// <summary>
@@ -52,8 +53,9 @@ public sealed class StringHandle : IDisposable
     /// <param name="str">String to set</param>
     public void SetString(string str)
     {
-        _safeHandle.Dispose();
-        _safeHandle = SafeStringHandle.FromString(str);
+        var newHandle = SafeStringHandle.FromString(str);
+        _safeHandle?.Dispose();
+        _safeHandle = newHandle;
     }
 
     /// <summary>
@@ -72,7 +74,7 @@ public sealed class StringHandle : IDisposable
     /// </summary>
     public void Dispose()
     {
-        _safeHandle.Dispose();
+        _safeHandle?.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -81,6 +83,6 @@ public sealed class StringHandle : IDisposable
     /// </summary>
     ~StringHandle()
     {
-        Dispose();
+        _safeHandle?.Dispose();
     }
 }

@@ -1,4 +1,5 @@
-﻿using NuggetMod.Interface.Events;
+﻿using NuggetMod.Helper;
+using NuggetMod.Interface.Events;
 using NuggetMod.Interface.Events.NativeCaller;
 using NuggetMod.Native.Engine;
 using NuggetMod.Native.Game;
