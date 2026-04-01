@@ -18,14 +18,16 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Build SourceGenerator
-        run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
+      - name: Pack SourceGenerator (NuGet + Symbols)
+        run: dotnet pack NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
-      - name: Upload Source Generator
+      - name: Upload Source Generator NuGet Packages
         uses: actions/upload-artifact@v4
         with:
-          name: NuggetMod.SourceGenerator
-          path: NuggetMod.SourceGenerator/bin/Release/*/NuggetMod.SourceGenerator.dll
+          name: NuggetMod.SourceGenerator.NuGet
+          path: |
+            NuggetMod.SourceGenerator/bin/Release/*.nupkg
+            NuggetMod.SourceGenerator/bin/Release/*.snupkg
 
   build-main:
     name: Build Main Project
@@ -65,24 +67,6 @@ jobs:
           name: NuggetMod
           path: |
             ${{github.workspace}}/NuggetMod/nuget/
-
-  build-helloworld:
-    name: Build HelloWorld Example
-    runs-on: ubuntu-latest
-    needs: build-source-generator
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
-
-      - name: Restore dependencies
-        run: dotnet restore NuggetMod.HelloWorld/NuggetMod.HelloWorld.csproj
-
-      - name: Build HelloWorld
-        run: dotnet build NuggetMod.HelloWorld/NuggetMod.HelloWorld.csproj -c Release --no-restore
 
   test:
     name: Run Tests
