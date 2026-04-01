@@ -127,18 +127,16 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Build & Pack SourceGenerator
-        run: |
-          dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
-          dotnet pack NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release --no-build -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+      - name: Pack SourceGenerator (NuGet + Symbols)
+        run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
       - name: Upload Source Generator NuGet Packages
         uses: actions/upload-artifact@v4
         with:
           name: NuggetMod.SourceGenerator.NuGet
           path: |
-            NuggetMod.SourceGenerator/bin/Release/*.nupkg
-            NuggetMod.SourceGenerator/bin/Release/*.snupkg
+            NuggetMod.SourceGenerator/nuget/*.nupkg
+            NuggetMod.SourceGenerator/nuget/*.snupkg
 
   pack-main:
     name: Pack Main Project
@@ -176,4 +174,5 @@ jobs:
         with:
           name: NuggetMod
           path: |
-            ${{github.workspace}}/NuggetMod/nuget/
+            NuggetMod/nuget/*.nupkg
+            NuggetMod/nuget/*.snupkg
