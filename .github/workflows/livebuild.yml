@@ -18,6 +18,115 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Build SourceGenerator
+        run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
+
+      - name: Upload Source Generator Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SourceGenerator-Build
+          path: NuggetMod.SourceGenerator/bin/Release/
+          retention-days: 1
+
+  build-main:
+    name: Build Main Project
+    runs-on: ubuntu-latest
+    needs: build-source-generator
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Download Source Generator
+        uses: actions/download-artifact@v4
+        with:
+          name: SourceGenerator-Build
+          path: NuggetMod.SourceGenerator/bin/Release/
+
+      - name: Install T4
+        run: dotnet tool install -g dotnet-t4
+
+      - name: Process T4
+        run: |
+          find . -type f -name "*.tt" \
+          -print0 | while IFS= read -r -d '' ttFile; do
+            echo "Processing template: $ttFile"
+            t4 "$ttFile"
+          done
+
+      - name: Restore dependencies
+        run: dotnet restore NuggetMod.sln
+
+      - name: Build NuggetMod
+        run: dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
+
+      - name: Upload Main Project Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MainProject-Build
+          path: |
+            NuggetMod/bin/Release/
+            NuggetMod/obj/Release/
+          retention-days: 1
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: [build-source-generator, build-main]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Download Source Generator
+        uses: actions/download-artifact@v4
+        with:
+          name: SourceGenerator-Build
+          path: NuggetMod.SourceGenerator/bin/Release/
+
+      - name: Download Main Project
+        uses: actions/download-artifact@v4
+        with:
+          name: MainProject-Build
+
+      - name: Install T4
+        run: dotnet tool install -g dotnet-t4
+
+      - name: Process T4
+        run: |
+          find . -type f -name "*.tt" \
+          -print0 | while IFS= read -r -d '' ttFile; do
+            echo "Processing template: $ttFile"
+            t4 "$ttFile"
+          done
+
+      - name: Restore Test dependencies
+        run: dotnet restore NuggetMod.Test/NuggetMod.Test.csproj
+
+      - name: Build Test Project
+        run: dotnet build NuggetMod.Test/NuggetMod.Test.csproj -c Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test NuggetMod.Test/NuggetMod.Test.csproj -c Release --no-build --verbosity normal
+
+  pack-source-generator:
+    name: Pack Source Generator
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
       - name: Build & Pack SourceGenerator
         run: |
           dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
@@ -31,10 +140,10 @@ jobs:
             NuggetMod.SourceGenerator/bin/Release/*.nupkg
             NuggetMod.SourceGenerator/bin/Release/*.snupkg
 
-  build-main:
-    name: Build Main Project
+  pack-main:
+    name: Pack Main Project
     runs-on: ubuntu-latest
-    needs: build-source-generator
+    needs: test
     steps:
       - uses: actions/checkout@v4
 
@@ -57,11 +166,10 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore NuggetMod.sln
 
-      - name: Build NuggetMod
-        run: dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
-
-      - name: Pack NuggetMod
-        run: dotnet pack NuggetMod/NuggetMod.csproj -c Release --no-build
+      - name: Build & Pack NuggetMod
+        run: |
+          dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
+          dotnet pack NuggetMod/NuggetMod.csproj -c Release --no-build
 
       - name: Upload NuggetMod Package
         uses: actions/upload-artifact@v4
@@ -69,35 +177,3 @@ jobs:
           name: NuggetMod
           path: |
             ${{github.workspace}}/NuggetMod/nuget/
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    needs: build-main
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
-
-      - name: Install T4
-        run: dotnet tool install -g dotnet-t4
-
-      - name: Process T4
-        run: |
-          find . -type f -name "*.tt" \
-          -print0 | while IFS= read -r -d '' ttFile; do
-            echo "Processing template: $ttFile"
-            t4 "$ttFile"
-          done
-
-      - name: Restore dependencies
-        run: dotnet restore NuggetMod.Test/NuggetMod.Test.csproj
-
-      - name: Build Test Project
-        run: dotnet build NuggetMod.Test/NuggetMod.Test.csproj -c Release --no-restore
-
-      - name: Run Tests
-        run: dotnet test NuggetMod.Test/NuggetMod.Test.csproj -c Release --no-build --verbosity normal
