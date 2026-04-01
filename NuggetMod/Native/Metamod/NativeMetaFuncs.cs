@@ -2,7 +2,7 @@
 
 namespace NuggetMod.Native.Metamod;
 
-// 定义委托
+// Delegate definitions
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate int NativeGetEntityApiDelegate(nint pFunctionTable, int interfaceVersion);

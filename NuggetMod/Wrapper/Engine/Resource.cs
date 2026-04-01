@@ -42,7 +42,7 @@ public class Resource : BaseNativeWrapper<NativeResource>
             unsafe
             {
                 byte[] bytes = Encoding.UTF8.GetBytes(value);
-                int copyLength = Math.Min(bytes.Length, 63); // 保留1个字节给null终止符
+                int copyLength = Math.Min(bytes.Length, 63); // Reserve 1 byte for null terminator
                 fixed (byte* pBytes = bytes)
                 {
                     for (int i = 0; i < copyLength; i++)
@@ -148,7 +148,7 @@ public class Resource : BaseNativeWrapper<NativeResource>
         {
             unsafe
             {
-                // 复制16字节的MD5哈希
+                // Copy 16-byte MD5 hash
                 byte[] hash = new byte[16];
                 for (int i = 0; i < 16; i++)
                 {
@@ -161,7 +161,7 @@ public class Resource : BaseNativeWrapper<NativeResource>
         {
             unsafe
             {
-                // 复制输入的MD5哈希（限制长度为16）
+                // Copy input MD5 hash (limit length to 16)
                 int copyLength = Math.Min(value.Length, 16);
                 for (int i = 0; i < copyLength; i++)
                 {
@@ -201,7 +201,7 @@ public class Resource : BaseNativeWrapper<NativeResource>
         {
             unsafe
             {
-                // 复制32字节的保留数据
+                // Copy 32-byte reserved data
                 byte[] reserved = new byte[32];
                 for (int i = 0; i < 32; i++)
                 {
@@ -214,7 +214,7 @@ public class Resource : BaseNativeWrapper<NativeResource>
         {
             unsafe
             {
-                // 复制输入的保留数据（限制长度为32）
+                // Copy input reserved data (limit length to 32)
                 int copyLength = Math.Min(value.Length, 32);
                 for (int i = 0; i < copyLength; i++)
                 {

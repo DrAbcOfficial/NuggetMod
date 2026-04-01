@@ -112,7 +112,7 @@ public struct NativeMetaUtilFunctions : INativeStruct
     /// <summary>Function pointer for getting engine type</summary>
     internal GetEngineTypeDelegate pfnGetEngineType;
 
-#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
+#pragma warning disable CS8500 // Taking address of managed type, size, or declaring pointer to it
     /// <summary>
     /// Delegate for logging messages
     /// </summary>
@@ -394,7 +394,7 @@ public struct NativeMetaUtilFunctions : INativeStruct
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate byte* GetEngineTypeDelegate();
-#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
+#pragma warning restore CS8500 // Taking address of managed type, size, or declaring pointer to it
 }
 
 #region Delegate For Delegate

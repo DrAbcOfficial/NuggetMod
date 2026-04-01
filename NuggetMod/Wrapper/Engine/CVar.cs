@@ -1,4 +1,4 @@
-﻿using NuggetMod.Native.Engine;
+using NuggetMod.Native.Engine;
 using System.Runtime.InteropServices;
 
 namespace NuggetMod.Wrapper.Engine;

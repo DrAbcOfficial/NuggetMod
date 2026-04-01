@@ -45,7 +45,7 @@ public class PMPlane : BaseNativeWrapper<NativePMPlane>
         {
             unsafe
             {
-                // 拷贝值到非托管内存
+                // Copy value to unmanaged memory
                 NativePtr->normal.x = value.X;
                 NativePtr->normal.y = value.Y;
                 NativePtr->normal.z = value.Z;

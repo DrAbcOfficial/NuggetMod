@@ -14,7 +14,7 @@ namespace NuggetMod.Interface;
 /// </summary>
 public class MetaMod
 {
-    #region 内部函数
+    #region Internal Functions
     private static DLLEvents? _entityApi = null;
     private static DLLEvents? _entityApi_Post = null;
     private static DLLEvents? _entityApi2 = null;
@@ -26,8 +26,8 @@ public class MetaMod
     private static BlendingInterfaceEvent? _blendingInterface = null;
     private static BlendingInterfaceEvent? _blendingInterface_Post = null;
 
-    // 将托管 delegate 转为原生函数指针并按字段顺序写入到非托管结构内存中。
-    // 注意：字段顺序必须与 NativeDllFuncs 的定义完全一致（指针大小顺序）。
+    // Converts managed delegates to native function pointers and writes to unmanaged struct memory.
+    // Note: Field order must exactly match NativeDllFuncs definition (pointer size order).
     private static unsafe void LinkNativeDLLEvents(nint pFunctionTable, NativeDllFuncs source)
     {
         if (pFunctionTable == 0)
@@ -430,7 +430,7 @@ public class MetaMod
     }
     #endregion
 
-    #region 对外函数
+    #region Public Functions
     /// <summary>
     /// Unified event registration interface
     /// </summary>
@@ -469,36 +469,36 @@ public class MetaMod
     }
     #endregion
 
-    #region 对外变量
+    #region Public Properties
     /// <summary>
     /// Gets the engine functions interface
     /// </summary>
-    public static EngineFuncs EngineFuncs => _engineFuncs ?? throw new NullReferenceException("EngineFuncs is NULL");
+    public static EngineFuncs EngineFuncs => _engineFuncs ?? throw new InvalidOperationException("EngineFuncs is not initialized");
 
     /// <summary>
     /// Gets the global variables
     /// </summary>
-    public static GlobalVars GlobalVars => _globalVars ?? throw new NullReferenceException("GlobalVars is NULL");
+    public static GlobalVars GlobalVars => _globalVars ?? throw new InvalidOperationException("GlobalVars is not initialized");
 
     /// <summary>
     /// Gets the MetaMod utility functions
     /// </summary>
-    public static MetaUtilFunctions MetaUtilFuncs => _metaUtilFuncs ?? throw new NullReferenceException("MetaUtilFuncs is NULL");
+    public static MetaUtilFunctions MetaUtilFuncs => _metaUtilFuncs ?? throw new InvalidOperationException("MetaUtilFuncs is not initialized");
 
     /// <summary>
     /// Gets the plugin information
     /// </summary>
-    public static MetaPluginInfo PluginInfo => _pluginInfo ?? throw new NullReferenceException("PluginInfo is NULL");
+    public static MetaPluginInfo PluginInfo => _pluginInfo ?? throw new InvalidOperationException("PluginInfo is not initialized");
 
     /// <summary>
     /// Gets the MetaMod global variables
     /// </summary>
-    public static MetaGlobals MetaGlobals => _metaGlobals ?? throw new NullReferenceException("MetaGlobals is NULL");
+    public static MetaGlobals MetaGlobals => _metaGlobals ?? throw new InvalidOperationException("MetaGlobals is not initialized");
 
     /// <summary>
     /// Gets the game DLL functions
     /// </summary>
-    public static MetaGameDLLFunctions GameDllFuncs => _gameDllFuncs ?? throw new NullReferenceException("GameDllFuncs is NULL");
+    public static MetaGameDLLFunctions GameDllFuncs => _gameDllFuncs ?? throw new InvalidOperationException("GameDllFuncs is not initialized");
 
     internal static EngineFuncs? _engineFuncs;
     internal static GlobalVars? _globalVars;

@@ -288,7 +288,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
     /// <param name="peng">Engine functions output.</param>
     /// <param name="pdll">DLL functions output.</param>
     /// <param name="pnewdll">New DLL functions output.</param>
-#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
+#pragma warning disable CS8500 // Taking address of managed type, size, or declaring pointer to it
     public void GetHookTables(out EngineFuncs peng, out DLLFunctions pdll, out NewDLLFunctions pnewdll)
     {
         unsafe
@@ -304,7 +304,7 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
             pnewdll = new NewDLLFunctions((nint)pNewDllFuncs);
         }
     }
-#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
+#pragma warning restore CS8500 // Taking address of managed type, size, or declaring pointer to it
 
     /// <summary>
     /// Gets the base address of a module by its handle.

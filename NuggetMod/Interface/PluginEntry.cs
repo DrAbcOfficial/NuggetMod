@@ -20,25 +20,17 @@ public abstract class PluginEntry
     /// Gets the plugin interface instance
     /// </summary>
     /// <returns>The plugin interface</returns>
-    /// <exception cref="NullReferenceException">Thrown when Interface is null</exception>
-    public static IPlugin GetPluginInterface()
-    {
-        if (Interface == null)
-            throw new NullReferenceException(nameof(Interface));
-        return Interface;
-    }
+    /// <exception cref="InvalidOperationException">Thrown when Interface is not initialized</exception>
+    public static IPlugin GetPluginInterface() =>
+        Interface ?? throw new InvalidOperationException("Plugin interface is not initialized");
 
     /// <summary>
     /// Gets the plugin information
     /// </summary>
     /// <returns>Plugin metadata</returns>
-    /// <exception cref="NullReferenceException">Thrown when Interface is null</exception>
-    public static MetaPluginInfo GetPluginInfo()
-    {
-        if (Interface == null)
-            throw new NullReferenceException(nameof(Interface));
-        return Interface.GetPluginInfo();
-    }
+    /// <exception cref="InvalidOperationException">Thrown when Interface is not initialized</exception>
+    public static MetaPluginInfo GetPluginInfo() =>
+        (Interface ?? throw new InvalidOperationException("Plugin interface is not initialized")).GetPluginInfo();
 
     /// <summary>
     /// Native function called by the engine to provide function pointers.
@@ -139,7 +131,7 @@ public abstract class PluginEntry
             Marshal.WriteIntPtr(dest, fp);
         }
         NativeMetaFuncs funcs = MetaMod.GetNative();
-        // 替换调用方式，显式指定委托类型
+        // Write delegates explicitly by type
         WriteDelegateField(pFunctionTable, "pfnGetEntityAPI", funcs.pfnGetEntityAPI);
         WriteDelegateField(pFunctionTable, "pfnGetEntityAPI_Post", funcs.pfnGetEntityAPI_Post);
         WriteDelegateField(pFunctionTable, "pfnGetEntityAPI2", funcs.pfnGetEntityAPI2);
