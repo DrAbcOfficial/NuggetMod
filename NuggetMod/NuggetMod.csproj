@@ -41,12 +41,10 @@
     </None>
   </ItemGroup>
 
-  <!-- 元包依赖 -->
+  <!-- 元包依赖：通过 NuGet 引用 Core 和 SourceGenerator -->
   <ItemGroup>
-    <ProjectReference Include="..\NuggetMod.Core\NuggetMod.Core.csproj" />
-    <ProjectReference Include="..\NuggetMod.SourceGenerator\NuggetMod.SourceGenerator.csproj" 
-                      OutputItemType="Analyzer" 
-                      ReferenceOutputAssembly="false" />
+    <PackageReference Include="DrAbc.NuggetMod.Core" Version="*" />
+    <PackageReference Include="DrAbc.NuggetMod.SourceGenerator" Version="*" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
