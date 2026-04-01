@@ -128,7 +128,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Pack SourceGenerator (NuGet + Symbols)
-        run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+        run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
 
       - name: Upload Source Generator NuGet Packages
         uses: actions/upload-artifact@v4
