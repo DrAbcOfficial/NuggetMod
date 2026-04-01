@@ -130,13 +130,11 @@ jobs:
       - name: Pack SourceGenerator (NuGet + Symbols)
         run: dotnet build NuggetMod.SourceGenerator/NuggetMod.SourceGenerator.csproj -c Release
 
-      - name: Upload Source Generator NuGet Packages
+      - name: Upload Source Generator NuGet Package
         uses: actions/upload-artifact@v4
         with:
           name: NuggetMod.SourceGenerator.NuGet
-          path: |
-            NuggetMod.SourceGenerator/nuget/*.nupkg
-            NuggetMod.SourceGenerator/nuget/*.snupkg
+          path: NuggetMod.SourceGenerator/nuget/*.nupkg
 
   pack-main:
     name: Pack Main Project
