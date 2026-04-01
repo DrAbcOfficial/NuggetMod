@@ -149,12 +149,9 @@ jobs:
             t4 "$ttFile"
           done
 
-      - name: Restore dependencies
-        run: dotnet restore NuggetMod.sln
-
       - name: Build & Pack NuggetMod.Core
         run: |
-          dotnet build NuggetMod.Core/NuggetMod.Core.csproj -c Release --no-restore
+          dotnet build NuggetMod.Core/NuggetMod.Core.csproj -c Release
           dotnet pack NuggetMod.Core/NuggetMod.Core.csproj -c Release --no-build
 
       - name: Upload NuggetMod.Core Package
@@ -177,12 +174,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore NuggetMod.sln
-
       - name: Build & Pack NuggetMod (Meta Package)
         run: |
-          dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
+          dotnet build NuggetMod/NuggetMod.csproj -c Release
           dotnet pack NuggetMod/NuggetMod.csproj -c Release --no-build
 
       - name: Upload NuggetMod Meta Package
