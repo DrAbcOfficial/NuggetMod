@@ -28,8 +28,8 @@ jobs:
           path: NuggetMod.SourceGenerator/bin/Release/
           retention-days: 1
 
-  build-main:
-    name: Build Main Project
+  build-core:
+    name: Build Core Project
     runs-on: ubuntu-latest
     needs: build-source-generator
     steps:
@@ -60,22 +60,22 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore NuggetMod.sln
 
-      - name: Build NuggetMod
-        run: dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
+      - name: Build NuggetMod.Core
+        run: dotnet build NuggetMod.Core/NuggetMod.Core.csproj -c Release --no-restore
 
-      - name: Upload Main Project Artifact
+      - name: Upload Core Project Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MainProject-Build
+          name: CoreProject-Build
           path: |
-            NuggetMod/bin/Release/
-            NuggetMod/obj/Release/
+            NuggetMod.Core/bin/Release/
+            NuggetMod.Core/obj/Release/
           retention-days: 1
 
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-    needs: [build-source-generator, build-main]
+    needs: [build-source-generator, build-core]
     steps:
       - uses: actions/checkout@v4
 
@@ -90,10 +90,10 @@ jobs:
           name: SourceGenerator-Build
           path: NuggetMod.SourceGenerator/bin/Release/
 
-      - name: Download Main Project
+      - name: Download Core Project
         uses: actions/download-artifact@v4
         with:
-          name: MainProject-Build
+          name: CoreProject-Build
 
       - name: Install T4
         run: dotnet tool install -g dotnet-t4
@@ -136,8 +136,8 @@ jobs:
           name: NuggetMod.SourceGenerator.NuGet
           path: NuggetMod.SourceGenerator/nuget/*.nupkg
 
-  pack-main:
-    name: Pack Main Project
+  pack-core:
+    name: Pack Core Project
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -162,12 +162,40 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore NuggetMod.sln
 
-      - name: Build & Pack NuggetMod
+      - name: Build & Pack NuggetMod.Core
+        run: |
+          dotnet build NuggetMod.Core/NuggetMod.Core.csproj -c Release --no-restore
+          dotnet pack NuggetMod.Core/NuggetMod.Core.csproj -c Release --no-build
+
+      - name: Upload NuggetMod.Core Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: NuggetMod.Core
+          path: |
+            NuggetMod.Core/nuget/*.nupkg
+            NuggetMod.Core/nuget/*.snupkg
+
+  pack-meta:
+    name: Pack Meta Package
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore NuggetMod.sln
+
+      - name: Build & Pack NuggetMod (Meta Package)
         run: |
           dotnet build NuggetMod/NuggetMod.csproj -c Release --no-restore
           dotnet pack NuggetMod/NuggetMod.csproj -c Release --no-build
 
-      - name: Upload NuggetMod Package
+      - name: Upload NuggetMod Meta Package
         uses: actions/upload-artifact@v4
         with:
           name: NuggetMod

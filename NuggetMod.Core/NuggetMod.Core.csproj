@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>DrAbc.NuggetMod.Core</PackageId>
+    <Title>NuggetMod.Core</Title>
+    <Authors>Dr.Abc</Authors>
+    <Product>NuggetMod.Core</Product>
+    <Description>Build MetaMod(GoldSrc) plugin with .NET 10 - Core library</Description>
+    <RepositoryUrl>https://github.com/DrAbcOfficial/NuggetMod.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>native;dll;game;GoldSrc;plugin;metamod;Half-Life;AOT</PackageTags>
+    <PackageOutputPath>./nuget</PackageOutputPath>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <Version>0.0.7</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <IsAotCompatible>True</IsAotCompatible>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <IsAotCompatible>True</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Interface\Events\NativeCaller\BlendingInterfaceNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BlendingInterfaceNativeCaller.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Interface\Events\NativeCaller\DLLNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DLLNativeCaller.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Interface\Events\NativeCaller\EngineNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EngineNativeCaller.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Interface\Events\NativeCaller\NewDLLNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NewDLLNativeCaller.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Interface\Events\NativeCaller\BlendingInterfaceNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BlendingInterfaceNativeCaller.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Interface\Events\NativeCaller\DLLNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DLLNativeCaller.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Interface\Events\NativeCaller\EngineNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EngineNativeCaller.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Interface\Events\NativeCaller\NewDLLNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NewDLLNativeCaller.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="nuget\" />
+  </ItemGroup>
+
+</Project>

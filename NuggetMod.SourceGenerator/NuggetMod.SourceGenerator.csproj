@@ -10,7 +10,7 @@
     
     <!-- NuGet Package Config -->
     <PackageId>DrAbc.NuggetMod.SourceGenerator</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Title>NuggetMod Source Generator</Title>
     <Authors>Dr.Abc</Authors>
     <Product>NuggetMod.SourceGenerator</Product>

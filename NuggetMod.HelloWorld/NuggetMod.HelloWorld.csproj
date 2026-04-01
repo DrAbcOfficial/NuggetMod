@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NuggetMod\NuggetMod.csproj" />
+    <ProjectReference Include="..\NuggetMod.Core\NuggetMod.Core.csproj" />
     <!-- Source Generator - 自动生成 NativeEntry -->
     <ProjectReference Include="..\NuggetMod.SourceGenerator\NuggetMod.SourceGenerator.csproj"
                       OutputItemType="Analyzer"

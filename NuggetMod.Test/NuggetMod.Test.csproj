@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NuggetMod\NuggetMod.csproj" />
+    <ProjectReference Include="..\NuggetMod.Core\NuggetMod.Core.csproj" />
   </ItemGroup>
 
 </Project>
