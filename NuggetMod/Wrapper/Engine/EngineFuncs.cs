@@ -1416,21 +1416,56 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ServerCommandDelegate();
-    
+
     /// <summary>
-    /// Registers a new server console command
+    /// Registers a new server console command.
+    /// WARNING: This method keeps the delegate registered for the lifetime of the server.
+    /// The delegate will NOT be automatically unregistered.
     /// </summary>
     /// <param name="cmd_name">Command name</param>
     /// <param name="function">Callback function to execute</param>
+    /// <exception cref="ArgumentNullException">When cmd_name or function is null</exception>
+    /// <exception cref="InvalidOperationException">When command is already registered</exception>
     public void AddServerCommand(string cmd_name, ServerCommandDelegate function)
     {
+        ArgumentNullException.ThrowIfNull(cmd_name, nameof(cmd_name));
+        ArgumentNullException.ThrowIfNull(function, nameof(function));
+
+        // 使用DelegateLifetimeManager确保委托不会被GC回收
+        string key = $"ServerCmd_{cmd_name}";
+        DelegateLifetimeManager.Register(key, function);
+
         nint func = Marshal.GetFunctionPointerForDelegate(function);
         nint cmd = Marshal.StringToHGlobalAnsi(cmd_name);
-        unsafe
+        try
         {
-            Base.pfnAddServerCommand(cmd, func);
+            unsafe
+            {
+                Base.pfnAddServerCommand(cmd, func);
+            }
         }
-        Marshal.FreeHGlobal(cmd);
+        catch
+        {
+            // 如果注册失败，清理已注册的委托
+            DelegateLifetimeManager.Unregister(key);
+            throw;
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(cmd);
+        }
+    }
+
+    /// <summary>
+    /// Unregisters a server command and allows its delegate to be garbage collected.
+    /// WARNING: Only call this if you are certain the command will not be invoked by the engine again!
+    /// </summary>
+    /// <param name="cmd_name">Command name that was previously registered</param>
+    /// <returns>True if the command was found and unregistered, false otherwise</returns>
+    public bool RemoveServerCommand(string cmd_name)
+    {
+        string key = $"ServerCmd_{cmd_name}";
+        return DelegateLifetimeManager.Unregister(key);
     }
 
     /// <summary>

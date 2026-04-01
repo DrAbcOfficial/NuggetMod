@@ -432,7 +432,7 @@ public class MetaMod
 
     #region Public Functions
     /// <summary>
-    /// Unified event registration interface
+    /// Unified event registration interface.
     /// </summary>
     /// <param name="entityApi">Entity API events</param>
     /// <param name="entityApiPost">Entity API post events</param>
@@ -444,6 +444,12 @@ public class MetaMod
     /// <param name="engineFunctionsPost">Engine function post events</param>
     /// <param name="blendingInterface">Blending interface events</param>
     /// <param name="blendingInterfacePost">Blending interface post events</param>
+    [Obsolete(
+        "This method may cause GC dangling pointer issues if the event instances are not kept alive externally. " +
+        "Use SafeEventRegistration.Register() or the new RegisterEventsSafely() method instead. " +
+        "See documentation for proper delegate lifetime management.",
+        DiagnosticId = "NUGMOD001",
+        UrlFormat = "https://github.com/NuggetMod/NuggetMod/wiki/GCSafety")]
     public static void RegisterEvents(
         DLLEvents? entityApi = null,
         DLLEvents? entityApiPost = null,
@@ -466,6 +472,48 @@ public class MetaMod
         _engineFunctions_Post = engineFunctionsPost;
         _blendingInterface = blendingInterface;
         _blendingInterface_Post = blendingInterfacePost;
+    }
+
+    /// <summary>
+    /// Safely registers events with automatic delegate lifetime management.
+    /// This method ensures that all delegates are kept alive and prevents GC dangling pointer issues.
+    /// </summary>
+    /// <param name="builder">Event registration builder configured with your event handlers</param>
+    /// <exception cref="ArgumentNullException">When builder is null</exception>
+    /// <exception cref="InvalidOperationException">When events of the same type are already registered</exception>
+    /// <remarks>
+    /// This is the recommended way to register events. Example:
+    /// <code>
+    /// MetaMod.RegisterEventsSafely(new EventRegistrationBuilder()
+    ///     .WithEntityApi(new MyDLLEvents())
+    ///     .WithEngineFunctions(new MyEngineEvents()));
+    /// </code>
+    /// </remarks>
+    public static void RegisterEventsSafely(EventRegistrationBuilder builder)
+    {
+        SafeEventRegistration.Register(builder);
+    }
+
+    /// <summary>
+    /// Checks if events of the specified type are already registered.
+    /// </summary>
+    /// <param name="eventType">Type of events to check</param>
+    /// <returns>True if events of this type are registered, false otherwise</returns>
+    public static bool IsEventTypeRegistered(EventRegistrationType eventType)
+    {
+        return SafeEventRegistration.IsRegistered(eventType);
+    }
+
+    /// <summary>
+    /// Unregisters all events and allows their delegates to be garbage collected.
+    /// </summary>
+    /// <remarks>
+    /// WARNING: This method should ONLY be called when the plugin is being unloaded!
+    /// After calling this method, all event handlers will become invalid.
+    /// </remarks>
+    public static void UnregisterAllEvents()
+    {
+        SafeEventRegistration.UnregisterAll();
     }
     #endregion
 

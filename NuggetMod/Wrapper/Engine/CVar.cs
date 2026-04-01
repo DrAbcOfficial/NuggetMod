@@ -42,8 +42,99 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         /// </summary>
         Unlogged = 1 << 8,
     }
+
+    // Static dictionary to keep registered CVars alive and prevent GC collection
+    // Key: CVar name, Value: CVar instance
+    private static readonly Dictionary<string, CVar> s_registeredCVars = new();
+
     internal unsafe CVar(nint ptr) : this((NativeCVar*)ptr) { }
     internal unsafe CVar(NativeCVar* native) : base(native) { }
+
+    /// <summary>
+    /// Creates a new console variable. Use MetaMod.EngineFuncs.CVarRegister() or extension methods to register it with the engine.
+    /// Important: The returned CVar must be kept alive (held in a static field or registered) to prevent GC from collecting it.
+    /// </summary>
+    /// <param name="name">The name of the cvar</param>
+    /// <param name="defaultValue">The default string value</param>
+    /// <param name="flags">CVar flags (e.g., FCVAR_ARCHIVE)</param>
+    public unsafe CVar(string name, string defaultValue, FCVAR flags = FCVAR.None) : base()
+    {
+        NameString = name ?? throw new ArgumentNullException(nameof(name));
+
+        // Allocate and set name
+        var nameBytes = System.Text.Encoding.UTF8.GetBytes(name + '\0');
+        nint namePtr = Marshal.AllocHGlobal(nameBytes.Length);
+        Marshal.Copy(nameBytes, 0, namePtr, nameBytes.Length);
+
+        // Allocate and set default value
+        var valueBytes = System.Text.Encoding.UTF8.GetBytes(defaultValue + '\0');
+        nint valuePtr = Marshal.AllocHGlobal(valueBytes.Length);
+        Marshal.Copy(valueBytes, 0, valuePtr, valueBytes.Length);
+
+        // Initialize the native structure
+        NativePtr->name = namePtr;
+        NativePtr->str = valuePtr;
+        NativePtr->flags = (int)flags;
+        NativePtr->value = float.TryParse(defaultValue, out float f) ? f : 0f;
+        NativePtr->next = 0;
+    }
+
+    /// <summary>
+    /// Creates a new console variable. Use MetaMod.EngineFuncs.CVarRegister() or extension methods to register it with the engine.
+    /// Important: The returned CVar must be kept alive (held in a static field or registered) to prevent GC from collecting it.
+    /// </summary>
+    /// <param name="name">The name of the cvar</param>
+    /// <param name="defaultValue">The default float value</param>
+    /// <param name="flags">CVar flags (e.g., FCVAR_ARCHIVE)</param>
+    public unsafe CVar(string name, float defaultValue, FCVAR flags = FCVAR.None) : this(name, defaultValue.ToString(), flags)
+    {
+    }
+
+    /// <summary>
+    /// Gets the CVar name (managed string, used for tracking registered CVars).
+    /// </summary>
+    internal string NameString { get; } = string.Empty;
+
+    /// <summary>
+    /// Internally registers this CVar in the static dictionary to prevent GC collection.
+    /// Called by extension methods upon registration.
+    /// </summary>
+    internal void TrackRegistration()
+    {
+        lock (s_registeredCVars)
+        {
+            s_registeredCVars[NameString.ToLowerInvariant()] = this;
+        }
+    }
+
+    /// <summary>
+    /// Releases unmanaged resources including string memory.
+    /// </summary>
+    protected override unsafe void Dispose(bool disposing)
+    {
+        if (NativePtr != null)
+        {
+            // Free name and value strings if they were allocated
+            if (NativePtr->name != 0)
+            {
+                Marshal.FreeHGlobal(NativePtr->name);
+                NativePtr->name = 0;
+            }
+            if (NativePtr->str != 0)
+            {
+                Marshal.FreeHGlobal(NativePtr->str);
+                NativePtr->str = 0;
+            }
+
+            // Remove from registered dictionary
+            lock (s_registeredCVars)
+            {
+                s_registeredCVars.Remove(NameString.ToLowerInvariant());
+            }
+        }
+
+        base.Dispose(disposing);
+    }
     /// <summary>
     /// Gets or sets the console variable name
     /// </summary>
@@ -173,5 +264,59 @@ public class CVar : BaseNativeWrapper<NativeCVar>
                 return nextPtr != null ? new CVar(nextPtr) : null;
             }
         }
+    }
+}
+
+/// <summary>
+/// C# style extension methods for CVar registration
+/// </summary>
+public static class CVarExtensions
+{
+    /// <summary>
+    /// Registers this CVar with the engine using fluent API style.
+    /// The CVar is kept alive internally to prevent GC collection.
+    /// </summary>
+    /// <param name="cvar">The CVar to register</param>
+    /// <param name="engineFuncs">Engine functions interface</param>
+    /// <returns>The same CVar instance for method chaining</returns>
+    public static CVar RegisterWith(this CVar cvar, EngineFuncs engineFuncs)
+    {
+        engineFuncs.CVarRegister(cvar);
+        cvar.TrackRegistration(); // Keep alive to prevent GC
+        return cvar;
+    }
+
+    /// <summary>
+    /// Creates and registers a CVar in a single call.
+    /// The CVar is kept alive internally to prevent GC collection.
+    /// </summary>
+    /// <param name="engineFuncs">Engine functions interface</param>
+    /// <param name="name">The name of the cvar</param>
+    /// <param name="defaultValue">The default string value</param>
+    /// <param name="flags">CVar flags (e.g., FCVAR_ARCHIVE)</param>
+    /// <returns>The registered CVar instance</returns>
+    public static CVar CreateCVar(this EngineFuncs engineFuncs, string name, string defaultValue, CVar.FCVAR flags = CVar.FCVAR.None)
+    {
+        var cvar = new CVar(name, defaultValue, flags);
+        engineFuncs.CVarRegister(cvar);
+        cvar.TrackRegistration(); // Keep alive to prevent GC
+        return cvar;
+    }
+
+    /// <summary>
+    /// Creates and registers a CVar in a single call.
+    /// The CVar is kept alive internally to prevent GC collection.
+    /// </summary>
+    /// <param name="engineFuncs">Engine functions interface</param>
+    /// <param name="name">The name of the cvar</param>
+    /// <param name="defaultValue">The default float value</param>
+    /// <param name="flags">CVar flags (e.g., FCVAR_ARCHIVE)</param>
+    /// <returns>The registered CVar instance</returns>
+    public static CVar CreateCVar(this EngineFuncs engineFuncs, string name, float defaultValue, CVar.FCVAR flags = CVar.FCVAR.None)
+    {
+        var cvar = new CVar(name, defaultValue, flags);
+        engineFuncs.CVarRegister(cvar);
+        cvar.TrackRegistration(); // Keep alive to prevent GC
+        return cvar;
     }
 }
