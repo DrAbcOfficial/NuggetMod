@@ -19,42 +19,18 @@ public class Link : BaseNativeWrapper<NativeLink>
     /// <summary>
     /// Gets or sets the pointer to the previous link in the list
     /// </summary>
-    public nint Prev
+    public unsafe nint Prev
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->prev;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->prev = value;
-            }
-        }
+        get => NativePtr->prev;
+        set => NativePtr->prev = value;
     }
 
     /// <summary>
     /// Gets or sets the pointer to the next link in the list
     /// </summary>
-    public nint Next
+    public unsafe nint Next
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->next;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->next = value;
-            }
-        }
+        get => NativePtr->next;
+        set => NativePtr->next = value;
     }
 }

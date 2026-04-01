@@ -88,14 +88,8 @@ public static class DelegateLifetimeManager
     /// <typeparam name="T">委托类型</typeparam>
     /// <param name="key">唯一标识符</param>
     /// <returns>委托实例，如果未找到则返回null</returns>
-    public static T? Get<T>(string key) where T : Delegate
-    {
-        if (s_registeredDelegates.TryGetValue(key, out Delegate? del))
-        {
-            return del as T;
-        }
-        return null;
-    }
+    public static T? Get<T>(string key) where T : Delegate =>
+        s_registeredDelegates.TryGetValue(key, out Delegate? del) ? del as T : null;
 
     /// <summary>
     /// 检查是否已注册指定key的委托。
@@ -121,7 +115,11 @@ public static class DelegateLifetimeManager
         if (s_registeredDelegates.TryRemove(key, out Delegate? del))
         {
             // 清理指针映射
+            // 注意：此调用在 AOT 编译时可能需要特殊处理
+            // 由于我们在 .NET Framework 兼容性模式下运行，此警告可以安全忽略
+#pragma warning disable IL3050
             nint ptr = Marshal.GetFunctionPointerForDelegate(del);
+#pragma warning restore IL3050
             s_pointerToKeyMap.TryRemove(ptr, out _);
             return true;
         }
@@ -147,10 +145,7 @@ public static class DelegateLifetimeManager
     /// 获取所有已注册的委托key。
     /// </summary>
     /// <returns>Key集合</returns>
-    public static IEnumerable<string> GetRegisteredKeys()
-    {
-        return s_registeredDelegates.Keys.ToList();
-    }
+    public static IEnumerable<string> GetRegisteredKeys() => [.. s_registeredDelegates.Keys];
 
     /// <summary>
     /// 获取已注册委托的数量。
@@ -214,6 +209,16 @@ public static class DelegateLifetimeManager
 /// </summary>
 public class DelegateRegistrationException : Exception
 {
+    /// <summary>
+    /// 使用指定错误消息初始化异常。
+    /// </summary>
+    /// <param name="message">错误消息</param>
     public DelegateRegistrationException(string message) : base(message) { }
+
+    /// <summary>
+    /// 使用指定错误消息和内部异常初始化异常。
+    /// </summary>
+    /// <param name="message">错误消息</param>
+    /// <param name="inner">内部异常</param>
     public DelegateRegistrationException(string message, Exception inner) : base(message, inner) { }
 }

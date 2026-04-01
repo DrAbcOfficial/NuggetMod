@@ -412,23 +412,19 @@ public class MetaMod
 
     internal static NativeMetaFuncs? _native = null;
 
-    internal static NativeMetaFuncs GetNative()
+    internal static NativeMetaFuncs GetNative() => _native ??= new()
     {
-        _native ??= new()
-        {
-            pfnGetEntityAPI = _entityApi == null ? null : GetEntityApiWrapper,
-            pfnGetEntityAPI_Post = _entityApi_Post == null ? null : GetEntityApiPostWrapper,
-            pfnGetEntityAPI2 = _entityApi2 == null ? null : GetEntityApi2Wrapper,
-            pfnGetEntityAPI2_Post = _entityApi2_Post == null ? null : GetEntityApi2PostWrapper,
-            pfnGetNewDLLFunctions = _newDllFunctions == null ? null : GetNewDllFunctionsWrapper,
-            pfnGetNewDLLFunctions_Post = _newDLLFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
-            pfnGetEngineFunctions = _engineFunctions == null ? null : GetEngineFunctions,
-            pfnGetEngineFunctions_Post = _engineFunctions_Post == null ? null : GetEngineFunctions_Post,
-            pfnGetStudioBlendingInterface = _blendingInterface == null ? null : GetBlendingInterfaceDelegate,
-            pfnGetStudioBlendingInterface_Post = _blendingInterface_Post == null ? null : GetBlendingInterface_PostDelegate
-        };
-        return (NativeMetaFuncs)_native;
-    }
+        pfnGetEntityAPI = _entityApi == null ? null : GetEntityApiWrapper,
+        pfnGetEntityAPI_Post = _entityApi_Post == null ? null : GetEntityApiPostWrapper,
+        pfnGetEntityAPI2 = _entityApi2 == null ? null : GetEntityApi2Wrapper,
+        pfnGetEntityAPI2_Post = _entityApi2_Post == null ? null : GetEntityApi2PostWrapper,
+        pfnGetNewDLLFunctions = _newDllFunctions == null ? null : GetNewDllFunctionsWrapper,
+        pfnGetNewDLLFunctions_Post = _newDLLFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
+        pfnGetEngineFunctions = _engineFunctions == null ? null : GetEngineFunctions,
+        pfnGetEngineFunctions_Post = _engineFunctions_Post == null ? null : GetEngineFunctions_Post,
+        pfnGetStudioBlendingInterface = _blendingInterface == null ? null : GetBlendingInterfaceDelegate,
+        pfnGetStudioBlendingInterface_Post = _blendingInterface_Post == null ? null : GetBlendingInterface_PostDelegate
+    };
     #endregion
 
     #region Public Functions

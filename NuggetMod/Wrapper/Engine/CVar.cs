@@ -138,68 +138,36 @@ public class CVar : BaseNativeWrapper<NativeCVar>
     /// <summary>
     /// Gets or sets the console variable name
     /// </summary>
-    public string Name
+    public unsafe string Name
     {
-        get
-        {
-            unsafe
-            {
-                return Marshal.PtrToStringUTF8(NativePtr->name) ?? string.Empty;
-            }
-        }
+        get => Marshal.PtrToStringUTF8(NativePtr->name) ?? string.Empty;
         set
         {
-            unsafe
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
-                Marshal.Copy(bytes, 0, NativePtr->name, bytes.Length);
-            }
-
+            var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
+            Marshal.Copy(bytes, 0, NativePtr->name, bytes.Length);
         }
     }
 
     /// <summary>
     /// Gets or sets the console variable string value
     /// </summary>
-    public string Str
+    public unsafe string Str
     {
-        get
-        {
-            unsafe
-            {
-                return Marshal.PtrToStringUTF8(NativePtr->str) ?? string.Empty;
-            }
-        }
+        get => Marshal.PtrToStringUTF8(NativePtr->str) ?? string.Empty;
         set
         {
-            unsafe
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
-                Marshal.Copy(bytes, 0, NativePtr->str, bytes.Length);
-            }
-
+            var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
+            Marshal.Copy(bytes, 0, NativePtr->str, bytes.Length);
         }
     }
 
     /// <summary>
     /// Gets or sets the console variable flags
     /// </summary>
-    public int Flags
+    public unsafe int Flags
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->flags;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->flags = value;
-            }
-        }
+        get => NativePtr->flags;
+        set => NativePtr->flags = value;
     }
 
     /// <summary>
@@ -207,62 +175,38 @@ public class CVar : BaseNativeWrapper<NativeCVar>
     /// </summary>
     /// <param name="flag">Flag to test</param>
     /// <returns>True if flag is set</returns>
-    public bool TestFlag(FCVAR flag)
-    {
-        return (Flags & (int)flag) != 0;
-    }
+    public bool TestFlag(FCVAR flag) => (Flags & (int)flag) != 0;
 
     /// <summary>
     /// Sets a specific flag
     /// </summary>
     /// <param name="flag">Flag to set</param>
-    public void SetFlag(FCVAR flag)
-    {
-        Flags |= (int)flag;
-    }
+    public void SetFlag(FCVAR flag) => Flags |= (int)flag;
 
     /// <summary>
     /// Removes a specific flag
     /// </summary>
     /// <param name="flag">Flag to remove</param>
-    public void RemoveFlag(FCVAR flag)
-    {
-        Flags &= ~(int)flag;
-    }
+    public void RemoveFlag(FCVAR flag) => Flags &= ~(int)flag;
 
     /// <summary>
     /// Gets or sets the console variable float value
     /// </summary>
-    public float Value
+    public unsafe float Value
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->value;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->value = value;
-            }
-        }
+        get => NativePtr->value;
+        set => NativePtr->value = value;
     }
 
     /// <summary>
     /// Gets the next console variable in the linked list
     /// </summary>
-    public CVar? Next
+    public unsafe CVar? Next
     {
         get
         {
-            unsafe
-            {
-                var nextPtr = (NativeCVar*)NativePtr->next;
-                return nextPtr != null ? new CVar(nextPtr) : null;
-            }
+            var nextPtr = (NativeCVar*)NativePtr->next;
+            return nextPtr != null ? new CVar(nextPtr) : null;
         }
     }
 }

@@ -81,14 +81,8 @@ public static class NativeObjectLifetimeManager
     /// <typeparam name="T">对象类型</typeparam>
     /// <param name="key">唯一标识符</param>
     /// <returns>对象实例，如果未找到则返回null</returns>
-    public static T? Get<T>(string key) where T : class
-    {
-        if (s_trackedObjects.TryGetValue(key, out object? obj))
-        {
-            return obj as T;
-        }
-        return null;
-    }
+    public static T? Get<T>(string key) where T : class =>
+        s_trackedObjects.TryGetValue(key, out object? obj) ? obj as T : null;
 
     /// <summary>
     /// 检查对象是否被跟踪。
@@ -167,7 +161,7 @@ public static class NativeObjectLifetimeManager
     /// <summary>
     /// 获取所有已跟踪对象的key。
     /// </summary>
-    public static IEnumerable<string> Keys => s_trackedObjects.Keys.ToList();
+    public static IEnumerable<string> Keys => [.. s_trackedObjects.Keys];
 
     /// <summary>
     /// 根据key前缀释放对象。

@@ -10,64 +10,28 @@ public class Color24 : BaseNativeWrapper<NativeColor24>
     /// <summary>
     /// Gets or sets the red component
     /// </summary>
-    public byte R
+    public unsafe byte R
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->r;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->r = value;
-            }
-        }
+        get => NativePtr->r;
+        set => NativePtr->r = value;
     }
 
     /// <summary>
     /// Gets or sets the green component
     /// </summary>
-    public byte G
+    public unsafe byte G
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->g;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->g = value;
-            }
-        }
+        get => NativePtr->g;
+        set => NativePtr->g = value;
     }
 
     /// <summary>
     /// Gets or sets the blue component
     /// </summary>
-    public byte B
+    public unsafe byte B
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->b;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->b = value;
-            }
-        }
+        get => NativePtr->b;
+        set => NativePtr->b = value;
     }
 
     /// <summary>

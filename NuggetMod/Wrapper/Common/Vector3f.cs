@@ -30,64 +30,28 @@ public class Vector3f : BaseNativeWrapper<NativeVector3f>
     /// <summary>
     /// X coordinate
     /// </summary>
-    public float X
+    public unsafe float X
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->x;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->x = value;
-            }
-        }
+        get => NativePtr->x;
+        set => NativePtr->x = value;
     }
 
     /// <summary>
     /// Y coordinate
     /// </summary>
-    public float Y
+    public unsafe float Y
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->y;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->y = value;
-            }
-        }
+        get => NativePtr->y;
+        set => NativePtr->y = value;
     }
 
     /// <summary>
     /// Z coordinate
     /// </summary>
-    public float Z
+    public unsafe float Z
     {
-        get
-        {
-            unsafe
-            {
-                return NativePtr->z;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->z = value;
-            }
-        }
+        get => NativePtr->z;
+        set => NativePtr->z = value;
     }
 
     // Common vector constants for game development
@@ -165,12 +129,9 @@ public class Vector3f : BaseNativeWrapper<NativeVector3f>
     /// <summary>
     /// Linearly interpolates between two vectors
     /// </summary>
-    public static Vector3f Lerp(Vector3f a, Vector3f b, float t)
-    {
-        return new Vector3f(
-            a.X + (b.X - a.X) * t,
-            a.Y + (b.Y - a.Y) * t,
-            a.Z + (b.Z - a.Z) * t
-        );
-    }
+    public static Vector3f Lerp(Vector3f a, Vector3f b, float t) => new(
+        a.X + (b.X - a.X) * t,
+        a.Y + (b.Y - a.Y) * t,
+        a.Z + (b.Z - a.Z) * t
+    );
 }

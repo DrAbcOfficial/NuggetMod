@@ -21,24 +21,15 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
     /// <summary>
     /// Gets or sets the map name for this level transition
     /// </summary>
-    public string MapName
+    public unsafe string MapName
     {
-        get
-        {
-            unsafe
-            {
-                return Marshal.PtrToStringAnsi((nint)NativePtr->mapName)?.TrimEnd('\0') ?? string.Empty;
-            }
-        }
+        get => Marshal.PtrToStringAnsi((nint)NativePtr->mapName)?.TrimEnd('\0') ?? string.Empty;
         set
         {
-            unsafe
+            var bytes = System.Text.Encoding.UTF8.GetBytes(value);
+            for (int i = 0; i < 32; i++)
             {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(value);
-                for (int i = 0; i < 32; i++)
-                {
-                    NativePtr->mapName[i] = i < bytes.Length ? bytes[i] : (byte)0;
-                }
+                NativePtr->mapName[i] = i < bytes.Length ? bytes[i] : (byte)0;
             }
         }
     }
@@ -46,24 +37,15 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
     /// <summary>
     /// Gets or sets the landmark name for this level transition
     /// </summary>
-    public string LandmarkName
+    public unsafe string LandmarkName
     {
-        get
-        {
-            unsafe
-            {
-                return Marshal.PtrToStringAnsi((nint)NativePtr->landmarkName)?.TrimEnd('\0') ?? string.Empty;
-            }
-        }
+        get => Marshal.PtrToStringAnsi((nint)NativePtr->landmarkName)?.TrimEnd('\0') ?? string.Empty;
         set
         {
-            unsafe
+            var bytes = System.Text.Encoding.UTF8.GetBytes(value);
+            for (int i = 0; i < 32; i++)
             {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(value);
-                for (int i = 0; i < 32; i++)
-                {
-                    NativePtr->landmarkName[i] = i < bytes.Length ? bytes[i] : (byte)0;
-                }
+                NativePtr->landmarkName[i] = i < bytes.Length ? bytes[i] : (byte)0;
             }
         }
     }
@@ -72,38 +54,16 @@ public class LevelList : BaseNativeWrapper<NativeLevelList>
     /// <summary>
     /// Gets or sets the landmark entity for this level transition
     /// </summary>
-    public Edict PentLandmark
+    public unsafe Edict PentLandmark
     {
-        get
-        {
-            unsafe
-            {
-                _pentlandmark ??= new Edict(NativePtr->pentLandmark);
-                return _pentlandmark;
-            }
-        }
-        set
-        {
-            unsafe
-            {
-                NativePtr->pentLandmark = (NativeEdict*)value.GetNative();
-            }
-        }
+        get => _pentlandmark ??= new Edict(NativePtr->pentLandmark);
+        set => NativePtr->pentLandmark = (NativeEdict*)value.GetNative();
     }
 
     private Vector3f? _vecLandmarkOrigin;
     /// <summary>
     /// Gets the landmark origin position
     /// </summary>
-    public Vector3f VecLandmarkOrigin
-    {
-        get
-        {
-            unsafe
-            {
-                _vecLandmarkOrigin ??= new Vector3f(&NativePtr->vecLandmarkOrigin);
-                return _vecLandmarkOrigin;
-            }
-        }
-    }
+    public unsafe Vector3f VecLandmarkOrigin =>
+        _vecLandmarkOrigin ??= new Vector3f(&NativePtr->vecLandmarkOrigin);
 }

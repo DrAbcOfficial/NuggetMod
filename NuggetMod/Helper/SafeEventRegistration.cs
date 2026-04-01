@@ -1,7 +1,6 @@
 using NuggetMod.Interface;
 using NuggetMod.Interface.Events;
 using NuggetMod.Interface.Events.NativeCaller;
-using System.Runtime.InteropServices;
 
 namespace NuggetMod.Helper;
 
@@ -25,6 +24,24 @@ namespace NuggetMod.Helper;
 /// </remarks>
 public static class SafeEventRegistration
 {
+    private static readonly Lock s_lock = new();
+    private static readonly HashSet<string> s_registeredPrefixes = new();
+
+    // 事件类型定义：前缀、属性Getter、包装器委托Getter
+    private static readonly EventTypeDefinition[] s_eventTypes =
+    [
+        new(PREFIX_ENTITY_API,       b => b.EntityApi,       () => MetaMod.GetEntityApiWrapper),
+        new(PREFIX_ENTITY_API_POST,  b => b.EntityApiPost,   () => MetaMod.GetEntityApiWrapper),
+        new(PREFIX_ENTITY_API2,      b => b.EntityApi2,      () => MetaMod.GetEntityApi2Wrapper),
+        new(PREFIX_ENTITY_API2_POST, b => b.EntityApi2Post,  () => MetaMod.GetEntityApi2Wrapper),
+        new(PREFIX_NEW_DLL,          b => b.NewDllFunctions, () => MetaMod.GetNewDllFunctionsWrapper),
+        new(PREFIX_NEW_DLL_POST,     b => b.NewDllFunctionsPost, () => MetaMod.GetNewDllFunctionsWrapper),
+        new(PREFIX_ENGINE,           b => b.EngineFunctions, () => MetaMod.GetEngineFunctions),
+        new(PREFIX_ENGINE_POST,      b => b.EngineFunctionsPost, () => MetaMod.GetEngineFunctions),
+        new(PREFIX_BLENDING,         b => b.BlendingInterface, () => MetaMod.GetBlendingInterfaceDelegate),
+        new(PREFIX_BLENDING_POST,    b => b.BlendingInterfacePost, () => MetaMod.GetBlendingInterfaceDelegate),
+    ];
+
     private const string PREFIX_ENTITY_API = "MetaMod_EntityApi";
     private const string PREFIX_ENTITY_API_POST = "MetaMod_EntityApiPost";
     private const string PREFIX_ENTITY_API2 = "MetaMod_EntityApi2";
@@ -36,8 +53,14 @@ public static class SafeEventRegistration
     private const string PREFIX_BLENDING = "MetaMod_Blending";
     private const string PREFIX_BLENDING_POST = "MetaMod_BlendingPost";
 
-    private static readonly HashSet<string> s_registeredPrefixes = new();
-    private static readonly Lock s_lock = new();
+    /// <summary>
+    /// 事件类型定义，包含前缀、属性Getter和包装器委托Getter。
+    /// </summary>
+    private sealed record EventTypeDefinition(
+        string Prefix,
+        Func<EventRegistrationBuilder, object?> PropertyGetter,
+        Func<Delegate> WrapperGetter
+    );
 
     /// <summary>
     /// 使用构建器模式注册事件。
@@ -49,22 +72,26 @@ public static class SafeEventRegistration
     {
         ArgumentNullException.ThrowIfNull(builder, nameof(builder));
 
+        var activeTypes = GetActiveEventTypes(builder);
+
         lock (s_lock)
         {
             // 检查是否有重复注册
-            var prefixesToCheck = GetPrefixesFromBuilder(builder);
-            foreach (var prefix in prefixesToCheck)
+            foreach (var typeDef in activeTypes)
             {
-                if (s_registeredPrefixes.Contains(prefix))
+                if (s_registeredPrefixes.Contains(typeDef.Prefix))
                 {
                     throw new InvalidOperationException(
-                        $"Events with prefix '{prefix}' are already registered. " +
+                        $"Events with prefix '{typeDef.Prefix}' are already registered. " +
                         $"Use Unregister first or check IsRegistered.");
                 }
             }
 
-            // 注册所有委托到生命周期管理器
-            RegisterDelegates(builder);
+            // 注册所有委托到生命周期管理器（通过Wrapper保持引用）
+            foreach (var typeDef in activeTypes)
+            {
+                DelegateLifetimeManager.TryRegister($"{typeDef.Prefix}_Wrapper", typeDef.WrapperGetter());
+            }
 
             // 注册到MetaMod
             MetaMod.RegisterEvents(
@@ -81,11 +108,27 @@ public static class SafeEventRegistration
             );
 
             // 标记已注册
-            foreach (var prefix in prefixesToCheck)
+            foreach (var typeDef in activeTypes)
             {
-                s_registeredPrefixes.Add(prefix);
+                s_registeredPrefixes.Add(typeDef.Prefix);
             }
         }
+    }
+
+    /// <summary>
+    /// 获取构建器中已设置的事件类型定义。
+    /// </summary>
+    private static List<EventTypeDefinition> GetActiveEventTypes(EventRegistrationBuilder builder)
+    {
+        var result = new List<EventTypeDefinition>(s_eventTypes.Length);
+        foreach (var typeDef in s_eventTypes)
+        {
+            if (typeDef.PropertyGetter(builder) != null)
+            {
+                result.Add(typeDef);
+            }
+        }
+        return result;
     }
 
     /// <summary>
@@ -99,25 +142,14 @@ public static class SafeEventRegistration
     {
         lock (s_lock)
         {
-            // 释放所有GCHandle
-            foreach (var handle in s_gcHandles.Values)
-            {
-                if (handle.IsAllocated)
-                    handle.Free();
-            }
-            s_gcHandles.Clear();
-
             // 清理所有相关委托
-            foreach (var prefix in s_registeredPrefixes)
-            {
-                var keysToRemove = DelegateLifetimeManager.GetRegisteredKeys()
-                    .Where(k => k.StartsWith(prefix + "_", StringComparison.Ordinal))
-                    .ToList();
+            var keysToRemove = DelegateLifetimeManager.GetRegisteredKeys()
+                .Where(k => s_registeredPrefixes.Any(p => k.StartsWith(p + "_", StringComparison.Ordinal)))
+                .ToList();
 
-                foreach (var key in keysToRemove)
-                {
-                    DelegateLifetimeManager.Unregister(key);
-                }
+            foreach (var key in keysToRemove)
+            {
+                DelegateLifetimeManager.Unregister(key);
             }
 
             s_registeredPrefixes.Clear();
@@ -131,7 +163,7 @@ public static class SafeEventRegistration
     /// <returns>是否已注册</returns>
     public static bool IsRegistered(EventRegistrationType eventType)
     {
-        string prefix = GetPrefixForEventType(eventType);
+        var prefix = GetPrefixForEventType(eventType);
         lock (s_lock)
         {
             return s_registeredPrefixes.Contains(prefix);
@@ -146,18 +178,28 @@ public static class SafeEventRegistration
     {
         lock (s_lock)
         {
-            var result = new List<EventRegistrationType>();
-            foreach (var prefix in s_registeredPrefixes)
-            {
-                var eventType = GetEventTypeFromPrefix(prefix);
-                if (eventType.HasValue)
-                {
-                    result.Add(eventType.Value);
-                }
-            }
-            return result.AsReadOnly();
+            return s_registeredPrefixes
+                .Where(p => s_prefixToEventType.TryGetValue(p, out _))
+                .Select(p => s_prefixToEventType[p])
+                .ToList()
+                .AsReadOnly();
         }
     }
+
+    // 前缀到事件类型的映射
+    private static readonly Dictionary<string, EventRegistrationType> s_prefixToEventType = new()
+    {
+        [PREFIX_ENTITY_API] = EventRegistrationType.EntityApi,
+        [PREFIX_ENTITY_API_POST] = EventRegistrationType.EntityApiPost,
+        [PREFIX_ENTITY_API2] = EventRegistrationType.EntityApi2,
+        [PREFIX_ENTITY_API2_POST] = EventRegistrationType.EntityApi2Post,
+        [PREFIX_NEW_DLL] = EventRegistrationType.NewDllFunctions,
+        [PREFIX_NEW_DLL_POST] = EventRegistrationType.NewDllFunctionsPost,
+        [PREFIX_ENGINE] = EventRegistrationType.EngineFunctions,
+        [PREFIX_ENGINE_POST] = EventRegistrationType.EngineFunctionsPost,
+        [PREFIX_BLENDING] = EventRegistrationType.BlendingInterface,
+        [PREFIX_BLENDING_POST] = EventRegistrationType.BlendingInterfacePost,
+    };
 
     /// <summary>
     /// 验证事件注册是否安全（无重复注册风险）。
@@ -168,16 +210,16 @@ public static class SafeEventRegistration
     {
         ArgumentNullException.ThrowIfNull(builder, nameof(builder));
 
+        var activeTypes = GetActiveEventTypes(builder);
         var conflicts = new List<string>();
 
         lock (s_lock)
         {
-            var prefixesToCheck = GetPrefixesFromBuilder(builder);
-            foreach (var prefix in prefixesToCheck)
+            foreach (var typeDef in activeTypes)
             {
-                if (s_registeredPrefixes.Contains(prefix))
+                if (s_registeredPrefixes.Contains(typeDef.Prefix))
                 {
-                    conflicts.Add(prefix);
+                    conflicts.Add(typeDef.Prefix);
                 }
             }
         }
@@ -215,162 +257,17 @@ public static class SafeEventRegistration
     /// <returns>已保持引用的委托数量</returns>
     public static int EnsureDelegatesPinned(EventRegistrationBuilder builder)
     {
-        int count = 0;
+        var activeTypes = GetActiveEventTypes(builder);
 
-        if (builder.EntityApi != null)
+        foreach (var typeDef in activeTypes)
         {
-            PinEventHandlers(builder.EntityApi, PREFIX_ENTITY_API);
-            count++;
-        }
-        if (builder.EntityApiPost != null)
-        {
-            PinEventHandlers(builder.EntityApiPost, PREFIX_ENTITY_API_POST);
-            count++;
-        }
-        if (builder.EntityApi2 != null)
-        {
-            PinEventHandlers(builder.EntityApi2, PREFIX_ENTITY_API2);
-            count++;
-        }
-        if (builder.EntityApi2Post != null)
-        {
-            PinEventHandlers(builder.EntityApi2Post, PREFIX_ENTITY_API2_POST);
-            count++;
-        }
-        if (builder.NewDllFunctions != null)
-        {
-            PinEventHandlers(builder.NewDllFunctions, PREFIX_NEW_DLL);
-            count++;
-        }
-        if (builder.NewDllFunctionsPost != null)
-        {
-            PinEventHandlers(builder.NewDllFunctionsPost, PREFIX_NEW_DLL_POST);
-            count++;
-        }
-        if (builder.EngineFunctions != null)
-        {
-            PinEventHandlers(builder.EngineFunctions, PREFIX_ENGINE);
-            count++;
-        }
-        if (builder.EngineFunctionsPost != null)
-        {
-            PinEventHandlers(builder.EngineFunctionsPost, PREFIX_ENGINE_POST);
-            count++;
-        }
-        if (builder.BlendingInterface != null)
-        {
-            PinEventHandlers(builder.BlendingInterface, PREFIX_BLENDING);
-            count++;
-        }
-        if (builder.BlendingInterfacePost != null)
-        {
-            PinEventHandlers(builder.BlendingInterfacePost, PREFIX_BLENDING_POST);
-            count++;
+            DelegateLifetimeManager.TryRegister($"{typeDef.Prefix}_Wrapper", typeDef.WrapperGetter());
         }
 
-        return count;
+        return activeTypes.Count;
     }
 
-    private static void PinEventHandlers(object eventHandler, string prefix)
-    {
-        // 通过GCHandle保持事件处理器对象存活
-        // 这确保事件处理器及其所有委托都不会被GC回收
-        var handle = GCHandle.Alloc(eventHandler, GCHandleType.Normal);
-        s_gcHandles[prefix] = handle;
-    }
-
-    private static readonly Dictionary<string, GCHandle> s_gcHandles = new();
-
-    private static void RegisterDelegates(EventRegistrationBuilder builder)
-    {
-        // 这里我们注册NativeCaller中使用的内部委托
-        // 这些委托在MetaMod.LinkNative*方法中被转换为函数指针
-
-        if (builder.EntityApi != null)
-        {
-            RegisterEntityApiDelegates(PREFIX_ENTITY_API);
-        }
-        if (builder.EntityApiPost != null)
-        {
-            RegisterEntityApiDelegates(PREFIX_ENTITY_API_POST);
-        }
-        if (builder.EntityApi2 != null)
-        {
-            RegisterEntityApi2Delegates(PREFIX_ENTITY_API2);
-        }
-        if (builder.EntityApi2Post != null)
-        {
-            RegisterEntityApi2Delegates(PREFIX_ENTITY_API2_POST);
-        }
-        if (builder.NewDllFunctions != null)
-        {
-            RegisterNewDllDelegates(PREFIX_NEW_DLL);
-        }
-        if (builder.NewDllFunctionsPost != null)
-        {
-            RegisterNewDllDelegates(PREFIX_NEW_DLL_POST);
-        }
-        if (builder.EngineFunctions != null)
-        {
-            RegisterEngineDelegates(PREFIX_ENGINE);
-        }
-        if (builder.EngineFunctionsPost != null)
-        {
-            RegisterEngineDelegates(PREFIX_ENGINE_POST);
-        }
-        if (builder.BlendingInterface != null)
-        {
-            RegisterBlendingDelegates(PREFIX_BLENDING);
-        }
-        if (builder.BlendingInterfacePost != null)
-        {
-            RegisterBlendingDelegates(PREFIX_BLENDING_POST);
-        }
-    }
-
-    private static void RegisterEntityApiDelegates(string prefix)
-    {
-        // 这些委托在NativeCaller类中定义，我们需要确保它们被保持引用
-        // 由于NativeCaller使用静态字段，它们本身不会被GC回收
-        // 但为了统一管理和文档目的，我们在这里进行"注册"（实际上只是记录）
-        DelegateLifetimeManager.TryRegister($"{prefix}_Wrapper", MetaMod.GetEntityApiWrapper);
-    }
-
-    private static void RegisterEntityApi2Delegates(string prefix)
-    {
-        DelegateLifetimeManager.TryRegister($"{prefix}_Wrapper", MetaMod.GetEntityApi2Wrapper);
-    }
-
-    private static void RegisterNewDllDelegates(string prefix)
-    {
-        DelegateLifetimeManager.TryRegister($"{prefix}_Wrapper", MetaMod.GetNewDllFunctionsWrapper);
-    }
-
-    private static void RegisterEngineDelegates(string prefix)
-    {
-        DelegateLifetimeManager.TryRegister($"{prefix}_Wrapper", MetaMod.GetEngineFunctions);
-    }
-
-    private static void RegisterBlendingDelegates(string prefix)
-    {
-        DelegateLifetimeManager.TryRegister($"{prefix}_Wrapper", MetaMod.GetBlendingInterfaceDelegate);
-    }
-
-    private static IEnumerable<string> GetPrefixesFromBuilder(EventRegistrationBuilder builder)
-    {
-        var prefixes = new List<string>();
-        if (builder.EntityApi != null) prefixes.Add(PREFIX_ENTITY_API);
-        if (builder.EntityApiPost != null) prefixes.Add(PREFIX_ENTITY_API_POST);
-        if (builder.EntityApi2 != null) prefixes.Add(PREFIX_ENTITY_API2);
-        if (builder.EntityApi2Post != null) prefixes.Add(PREFIX_ENTITY_API2_POST);
-        if (builder.NewDllFunctions != null) prefixes.Add(PREFIX_NEW_DLL);
-        if (builder.NewDllFunctionsPost != null) prefixes.Add(PREFIX_NEW_DLL_POST);
-        if (builder.EngineFunctions != null) prefixes.Add(PREFIX_ENGINE);
-        if (builder.EngineFunctionsPost != null) prefixes.Add(PREFIX_ENGINE_POST);
-        if (builder.BlendingInterface != null) prefixes.Add(PREFIX_BLENDING);
-        if (builder.BlendingInterfacePost != null) prefixes.Add(PREFIX_BLENDING_POST);
-        return prefixes;
-    }
+    // 辅助方法已移除，功能被 GetActiveEventTypes 替代
 
     private static string GetPrefixForEventType(EventRegistrationType eventType)
     {
@@ -390,23 +287,7 @@ public static class SafeEventRegistration
         };
     }
 
-    private static EventRegistrationType? GetEventTypeFromPrefix(string prefix)
-    {
-        return prefix switch
-        {
-            PREFIX_ENTITY_API => EventRegistrationType.EntityApi,
-            PREFIX_ENTITY_API_POST => EventRegistrationType.EntityApiPost,
-            PREFIX_ENTITY_API2 => EventRegistrationType.EntityApi2,
-            PREFIX_ENTITY_API2_POST => EventRegistrationType.EntityApi2Post,
-            PREFIX_NEW_DLL => EventRegistrationType.NewDllFunctions,
-            PREFIX_NEW_DLL_POST => EventRegistrationType.NewDllFunctionsPost,
-            PREFIX_ENGINE => EventRegistrationType.EngineFunctions,
-            PREFIX_ENGINE_POST => EventRegistrationType.EngineFunctionsPost,
-            PREFIX_BLENDING => EventRegistrationType.BlendingInterface,
-            PREFIX_BLENDING_POST => EventRegistrationType.BlendingInterfacePost,
-            _ => null
-        };
-    }
+
 }
 
 /// <summary>
@@ -414,15 +295,25 @@ public static class SafeEventRegistration
 /// </summary>
 public enum EventRegistrationType
 {
+    /// <summary>Entity API 事件</summary>
     EntityApi,
+    /// <summary>Entity API Post 事件</summary>
     EntityApiPost,
+    /// <summary>Entity API2 事件</summary>
     EntityApi2,
+    /// <summary>Entity API2 Post 事件</summary>
     EntityApi2Post,
+    /// <summary>New DLL Functions 事件</summary>
     NewDllFunctions,
+    /// <summary>New DLL Functions Post 事件</summary>
     NewDllFunctionsPost,
+    /// <summary>Engine Functions 事件</summary>
     EngineFunctions,
+    /// <summary>Engine Functions Post 事件</summary>
     EngineFunctionsPost,
+    /// <summary>Blending Interface 事件</summary>
     BlendingInterface,
+    /// <summary>Blending Interface Post 事件</summary>
     BlendingInterfacePost
 }
 

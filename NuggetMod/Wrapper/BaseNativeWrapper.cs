@@ -11,10 +11,10 @@ namespace NuggetMod.Wrapper;
 /// GC SAFETY WARNING:
 /// This class manages unmanaged memory pointers. To prevent GC dangling pointer issues:
 ///
-/// 1. If this wrapper OWNS the pointer (ownsPointer=true):
-///    - The wrapper instance MUST be kept alive as long as the native code might access the memory
-///    - Use a static field or the provided <see cref="NativeObjectLifetimeManager"/> to keep references
-///    - Always call Dispose() when done, or use 'using' statement
+    /// 1. If this wrapper OWNS the pointer (ownsPointer=true):
+    ///    - The wrapper instance MUST be kept alive as long as the native code might access the memory
+    ///    - Use a static field or the provided <see cref="Helper.NativeObjectLifetimeManager"/> to keep references
+    ///    - Always call Dispose() when done, or use 'using' statement
 ///
 /// 2. If this wrapper does NOT own the pointer (ownsPointer=false, default):
 ///    - The underlying memory is managed elsewhere (typically by the game engine)

@@ -6,7 +6,7 @@ namespace NuggetMod.Helper;
 /// <summary>
 /// utility helper functions
 /// </summary>
-public class Utility
+public static class Utility
 {
     private const int MaxPlayers = 33;
     private const int FirstPlayerIndex = 1;
@@ -15,17 +15,9 @@ public class Utility
     /// get all player list
     /// </summary>
     /// <returns>player list</returns>
-    public static List<Edict> GetAllPlayers()
-    {
-        List<Edict> edicts = [];
-        for (int i = FirstPlayerIndex; i <= MaxPlayers; i++)
-        {
-            var edict = MetaMod.EngineFuncs.PEntityOfEntIndex(i);
-            if (edict != null)
-            {
-                edicts.Add(edict);
-            }
-        }
-        return edicts;
-    }
+    public static List<Edict> GetAllPlayers() =>
+        [.. Enumerable.Range(FirstPlayerIndex, MaxPlayers - FirstPlayerIndex + 1)
+            .Select(i => MetaMod.EngineFuncs.PEntityOfEntIndex(i))
+            .Where(e => e != null)
+            .Cast<Edict>()];
 }
