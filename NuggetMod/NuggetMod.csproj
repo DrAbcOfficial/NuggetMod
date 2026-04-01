@@ -95,11 +95,16 @@
     <Folder Include="nuget\" />
   </ItemGroup>
 
-  <!-- 引用 Source Generator 项目 -->
-  <ItemGroup>
+  <!-- 引用 Source Generator 项目 (开发时使用项目引用，发布时使用包引用) -->
+  <ItemGroup Condition="'$(UseSourceGeneratorPackage)' != 'true'">
     <ProjectReference Include="..\NuggetMod.SourceGenerator\NuggetMod.SourceGenerator.csproj"
                       OutputItemType="Analyzer"
                       ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  
+  <!-- 通过 NuGet 包引用 Source Generator -->
+  <ItemGroup Condition="'$(UseSourceGeneratorPackage)' == 'true'">
+    <PackageReference Include="DrAbc.NuggetMod.SourceGenerator" Version="0.0.1" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
