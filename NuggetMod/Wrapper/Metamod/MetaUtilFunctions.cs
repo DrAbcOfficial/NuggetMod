@@ -537,10 +537,18 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
     /// <param name="fnDisasmSingleCallback">Callback function for processing the disassembled instruction.</param>
     /// <param name="context">User-defined context data passed to the callback.</param>
     /// <returns>Length of the disassembled instruction in bytes.</returns>
+    /// <remarks>
+    /// WARNING: The callback delegate must be kept alive by the caller for the duration of the call.
+    /// Consider using DelegateLifetimeManager if the callback needs to persist beyond this call.
+    /// </remarks>
     public int DisasmSingleInstruction(nint address, DisasmSingleCallbackDelegate fnDisasmSingleCallback, nint context)
     {
+        ArgumentNullException.ThrowIfNull(fnDisasmSingleCallback);
+
+        // 同步调用，委托在调用期间需要保持存活
+        // 由于这是同步调用，委托会在调用期间保持存活
         nint ptr = Marshal.GetFunctionPointerForDelegate(fnDisasmSingleCallback);
-        return Base.pfnDisasmSingleInstruction(address, ptr, context); ;
+        return Base.pfnDisasmSingleInstruction(address, ptr, context);
     }
 
     /// <summary>
@@ -552,8 +560,15 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
     /// <param name="depth">Recursion depth for following branches.</param>
     /// <param name="context">User-defined context data passed to the callback.</param>
     /// <returns>True if successful, false otherwise.</returns>
+    /// <remarks>
+    /// WARNING: The callback delegate must be kept alive by the caller for the duration of the call.
+    /// Consider using DelegateLifetimeManager if the callback needs to persist beyond this call.
+    /// </remarks>
     public bool DisasmRange(nint disasmBase, uint disasmSize, DisasmCallbackDelegate fnDisasmCallback, int depth, nint context)
     {
+        ArgumentNullException.ThrowIfNull(fnDisasmCallback);
+
+        // 同步调用，委托在调用期间需要保持存活
         nint ptr = Marshal.GetFunctionPointerForDelegate(fnDisasmCallback);
         return Base.pfnDisasmRanges(disasmBase, disasmSize, ptr, depth, context) == 1;
     }
@@ -576,8 +591,15 @@ public class MetaUtilFunctions(nint ptr) : BaseFunctionWrapper<NativeMetaUtilFun
     /// <param name="searchSize">Maximum distance to search backwards.</param>
     /// <param name="findAddressCallback">Callback function to validate potential function beginnings.</param>
     /// <returns>Address of the function beginning, or zero if not found.</returns>
+    /// <remarks>
+    /// WARNING: The callback delegate must be kept alive by the caller for the duration of the call.
+    /// Consider using DelegateLifetimeManager if the callback needs to persist beyond this call.
+    /// </remarks>
     public nint ReverseSearchFuntionBeginEx(nint searchBegin, uint searchSize, FindAddressCallbackDelegate findAddressCallback)
     {
+        ArgumentNullException.ThrowIfNull(findAddressCallback);
+
+        // 同步调用，委托在调用期间需要保持存活
         nint ptr = Marshal.GetFunctionPointerForDelegate(findAddressCallback);
         return Base.pfnReverseSearchFunctionBeginEx(searchBegin, searchSize, ptr);
     }

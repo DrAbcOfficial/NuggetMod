@@ -109,18 +109,24 @@ public static class DelegateLifetimeManager
     /// <remarks>
     /// 警告：只有在确定原生引擎不再调用此委托后才能注销！
     /// 通常在服务器关闭或命令被移除时调用。
+    /// 注意：注销后，如果原生代码仍持有函数指针，可能导致访问冲突或垂悬指针。
     /// </remarks>
     public static bool Unregister(string key)
     {
         if (s_registeredDelegates.TryRemove(key, out Delegate? del))
         {
-            // 清理指针映射
-            // 注意：此调用在 AOT 编译时可能需要特殊处理
-            // 由于我们在 .NET Framework 兼容性模式下运行，此警告可以安全忽略
-#pragma warning disable IL3050
-            nint ptr = Marshal.GetFunctionPointerForDelegate(del);
-#pragma warning restore IL3050
-            s_pointerToKeyMap.TryRemove(ptr, out _);
+            // 清理指针映射 - 使用TryGetValue避免重复调用GetFunctionPointerForDelegate
+            // 因为每次调用GetFunctionPointerForDelegate可能返回不同的指针值
+            // 取决于委托的内部表示和GC状态
+            var entry = s_pointerToKeyMap.FirstOrDefault(kvp => kvp.Value == key);
+            if (entry.Key != nint.Zero)
+            {
+                s_pointerToKeyMap.TryRemove(entry.Key, out _);
+            }
+
+            // 重要：注销后，委托可能很快被GC回收
+            // 如果原生代码仍持有函数指针，访问它将导致未定义行为
+            // 调用方必须确保原生代码不会再调用此委托
             return true;
         }
         return false;

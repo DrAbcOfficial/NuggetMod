@@ -913,6 +913,10 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
+            if (value.Length == 0)
+                return;
+
             unsafe
             {
                 int copyLength = Math.Min(value.Length, 4);
@@ -943,6 +947,10 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
         }
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
+            if (value.Length == 0)
+                return;
+
             unsafe
             {
                 int copyLength = Math.Min(value.Length, 2);
@@ -1241,7 +1249,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->chain = null;
                 else
-                    NativePtr->chain = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->chain = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1270,7 +1283,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->dmg_inflictor = null;
                 else
-                    NativePtr->dmg_inflictor = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->dmg_inflictor = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1299,7 +1317,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->enemy = null;
                 else
-                    NativePtr->enemy = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->enemy = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1328,7 +1351,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->aiment = null;
                 else
-                    NativePtr->aiment = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->aiment = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1357,7 +1385,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->owner = null;
                 else
-                    NativePtr->owner = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->owner = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1386,7 +1419,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->groundentity = null;
                 else
-                    NativePtr->groundentity = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->groundentity = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -1986,7 +2024,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->pContainingEntity = null;
                 else
-                    NativePtr->pContainingEntity = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->pContainingEntity = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -2541,7 +2584,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser1 = null;
                 else
-                    NativePtr->euser1 = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->euser1 = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -2570,7 +2618,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser2 = null;
                 else
-                    NativePtr->euser2 = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->euser2 = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -2599,7 +2652,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser3 = null;
                 else
-                    NativePtr->euser3 = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->euser3 = (NativeEdict*)nativePtr;
+                }
             }
         }
     }
@@ -2628,7 +2686,12 @@ public class Entvars : BaseNativeWrapper<NativeEntvars>
                 if (value == null)
                     NativePtr->euser4 = null;
                 else
-                    NativePtr->euser4 = (NativeEdict*)value.GetNative();
+                {
+                    nint nativePtr = value.GetNative();
+                    if (nativePtr == nint.Zero)
+                        throw new ArgumentException("Edict has been disposed or is invalid.", nameof(value));
+                    NativePtr->euser4 = (NativeEdict*)nativePtr;
+                }
             }
         }
     }

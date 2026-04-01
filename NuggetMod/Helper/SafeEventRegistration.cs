@@ -90,7 +90,14 @@ public static class SafeEventRegistration
             // 注册所有委托到生命周期管理器（通过Wrapper保持引用）
             foreach (var typeDef in activeTypes)
             {
-                DelegateLifetimeManager.TryRegister($"{typeDef.Prefix}_Wrapper", typeDef.WrapperGetter());
+                var wrapperDelegate = typeDef.WrapperGetter();
+                if (wrapperDelegate == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Wrapper delegate for prefix '{typeDef.Prefix}' returned null. " +
+                        "This may indicate MetaMod is not properly initialized.");
+                }
+                DelegateLifetimeManager.TryRegister($"{typeDef.Prefix}_Wrapper", wrapperDelegate);
             }
 
             // 注册到MetaMod

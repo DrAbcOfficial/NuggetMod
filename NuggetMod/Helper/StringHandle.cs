@@ -1,6 +1,7 @@
 ﻿using NuggetMod.Interface;
 using NuggetMod.Native.Engine;
 using NuggetMod.Helper;
+using System.Threading;
 
 namespace NuggetMod.Helper;
 
@@ -43,8 +44,8 @@ public sealed class StringHandle : IDisposable
     internal void SetHandle(int handle)
     {
         var newHandle = SafeStringHandle.FromStringBase(handle);
-        _safeHandle?.Dispose();
-        _safeHandle = newHandle;
+        var oldHandle = Interlocked.Exchange(ref _safeHandle, newHandle);
+        oldHandle?.Dispose();
     }
 
     /// <summary>
@@ -53,9 +54,12 @@ public sealed class StringHandle : IDisposable
     /// <param name="str">String to set</param>
     public void SetString(string str)
     {
+        // 先创建新句柄，确保如果创建失败不会影响现有句柄
         var newHandle = SafeStringHandle.FromString(str);
-        _safeHandle?.Dispose();
-        _safeHandle = newHandle;
+
+        // 安全地释放旧句柄并设置新句柄
+        var oldHandle = Interlocked.Exchange(ref _safeHandle, newHandle);
+        oldHandle?.Dispose();
     }
 
     /// <summary>

@@ -659,7 +659,14 @@ public class EngineFuncs(nint ptr) : BaseFunctionWrapper<NativeEngineFuncs>(ptr)
     public int AllocString(string szValue)
     {
         nint ns = Marshal.StringToHGlobalAnsi(szValue);
-        return Base.pfnAllocString(ns);
+        try
+        {
+            return Base.pfnAllocString(ns);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(ns);
+        }
     }
     /// <summary>
     /// Gets the entity variables (entvars) for an entity

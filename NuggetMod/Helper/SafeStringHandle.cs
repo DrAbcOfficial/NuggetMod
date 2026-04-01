@@ -41,7 +41,22 @@ internal sealed class SafeStringHandle : SafeHandle
         if (!string.IsNullOrEmpty(str))
         {
             handle.handle = Marshal.StringToHGlobalAnsi(str);
-            handle._cachedValue = (int)(handle.handle - MetaMod.GlobalVars.StringBase);
+            // 计算相对于StringBase的偏移量，检查溢出
+            nint offset = handle.handle - MetaMod.GlobalVars.StringBase;
+            // 在64位系统上，如果偏移量超出int范围，使用饱和值
+            if (nint.Size == 8)
+            {
+                if (offset > int.MaxValue)
+                    handle._cachedValue = int.MaxValue;
+                else if (offset < int.MinValue)
+                    handle._cachedValue = int.MinValue;
+                else
+                    handle._cachedValue = (int)offset;
+            }
+            else
+            {
+                handle._cachedValue = (int)offset;
+            }
         }
         return handle;
     }

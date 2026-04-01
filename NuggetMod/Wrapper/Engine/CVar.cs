@@ -143,8 +143,23 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         get => Marshal.PtrToStringUTF8(NativePtr->name) ?? string.Empty;
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
+
+            // 释放原有内存（如果不是由当前CVar分配的，则不应释放）
+            // 这里假设setter只在新创建的CVar上调用
             var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
-            Marshal.Copy(bytes, 0, NativePtr->name, bytes.Length);
+            nint newPtr = Marshal.AllocHGlobal(bytes.Length);
+            Marshal.Copy(bytes, 0, newPtr, bytes.Length);
+
+            // 原子地更新指针
+            nint oldPtr = NativePtr->name;
+            NativePtr->name = newPtr;
+
+            // 释放旧内存
+            if (oldPtr != nint.Zero)
+            {
+                Marshal.FreeHGlobal(oldPtr);
+            }
         }
     }
 
@@ -156,8 +171,25 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         get => Marshal.PtrToStringUTF8(NativePtr->str) ?? string.Empty;
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
+
+            // 分配新内存并复制数据
             var bytes = System.Text.Encoding.UTF8.GetBytes(value + '\0');
-            Marshal.Copy(bytes, 0, NativePtr->str, bytes.Length);
+            nint newPtr = Marshal.AllocHGlobal(bytes.Length);
+            Marshal.Copy(bytes, 0, newPtr, bytes.Length);
+
+            // 原子地更新指针
+            nint oldPtr = NativePtr->str;
+            NativePtr->str = newPtr;
+
+            // 释放旧内存
+            if (oldPtr != nint.Zero)
+            {
+                Marshal.FreeHGlobal(oldPtr);
+            }
+
+            // 更新float值
+            NativePtr->value = float.TryParse(value, out float f) ? f : 0f;
         }
     }
 

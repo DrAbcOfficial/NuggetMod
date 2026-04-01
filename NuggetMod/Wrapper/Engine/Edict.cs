@@ -72,6 +72,10 @@ public class Edict : BaseNativeWrapper<NativeEdict>
         }
         set
         {
+            ArgumentNullException.ThrowIfNull(value);
+            if (value.Length == 0)
+                return;
+
             int copyLength = Math.Min(value.Length, 48);
             value.AsSpan(0, copyLength).CopyTo(new Span<short>(NativePtr->leafnums, 48));
         }
